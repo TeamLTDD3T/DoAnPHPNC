@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\LoaiSanPhamController;
+use App\Models\LoaiSanPham;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,4 +59,37 @@ Route::get('/addcolor', function () {
 });
 Route::get('/editcolor', function () {
     return view('edit_color');
+});
+
+Route::get('/producttype',[LoaiSanPhamController::class,'index']);
+
+Route::get('/accounttype', function () {
+    return view('account_type');
+});
+Route::get('/addaccounttype', function () {
+    return view('add_account_type');
+});
+Route::get('/editaccounttype', function () {
+    return view('edit_account_type');
+});
+Route::get('/size', function () {
+    return view('size');
+});
+Route::get('/addsize', function () {
+    return view('add_size');
+});
+Route::get('/editsize', function () {
+    return view('edit_size');
+});
+Route::get('/wishlist', function () {
+    return view('wishlist');
+});
+Route::get('/picture', function () {
+    return view('picture');
+});
+Route::get('/addpicture', function () {
+    return view('add_picture');
+});
+Route::get('/editpicture', function () {
+    return view('edit_picture');
 });

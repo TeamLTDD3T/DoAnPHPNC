@@ -95,7 +95,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="/accounttype" class="nav-link">
                                 <i class="nav-icon fas fa-user-tag"></i>
                                 <p>
                                     Account Types
@@ -127,7 +127,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="/picture" class="nav-link">
                                 <i class="nav-icon fas fa-image"></i>
                                 <p>
                                     Pictures
@@ -143,7 +143,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="/producttype" class="nav-link">
                                 <i class="nav-icon fas fa-tags"></i>
                                 <p>
                                     Product Types
@@ -159,7 +159,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="/size" class="nav-link">
                                 <i class="nav-icon fab fa-stripe-s"></i>
                                 <p>
                                     Sizes
@@ -167,7 +167,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="/wishlist" class="nav-link">
                                 <i class="nav-icon fas fa-heart"></i>
                                 <p>
                                     Wishlist
