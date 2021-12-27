@@ -6,12 +6,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Add Product</h1>
+                        <h1 class="m-0">Add Size</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/">Home</a></li>
-                            <li class="breadcrumb-item active">Add Product</li>
+                            <li class="breadcrumb-item active">Add Size</li>
                         </ol>
                     </div>
                     <!-- /.col -->
@@ -24,7 +24,7 @@
             <div class="container-fluid">
                     <div class="card card-secondary">
                         <div class="card-header">
-                            <h3 class="card-title">Form Add Product</h3>
+                            <h3 class="card-title">Form Add Size</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
@@ -38,16 +38,7 @@
                                 <div class="form-group">
                                     <label for="">Name</label>
                                     <input type="text" class="form-control" id=""
-                                        placeholder="Name Product">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Description</label>
-                                    <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Price</label>
-                                    <input type="number" class="form-control" id=""
-                                        placeholder="Price Product" min="0" value="0">
+                                        placeholder="Name Size">
                                 </div>
                                 {{-- <div class="form-group">
                                     <label for="InputFile">File Picture Input</label>
@@ -61,26 +52,6 @@
                                         </div>
                                     </div>
                                 </div> --}}
-                                <div class="form-group">
-                                    <label for="">Product Types</label>
-                                    <select class="form-control">
-                                        <option>option 1</option>
-                                        <option>option 2</option>
-                                        <option>option 3</option>
-                                        <option>option 4</option>
-                                        <option>option 5</option>
-                                      </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Brands</label>
-                                    <select class="form-control">
-                                        <option>option 1</option>
-                                        <option>option 2</option>
-                                        <option>option 3</option>
-                                        <option>option 4</option>
-                                        <option>option 5</option>
-                                      </select>
-                                </div>
                             </div>
                             <!-- /.card-body -->
 

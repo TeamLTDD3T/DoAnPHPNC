@@ -42,4 +42,36 @@ Route::get('/adddetailproduct', function () {
 Route::get('/editdetailproduct', function () {
     return view('edit_detail_product');
 });
+
 Route::get('/producttype',[LoaiSanPhamController::class,'index']);
+
+Route::get('/accounttype', function () {
+    return view('account_type');
+});
+Route::get('/addaccounttype', function () {
+    return view('add_account_type');
+});
+Route::get('/editaccounttype', function () {
+    return view('edit_account_type');
+});
+Route::get('/size', function () {
+    return view('size');
+});
+Route::get('/addsize', function () {
+    return view('add_size');
+});
+Route::get('/editsize', function () {
+    return view('edit_size');
+});
+Route::get('/wishlist', function () {
+    return view('wishlist');
+});
+Route::get('/picture', function () {
+    return view('picture');
+});
+Route::get('/addpicture', function () {
+    return view('add_picture');
+});
+Route::get('/editpicture', function () {
+    return view('edit_picture');
+});
