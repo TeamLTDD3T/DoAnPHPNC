@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\LoaiSanPhamController;
+use App\Models\LoaiSanPham;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,3 +42,4 @@ Route::get('/adddetailproduct', function () {
 Route::get('/editdetailproduct', function () {
     return view('edit_detail_product');
 });
+Route::get('/producttype',[LoaiSanPhamController::class,'index']);
