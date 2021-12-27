@@ -103,7 +103,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="/brand" class="nav-link">
                                 <i class="nav-icon fas fa-bold"></i>
                                 <p>
                                     Brands
@@ -111,7 +111,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="/color" class="nav-link">
                                 <i class="nav-icon fas fa-palette"></i>
                                 <p>
                                     Colors

@@ -40,3 +40,21 @@ Route::get('/adddetailproduct', function () {
 Route::get('/editdetailproduct', function () {
     return view('edit_detail_product');
 });
+Route::get('/brand', function () {
+    return view('brand');
+});
+Route::get('/addbrand', function () {
+    return view('add_brand');
+});
+Route::get('/editbrand', function () {
+    return view('edit_brand');
+});
+Route::get('/color', function () {
+    return view('color');
+});
+Route::get('/addcolor', function () {
+    return view('add_color');
+});
+Route::get('/editcolor', function () {
+    return view('edit_color');
+});
