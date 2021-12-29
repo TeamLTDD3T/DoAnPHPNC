@@ -2,6 +2,10 @@
 use App\Http\Controllers\SanPhamController;
 use App\Http\Controllers\ChiTietSanPhamController;
 use App\Http\Controllers\LoaiSanPhamController;
+use App\Http\Controllers\LoaiTaiKhoanController;
+use App\Http\Controllers\SizeController;
+use App\Http\Controllers\YeuThichController;
+use App\Http\Controllers\HinhAnhController;
 use App\Models\ChiTietSanPham;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +37,15 @@ Route::get('/producttype',[LoaiSanPhamController::class,'index']);
 Route::resource('sanPham', SanPhamController::class);
 
 Route::resource('chiTietSanPham',ChiTietSanPhamController::class);
+
+Route::resource('loaiTaiKhoan', LoaiTaiKhoanController::class);
+
+Route::resource('size', SizeController::class);
+
+Route::resource('yeuThich', YeuThichController::class);
+
+Route::resource('hinhAnh', HinhAnhController::class);
+
 // Route::get('/adddetailproduct', function () {
 //     return view('add_detail_product');
 // });

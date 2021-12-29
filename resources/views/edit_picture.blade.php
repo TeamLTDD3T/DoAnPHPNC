@@ -28,18 +28,20 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form>
+                        <form method="post" action="{{ route('hinhAnh.update',['hinhAnh'=>$hinhAnh]) }}" enctype="multipart/form-data">
+                            @csrf
+                            @method('PATCH')
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="">ID</label>
-                                    <input type="id" class="form-control" id=""
+                                    <input type="id" class="form-control" name="id"
                                         value="1" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="InputFile">File Picture Input</label>
                                     <div class="input-group">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="InputFile">
+                                            <input type="file" class="custom-file-" type="file" accept="image/*" name="file">
                                             <label class="custom-file-label" for="InputFile">Choose file</label>
                                         </div>
                                         <div class="input-group-append">
@@ -48,8 +50,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="">ID Product</label>
-                                    <input type="id" class="form-control" id=""
+                                    <label for="">ID Detail Product</label>
+                                    <input type="id" class="form-control" name="ctsanpham"
                                         value="1" readonly>
                                 </div>
                             </div>

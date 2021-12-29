@@ -27,7 +27,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">Account Type Management</h3>
                                 <div style="float: right;margin-left:20px;margin-top: -0.3rem;width: 100px;">
-                                    <a href='/addaccounttype'>
+                                    <a href='{{ route('loaiTaiKhoan.create') }}'>
                                         <button type="button" class="btn btn-block btn-default btn-sm">Add</button>
                                     </a>
                                 </div>
@@ -60,23 +60,33 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Admin</td>
-                                            <td><span class="tag tag-success">Active</span></td>
-                                            <td style="width: 20px;">
-                                                <a href='/editaccounttype'>
-                                                    <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                            class="fas fa-edit"></i>
-                                                    </button>
-                                                </a>
-                                            </td>
-                                            <td style="width: 20px;">
-                                                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                    class="fas fa-trash"></i>
-                                            </button>
-                                            </td>
-                                        </tr>
+                                        @foreach ($lstltk as $ltk)
+                                            <tr>
+                                                <td>{{ $ltk->id }}</td>
+                                                <td>{{ $ltk->ten_loai_tai_khoan }}</td>
+                                                <td><span class="tag tag-success">Active</span></td>
+                                                
+                                                <td style=";width: 20px;">
+                                                    <a href='{{ route('loaiTaiKhoan.edit', ['loaiTaiKhoan' => $ltk]) }}'>
+                                                        <button type="button"
+                                                            class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                class="fas fa-edit"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                                <td style="width: 20px;">
+                                                    <form method="post"
+                                                        action="{{ route('loaiTaiKhoan.destroy', ['loaiTaiKhoan' => $ltk]) }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

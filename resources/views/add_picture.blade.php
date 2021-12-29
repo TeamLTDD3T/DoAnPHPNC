@@ -28,28 +28,29 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form>
+                        <form method="post" action="{{ route('hinhAnh.store') }}">
+                            @csrf
                             <div class="card-body">
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="">ID</label>
                                     <input type="id" class="form-control" id=""
                                         value="2" readonly>
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label for="InputFile">File Picture Input</label>
                                     <div class="input-group">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="InputFile">
-                                            <label class="custom-file-label" for="InputFile">Choose file</label>
+                                            <input type="file" class="custom-file-input" type="file" accept="image/*" name="file">
+                                            <label class="custom-file-label" for="file"></label>
                                         </div>
-                                        <div class="input-group-append">
+                                        {{-- <div class="input-group-append">
                                             <span class="input-group-text">Upload</span>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="">ID Detail Product</label>
-                                    <input type="id" class="form-control" id=""
+                                    <input type="id" class="form-control" name="ctsanpham"
                                         value="1" readonly>
                                 </div>  
                             </div>

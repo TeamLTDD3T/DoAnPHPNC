@@ -95,7 +95,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/accounttype" class="nav-link">
+                            <a href="{{ route('loaiTaiKhoan.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-user-tag"></i>
                                 <p>
                                     Account Types
@@ -127,7 +127,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/picture" class="nav-link">
+                            <a href="{{ route('hinhAnh.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-image"></i>
                                 <p>
                                     Pictures
@@ -159,7 +159,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/size" class="nav-link">
+                            <a href="{{ route('size.index') }}" class="nav-link">
                                 <i class="nav-icon fab fa-stripe-s"></i>
                                 <p>
                                     Sizes
@@ -167,7 +167,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/wishlist" class="nav-link">
+                            <a href="{{ route('yeuThich.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-heart"></i>
                                 <p>
                                     Wishlist

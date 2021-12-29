@@ -28,16 +28,17 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form>
+                        <form method="post" action="{{ route('size.store') }}">
+                            @csrf
                             <div class="card-body">
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="">ID</label>
                                     <input type="id" class="form-control" id=""
                                         value="2" readonly>
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label for="">Name</label>
-                                    <input type="text" class="form-control" id=""
+                                    <input type="text" class="form-control" name="tensize"
                                         placeholder="Name Size">
                                 </div>
                                 {{-- <div class="form-group">

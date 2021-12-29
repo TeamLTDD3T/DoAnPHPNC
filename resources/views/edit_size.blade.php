@@ -28,17 +28,19 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form>
+                        <form method="post" action="{{ route('size.update',['size'=>$size]) }}" enctype="multipart/form-data">
+                            @csrf
+                            @method('PATCH')
                             <div class="card-body">
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="">ID</label>
-                                    <input type="id" class="form-control" id=""
+                                    <input type="id" class="form-control" name="id"
                                         value="1" readonly>
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label for="">Name</label>
-                                    <input type="id" class="form-control" id=""
-                                        value="XL">
+                                    <input type="id" class="form-control" name="tensize"
+                                    value="{{ $size ->ten_size }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Status</label>
