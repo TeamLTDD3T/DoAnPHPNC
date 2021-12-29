@@ -93,3 +93,12 @@ Route::get('/addpicture', function () {
 Route::get('/editpicture', function () {
     return view('edit_picture');
 });
+Route::get('/review', function () {
+    return view('review');
+});
+Route::get('/order', function () {
+    return view('order');
+});
+Route::get('/detailorder', function () {
+    return view('detail_order');
+});
