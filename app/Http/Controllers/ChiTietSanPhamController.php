@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\ChiTietSanPham;
-use App\Http\Requests\StoreChiTietSanPhamRequest;
-use App\Http\Requests\UpdateChiTietSanPhamRequest;
+use App\Models\Mau;
+use App\Models\SanPham;
+use App\Models\Size;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use SebastianBergmann\Environment\Console;
 
 class ChiTietSanPhamController extends Controller
 {
@@ -23,9 +27,11 @@ class ChiTietSanPhamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(SanPham $sanPham)
     {
-        //
+        $lstsize=Size::all();
+        $lstmau=Mau::all();
+        return view('add_detail_product',['lstsize'=>$lstsize,'lstmau'=>$lstmau,'sanPham'=>$sanPham]);
     }
 
     /**
@@ -34,9 +40,17 @@ class ChiTietSanPhamController extends Controller
      * @param  \App\Http\Requests\StoreChiTietSanPhamRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreChiTietSanPhamRequest $request)
+    public function store(Request $request,SanPham $sanPham)
     {
-        //
+        $chiTietSanPham= new ChiTietSanPham;
+        $chiTietSanPham->fill([
+            'san_pham_id'=>$request->input('idproduct'),
+            'mau_id'=>$request->input('mau'),
+            'size_id'=>$request->input('size'),
+            'so_luong'=>$request->input('soluong'),
+        ]);
+        $chiTietSanPham->save();
+        return Redirect::route('sanPham.show', ['sanPham' => $sanPham]);
     }
 
     /**
@@ -68,7 +82,7 @@ class ChiTietSanPhamController extends Controller
      * @param  \App\Models\ChiTietSanPham  $chiTietSanPham
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateChiTietSanPhamRequest $request, ChiTietSanPham $chiTietSanPham)
+    public function update(Request $request, ChiTietSanPham $chiTietSanPham)
     {
         //
     }

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\LoaiSanPham;
+use App\Models\Size;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,7 +17,11 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
         $this->call([
             LoaiSanPhamSeeder::class,
-            // SanPhamSeeder::class
+            ThuongHieuSeeder::class,
+            MauSeeder::class,
+            SizeSeeder::class,
+            SanPhamSeeder::class,
+            ChiTietSanPhamSeeder::class
         ]);
     }
 }

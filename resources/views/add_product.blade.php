@@ -28,25 +28,26 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form>
+                        <form method="post" action="{{ route('sanPham.store') }}">
+                            @csrf
                             <div class="card-body">
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="">ID</label>
                                     <input type="id" class="form-control" id=""
                                         value="2" readonly>
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label for="">Name</label>
-                                    <input type="text" class="form-control" id=""
+                                    <input type="text" class="form-control" id="" name="tensp"
                                         placeholder="Name Product">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Description</label>
-                                    <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                    <textarea class="form-control" rows="3" placeholder="Enter ..." name="mota"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Price</label>
-                                    <input type="number" class="form-control" id=""
+                                    <input type="number" class="form-control" name="gia"
                                         placeholder="Price Product" min="0" value="0">
                                 </div>
                                 {{-- <div class="form-group">
@@ -63,22 +64,22 @@
                                 </div> --}}
                                 <div class="form-group">
                                     <label for="">Product Types</label>
-                                    <select class="form-control">
-                                        <option>option 1</option>
-                                        <option>option 2</option>
-                                        <option>option 3</option>
-                                        <option>option 4</option>
-                                        <option>option 5</option>
+                                    <select class="form-control" name="loaisp">
+                                        @foreach ($lstloai as $loai)
+                                            <option value="{{ $loai->id }}">
+                                                {{ $loai->ten_loai_san_pham }}
+                                            </option>
+                                        @endforeach
                                       </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Brands</label>
-                                    <select class="form-control">
-                                        <option>option 1</option>
-                                        <option>option 2</option>
-                                        <option>option 3</option>
-                                        <option>option 4</option>
-                                        <option>option 5</option>
+                                    <select class="form-control" name="thuonghieu">
+                                        @foreach ($lstthuonghieu as $thuonghieu)
+                                        <option value="{{ $thuonghieu->id }}">
+                                            {{ $thuonghieu->ten_thuong_hieu }}
+                                        </option>
+                                    @endforeach
                                       </select>
                                 </div>
                             </div>

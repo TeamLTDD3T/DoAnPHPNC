@@ -28,26 +28,28 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form>
+                        <form method="post" action="{{ route('sanPham.update',['sanPham'=>$sanPham]) }}" enctype="multipart/form-data">
+                            @csrf
+                            @method('PATCH')
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="">ID</label>
-                                    <input type="id" class="form-control" id=""
-                                        value="1" readonly>
+                                    <input type="id" class="form-control" name="id"
+                                        value="{{ $sanPham ->id }}" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Name</label>
-                                    <input type="text" class="form-control" id=""
-                                        placeholder="Name Product" value="Shirt Nike">
+                                    <input type="text" class="form-control" name="tensp"
+                                        placeholder="Name Product" value="{{ $sanPham ->ten_san_pham }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Description</label>
-                                    <textarea class="form-control" rows="3" placeholder="Enter ...">Best</textarea>
+                                    <textarea class="form-control" rows="3" placeholder="Enter ..." name="mota">{{ $sanPham ->mo_ta }}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Price</label>
-                                    <input type="number" class="form-control" id=""
-                                        placeholder="Price Product" value="100" min="0">
+                                    <input type="number" class="form-control" name="gia"
+                                        placeholder="Price Product" value="{{ $sanPham ->gia }}" min="0">
                                 </div>
                                 {{-- <div class="form-group">
                                     <label for="InputFile">File Picture Input</label>
@@ -63,22 +65,22 @@
                                 </div> --}}
                                 <div class="form-group">
                                     <label for="">Product Types</label>
-                                    <select class="form-control">
-                                        <option>option 1</option>
-                                        <option>option 2</option>
-                                        <option>option 3</option>
-                                        <option>option 4</option>
-                                        <option>option 5</option>
+                                    <select class="form-control" name="loaisp">
+                                        @foreach ($lstloai as $loai)
+                                            <option value="{{ $loai->id }}" @if($loai->id == $sanPham->loai_san_pham_id) selected @endif>
+                                                {{ $loai->ten_loai_san_pham }}
+                                            </option>
+                                        @endforeach
                                       </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Brands</label>
-                                    <select class="form-control">
-                                        <option>option 1</option>
-                                        <option>option 2</option>
-                                        <option>option 3</option>
-                                        <option>option 4</option>
-                                        <option>option 5</option>
+                                    <select class="form-control" name="thuonghieu">
+                                        @foreach ($lstthuonghieu as $thuonghieu)
+                                        <option value="{{ $thuonghieu->id }}" @if($thuonghieu->id == $sanPham->thuong_hieu_id) selected @endif>
+                                            {{ $thuonghieu->ten_thuong_hieu }}
+                                        </option>
+                                    @endforeach
                                       </select>
                                 </div>
                             </div>

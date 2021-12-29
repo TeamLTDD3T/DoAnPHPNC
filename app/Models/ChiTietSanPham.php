@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ChiTietSanPham extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+    public function SanPham()
+    {
+        return $this->belongsTo(SanPham::class);
+    }
 }

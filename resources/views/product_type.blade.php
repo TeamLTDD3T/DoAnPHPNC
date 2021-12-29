@@ -61,30 +61,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Shirt</td>
-                                            <td><span class="tag tag-success">Active</span></td>
-                                            <td style="width: 20px;">
-                                                <a href='/detailproduct'>
-                                                    <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                            class="fas fa-info-circle"></i>
-                                                    </button>
-                                                </a>
-                                            </td>
-                                            <td style=";width: 20px;">
-                                                <a href='/editproduct'>
-                                                    <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                            class="fas fa-edit"></i>
-                                                    </button>
-                                                </a>
-                                            </td>
-                                            <td style="width: 20px;">
-                                                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                        class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
                                         @foreach ($lstloaisp as $loai)
                                         <tr>
                                             <td>{{ $loai ->id }}</td>

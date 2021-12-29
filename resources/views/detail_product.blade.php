@@ -27,7 +27,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">Detail Product Management</h3>
                                 <div style="float: right;margin-left:20px;margin-top: -0.3rem;width: 100px;">
-                                    <a href='/adddetailproduct'>
+                                    <a href='{{ route('chiTietSanPham.create', ['sanPham' => $sanPham]) }}'>
                                         <button type="button" class="btn btn-block btn-default btn-sm">Add</button>
                                     </a>
                                 </div>
@@ -63,12 +63,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($lstCTSanPham as $ctsp)
                                         <tr>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>Red</td>
-                                            <td>S</td>
-                                            <td>100</td>
+                                            <td>{{ $ctsp->id }}</td>
+                                            <td>{{ $ctsp->san_pham_id }}</td>
+                                            <td>{{ $ctsp->mau_id }}</td>
+                                            <td>{{ $ctsp->size_id }}</td>
+                                            <td>{{ $ctsp->so_luong }}</td>
                                             <td><span class="tag tag-success">Active</span></td>
                                             <td style=";width: 20px;">
                                                 <a href='/editdetailproduct'>
@@ -83,6 +84,7 @@
                                                 </button>
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

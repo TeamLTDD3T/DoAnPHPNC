@@ -27,7 +27,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">Product Management</h3>
                                 <div style="float: right;margin-left:20px;margin-top: -0.3rem;width: 100px;">
-                                    <a href='/addproduct'>
+                                    <a href='{{ route('sanPham.create') }}'>
                                         <button type="button" class="btn btn-block btn-default btn-sm">Add</button>
                                     </a>
                                 </div>
@@ -65,34 +65,44 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Shirt Nike</td>
-                                            <td>Best</td>
-                                            <td>100$</td>
-                                            <td>Shirt</td>
-                                            <td>Nike</td>
-                                            <td><span class="tag tag-success">Active</span></td>
-                                            <td style="width: 20px;">
-                                                <a href='/detailproduct'>
-                                                    <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                            class="fas fa-info-circle"></i>
-                                                    </button>
-                                                </a>
-                                            </td>
-                                            <td style=";width: 20px;">
-                                                <a href='/editproduct'>
-                                                    <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                            class="fas fa-edit"></i>
-                                                    </button>
-                                                </a>
-                                            </td>
-                                            <td style="width: 20px;">
-                                                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                        class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                        @foreach ($lstsp as $sp)
+                                            <tr>
+                                                <td>{{ $sp->id }}</td>
+                                                <td>{{ $sp->ten_san_pham }}</td>
+                                                <td>{{ $sp->mo_ta }}</td>
+                                                <td>{{ $sp->gia }}</td>
+                                                <td>{{ $sp->loai_san_pham_id }}</td>
+                                                <td>{{ $sp->thuong_hieu_id }}</td>
+                                                <td><span class="tag tag-success">Active</span></td>
+                                                <td style="width: 20px;">
+                                                    <a href='{{ route('sanPham.show', ['sanPham' => $sp]) }}'>
+                                                        <button type="button"
+                                                            class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                class="fas fa-info-circle"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                                <td style=";width: 20px;">
+                                                    <a href='{{ route('sanPham.edit', ['sanPham' => $sp]) }}'>
+                                                        <button type="button"
+                                                            class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                class="fas fa-edit"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                                <td style="width: 20px;">
+                                                    <form method="post"
+                                                        action="{{ route('sanPham.destroy', ['sanPham' => $sp]) }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -104,4 +114,4 @@
             </div><!-- /.container-fluid -->
         </section>
     </div>
-    @endsection
+@endsection

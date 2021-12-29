@@ -135,7 +135,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/product" class="nav-link">
+                            <a href="{{ route('sanPham.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-tshirt"></i>
                                 <p>
                                     Products

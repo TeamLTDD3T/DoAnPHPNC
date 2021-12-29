@@ -28,41 +28,42 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form>
+                        <form method="post" action="{{ route('chiTietSanPham.store',['sanPham' => $sanPham]) }}">
+                            @csrf
                             <div class="card-body">
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="">ID</label>
                                     <input type="id" class="form-control" id=""
                                         value="2" readonly>
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label for="">ID Product</label>
-                                    <input type="id" class="form-control" id=""
-                                        value="1" readonly>
+                                    <input type="text" class="form-control" name="idproduct"
+                                        value="{{ $sanPham->id }}" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Colors</label>
-                                    <select class="form-control">
-                                        <option>option 1</option>
-                                        <option>option 2</option>
-                                        <option>option 3</option>
-                                        <option>option 4</option>
-                                        <option>option 5</option>
+                                    <select class="form-control" name="mau">
+                                        @foreach ($lstmau as $mau)
+                                            <option value="{{ $mau->id }}">
+                                                {{ $mau->ten_mau }}
+                                            </option>
+                                        @endforeach
                                       </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Sizes</label>
-                                    <select class="form-control">
-                                        <option>option 1</option>
-                                        <option>option 2</option>
-                                        <option>option 3</option>
-                                        <option>option 4</option>
-                                        <option>option 5</option>
+                                    <select class="form-control" name="size">
+                                        @foreach ($lstsize as $size)
+                                            <option value="{{ $size->id }}">
+                                                {{ $size->ten_size }}
+                                            </option>
+                                        @endforeach
                                       </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Quantity</label>
-                                    <input type="number" class="form-control" id="" min="0" value="0">
+                                    <input type="number" class="form-control" name="soluong" min="0" value="0">
                                 </div>
                             </div>
                             <!-- /.card-body -->
