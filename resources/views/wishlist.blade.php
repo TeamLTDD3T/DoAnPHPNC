@@ -53,11 +53,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>1</td>
-                                        </tr>
+                                        @foreach ($lstyeuThich as $yt)
+                                            <tr>
+                                                <td>{{ $yt->id }}</td>
+                                                <td>{{ $yt->tai_khoan_id }}</td>
+                                                <td>{{ $yt->chi_tiet_san_pham_id }}</td>
+                                                <td><span class="tag tag-success">Active</span></td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

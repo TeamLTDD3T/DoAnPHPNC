@@ -27,7 +27,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">Picture Management</h3>
                                 <div style="float: right;margin-left:20px;margin-top: -0.3rem;width: 100px;">
-                                    <a href='/addpicture'>
+                                    <a href='{{ route('hinhAnh.create') }}'>
                                         <button type="button" class="btn btn-block btn-default btn-sm">Add</button>
                                     </a>
                                 </div>
@@ -61,24 +61,34 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>abc.jpg</td>
-                                            <td>1</td>
-                                            <td><span class="tag tag-success">Active</span></td>
-                                            <td style=";width: 20px;">
-                                                <a href='/editpicture'>
-                                                    <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                            class="fas fa-edit"></i>
-                                                    </button>
-                                                </a>
-                                            </td>
-                                            <td style="width: 20px;">
-                                                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                        class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                        @foreach ($lsthinhAnh as $ha)
+                                            <tr>
+                                                <td>{{ $ha->id }}</td>
+                                                <td>{{ $ha->hinh_anh }}</td>
+                                                <td>{{ $ha->chi_tiet_san_pham_id }}</td>
+                                                <td><span class="tag tag-success">Active</span></td>
+                                                
+                                                <td style=";width: 20px;">
+                                                    <a href='{{ route('hinhAnh.edit', ['hinhAnh' => $ha]) }}'>
+                                                        <button type="button"
+                                                            class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                class="fas fa-edit"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                                <td style="width: 20px;">
+                                                    <form method="post"
+                                                        action="{{ route('hinhAnh.destroy', ['hinhAnh' => $ha]) }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

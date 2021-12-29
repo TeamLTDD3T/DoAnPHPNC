@@ -27,7 +27,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">Size Management</h3>
                                 <div style="float: right;margin-left:20px;margin-top: -0.3rem;width: 100px;">
-                                    <a href='/addsize'>
+                                    <a href='{{ route('size.create') }}'>
                                         <button type="button" class="btn btn-block btn-default btn-sm">Add</button>
                                     </a>
                                 </div>
@@ -58,23 +58,33 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>XL</td>
-                                            <td><span class="tag tag-success">Active</span></td>
-                                            <td style="width: 20px;">
-                                                <a href='/editsize'>
-                                                    <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                            class="fas fa-edit"></i>
-                                                    </button>
-                                                </a>
-                                            </td>
-                                            <td style="width: 20px;">
-                                                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                    class="fas fa-trash"></i>
-                                            </button>
-                                            </td>
-                                        </tr>
+                                        @foreach ($lstsize as $size)
+                                            <tr>
+                                                <td>{{ $size->id }}</td>
+                                                <td>{{ $size->ten_size }}</td>
+                                                <td><span class="tag tag-success">Active</span></td>
+                                                
+                                                <td style=";width: 20px;">
+                                                    <a href='{{ route('size.edit', ['size' => $size]) }}'>
+                                                        <button type="button"
+                                                            class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                class="fas fa-edit"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                                <td style="width: 20px;">
+                                                    <form method="post"
+                                                        action="{{ route('size.destroy', ['size' => $size]) }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
