@@ -28,7 +28,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form method="post" action="{{ route('hinhAnh.store') }}">
+                        <form method="post" action="{{ route('hinhAnh.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 {{-- <div class="form-group">
