@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ChiTietSanPham;
 use App\Models\HinhAnh;
 use App\Models\SanPham;
 use Illuminate\Http\Request;
@@ -40,8 +41,8 @@ class HinhAnhController extends Controller
      */
     public function create()
     {
-        $lstsp=SanPham::all();
-        return view('add_picture',['lstsp'=>$lstsp]);
+        $lstctsp=ChiTietSanPham::all();
+        return view('add_picture',['lstctsp'=>$lstctsp]);
     }
 
     /**
@@ -85,8 +86,8 @@ class HinhAnhController extends Controller
      */
     public function edit(HinhAnh $hinhAnh)
     {
-        $lstsp=SanPham::all();
-        return view('edit_picture',['hinhAnh'=>$hinhAnh,'lstsp'=>$lstsp]);
+        $lstctsp=ChiTietSanPham::all();
+        return view('edit_picture',['hinhAnh'=>$hinhAnh,'lstctsp'=>$lstctsp]);
     }
 
     /**
