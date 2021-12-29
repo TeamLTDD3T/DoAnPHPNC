@@ -37,22 +37,16 @@
                                         value="2" readonly>
                                 </div> --}}
                                 <div class="form-group">
-                                    <label for="InputFile">File Picture Input</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" type="file" accept="image/*" name="file">
-                                            <label class="custom-file-label" for="file"></label>
-                                        </div>
-                                        {{-- <div class="input-group-append">
-                                            <span class="input-group-text">Upload</span>
-                                        </div> --}}
+                                    <div class="custom-file">
+                                      <input type="file" class="custom-file-input" id="customFile" name="file" accept="image/*">
+                                      <label class="custom-file-label" for="customFile">Choose file</label>
                                     </div>
-                                </div>
+                                  </div>
                                 <div class="form-group">
                                     <label for="">ID Detail Product</label>
                                     <input type="id" class="form-control" name="ctsanpham"
                                         value="1" readonly>
-                                </div>  
+                                </div>
                             </div>
                             <!-- /.card-body -->
 

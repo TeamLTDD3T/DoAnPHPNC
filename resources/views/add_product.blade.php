@@ -38,7 +38,7 @@
                                 </div> --}}
                                 <div class="form-group">
                                     <label for="">Name</label>
-                                    <input type="text" class="form-control" id="" name="tensp"
+                                    <input type="text" class="form-control" name="tensp"
                                         placeholder="Name Product">
                                 </div>
                                 <div class="form-group">

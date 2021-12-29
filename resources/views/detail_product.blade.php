@@ -72,16 +72,22 @@
                                             <td>{{ $ctsp->so_luong }}</td>
                                             <td><span class="tag tag-success">Active</span></td>
                                             <td style=";width: 20px;">
-                                                <a href='/editdetailproduct'>
+                                                <a href='{{ route('chiTietSanPham.edit', ['chiTietSanPham' => $ctsp]) }}'>
                                                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
                                                             class="fas fa-edit"></i>
                                                     </button>
                                                 </a>
                                             </td>
                                             <td style="width: 20px;">
-                                                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                        class="fas fa-trash"></i>
-                                                </button>
+                                                <form method="post"
+                                                        action="{{ route('chiTietSanPham.destroy', ['chiTietSanPham' => $ctsp,'sanPham'=>$sanPham]) }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
                                             </td>
                                         </tr>
                                         @endforeach

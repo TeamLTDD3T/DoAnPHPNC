@@ -7,8 +7,10 @@ use App\Models\Mau;
 use App\Models\SanPham;
 use App\Models\Size;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
-use SebastianBergmann\Environment\Console;
+
+
 
 class ChiTietSanPhamController extends Controller
 {
@@ -17,9 +19,10 @@ class ChiTietSanPhamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $sanPham =SanPham::where('id','=',$request->get('sanPham'))->first();
+        return view('detail_product',['lstCTSanPham'=>$sanPham->chiTietSanPhams,'sanPham'=>$sanPham]);
     }
 
     /**
@@ -27,11 +30,12 @@ class ChiTietSanPhamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(SanPham $sanPham)
+    public function create(Request $request)
     {
+        // var_dump($sanPham);
         $lstsize=Size::all();
         $lstmau=Mau::all();
-        return view('add_detail_product',['lstsize'=>$lstsize,'lstmau'=>$lstmau,'sanPham'=>$sanPham]);
+        return view('add_detail_product',['lstsize'=>$lstsize,'lstmau'=>$lstmau,'sanPham'=>$request->get('sanPham')]);
     }
 
     /**
@@ -40,8 +44,9 @@ class ChiTietSanPhamController extends Controller
      * @param  \App\Http\Requests\StoreChiTietSanPhamRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,SanPham $sanPham)
+    public function store(Request $request)
     {
+        $sanPham =SanPham::where('id','=',$request->input('idproduct'))->first();
         $chiTietSanPham= new ChiTietSanPham;
         $chiTietSanPham->fill([
             'san_pham_id'=>$request->input('idproduct'),
@@ -50,7 +55,7 @@ class ChiTietSanPhamController extends Controller
             'so_luong'=>$request->input('soluong'),
         ]);
         $chiTietSanPham->save();
-        return Redirect::route('sanPham.show', ['sanPham' => $sanPham]);
+        return view('detail_product',['lstCTSanPham'=>$sanPham->chiTietSanPhams,'sanPham'=>$sanPham]);
     }
 
     /**
@@ -72,7 +77,9 @@ class ChiTietSanPhamController extends Controller
      */
     public function edit(ChiTietSanPham $chiTietSanPham)
     {
-        //
+        $lstsize=Size::all();
+        $lstmau=Mau::all();
+        return view('edit_detail_product',['lstsize'=>$lstsize,'lstmau'=>$lstmau,'chiTietSanPham'=>$chiTietSanPham]);
     }
 
     /**
@@ -84,7 +91,15 @@ class ChiTietSanPhamController extends Controller
      */
     public function update(Request $request, ChiTietSanPham $chiTietSanPham)
     {
-        //
+        $sanPham =SanPham::where('id','=',$request->input('idproduct'))->first();
+        $chiTietSanPham->fill([
+            'san_pham_id'=>$request->input('idproduct'),
+            'mau_id'=>$request->input('mau'),
+            'size_id'=>$request->input('size'),
+            'so_luong'=>$request->input('soluong'),
+        ]);
+        $chiTietSanPham->save();
+        return view('detail_product',['lstCTSanPham'=>$sanPham->chiTietSanPhams,'sanPham'=>$sanPham]);
     }
 
     /**
@@ -93,8 +108,10 @@ class ChiTietSanPhamController extends Controller
      * @param  \App\Models\ChiTietSanPham  $chiTietSanPham
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ChiTietSanPham $chiTietSanPham)
+    public function destroy(Request $request,ChiTietSanPham $chiTietSanPham)
     {
-        //
+        $idsp=$request->get('sanPham');
+        $chiTietSanPham->delete();
+        return Redirect::route('chiTietSanPham.index',['sanPham'=>$idsp]);
     }
 }
