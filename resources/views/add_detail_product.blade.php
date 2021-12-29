@@ -28,7 +28,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form method="post" action="{{ route('chiTietSanPham.store',['sanPham' => $sanPham]) }}">
+                        <form method="post" action="{{ route('chiTietSanPham.store') }}">
                             @csrf
                             <div class="card-body">
                                 {{-- <div class="form-group">
@@ -39,7 +39,7 @@
                                 <div class="form-group">
                                     <label for="">ID Product</label>
                                     <input type="text" class="form-control" name="idproduct"
-                                        value="{{ $sanPham->id }}" readonly>
+                                        value="{{ $sanPham }}" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Colors</label>

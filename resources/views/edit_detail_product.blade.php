@@ -28,41 +28,43 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form>
+                        <form method="post" action="{{ route('chiTietSanPham.update',['chiTietSanPham'=>$chiTietSanPham]) }}">
+                            @csrf
+                            @method('PATCH')
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="">ID</label>
-                                    <input type="id" class="form-control" id=""
-                                        value="1" readonly>
+                                    <input type="id" class="form-control"
+                                        value="{{ $chiTietSanPham->id }}" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="">ID Product</label>
-                                    <input type="id" class="form-control" id=""
-                                        value="1" readonly>
+                                    <input type="id" class="form-control"  name="idproduct"
+                                        value="{{ $chiTietSanPham->san_pham_id }}" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Colors</label>
-                                    <select class="form-control">
-                                        <option>option 1</option>
-                                        <option>option 2</option>
-                                        <option>option 3</option>
-                                        <option>option 4</option>
-                                        <option>option 5</option>
+                                    <select class="form-control" name="mau">
+                                        @foreach ($lstmau as $mau)
+                                            <option value="{{ $mau->id }}" @if($mau->id == $chiTietSanPham->mau_id) selected @endif>
+                                                {{ $mau->ten_mau }}
+                                            </option>
+                                        @endforeach
                                       </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Sizes</label>
-                                    <select class="form-control">
-                                        <option>option 1</option>
-                                        <option>option 2</option>
-                                        <option>option 3</option>
-                                        <option>option 4</option>
-                                        <option>option 5</option>
+                                    <select class="form-control" name="size">
+                                        @foreach ($lstsize as $size)
+                                            <option value="{{ $size->id }}" @if($size->id == $chiTietSanPham->size_id) selected @endif>
+                                                {{ $size->ten_size }}
+                                            </option>
+                                        @endforeach
                                       </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Quantity</label>
-                                    <input type="number" class="form-control" id="" min="0" value="100">
+                                    <input type="number" class="form-control" name="soluong" min="0" value="{{ $chiTietSanPham->so_luong }}">
                                 </div>
                             </div>
                             <!-- /.card-body -->

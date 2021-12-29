@@ -7,6 +7,7 @@ use App\Models\LoaiSanPham;
 use App\Models\ThuongHieu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use SebastianBergmann\Environment\Console;
 
 class SanPhamController extends Controller
 {
@@ -61,6 +62,7 @@ class SanPhamController extends Controller
      */
     public function show(SanPham $sanPham)
     {
+        // var_dump($sanPham);
         return view('detail_product',['lstCTSanPham'=>$sanPham->chiTietSanPhams,'sanPham'=>$sanPham]);
     }
 
