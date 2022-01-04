@@ -16,7 +16,7 @@ class LoaiTaiKhoanController extends Controller
     public function index()
     {
         $lstltk=LoaiTaiKhoan::all();
-        return view('account_type',['lstltk'=>$lstltk]);
+        return view('pages.account_type',['lstltk'=>$lstltk]);
     }
 
     /**
@@ -26,7 +26,7 @@ class LoaiTaiKhoanController extends Controller
      */
     public function create()
     {
-        return view('add_account_type');
+        return view('add.add_account_type');
     }
 
     /**
@@ -64,7 +64,7 @@ class LoaiTaiKhoanController extends Controller
      */
     public function edit(LoaiTaiKhoan $loaiTaiKhoan)
     {
-        return view('edit_account_type',['loaiTaiKhoan'=>$loaiTaiKhoan]);
+        return view('edit.edit_account_type',['loaiTaiKhoan'=>$loaiTaiKhoan]);
     }
 
     /**

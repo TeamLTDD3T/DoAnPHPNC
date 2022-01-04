@@ -6,6 +6,7 @@ use App\Http\Controllers\LoaiTaiKhoanController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\YeuThichController;
 use App\Http\Controllers\HinhAnhController;
+use App\Http\Controllers\AuthController;
 use App\Models\ChiTietSanPham;
 use Illuminate\Support\Facades\Route;
 
@@ -21,16 +22,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('login');
+    return view('pages.login');
 });
 
 Route::get('/home', function () {
-    return view('home');
+    return view('pages.home');
 });
 
-// Route::get('/account', function () {
-//     return view('account');
-// });
+Route::post('login', [AuthController::class, 'Login'])->name('login');
 
 Route::get('/producttype',[LoaiSanPhamController::class,'index']);
 

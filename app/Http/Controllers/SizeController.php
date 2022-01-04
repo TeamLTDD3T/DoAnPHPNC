@@ -16,7 +16,7 @@ class SizeController extends Controller
     public function index()
     {
         $lstsize=Size::all();
-        return view('size',['lstsize'=>$lstsize]);
+        return view('pages.size',['lstsize'=>$lstsize]);
     }
 
     /**
@@ -26,7 +26,7 @@ class SizeController extends Controller
      */
     public function create()
     {
-        return view('add_size');
+        return view('add.add_size');
     }
 
     /**
@@ -64,7 +64,7 @@ class SizeController extends Controller
      */
     public function edit(Size $size)
     {
-        return view('edit_size',['size'=>$size]);
+        return view('edit.edit_size',['size'=>$size]);
     }
 
     /**

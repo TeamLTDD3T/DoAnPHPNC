@@ -16,7 +16,7 @@ class LoaiSanPhamController extends Controller
     public function index()
     {
         $lstloaisp=LoaiSanPham::all();
-        return view('product_type',['lstloaisp'=>$lstloaisp]);
+        return view('pages.product_type',['lstloaisp'=>$lstloaisp]);
     }
 
     /**

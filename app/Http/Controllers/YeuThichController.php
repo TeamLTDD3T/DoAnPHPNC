@@ -16,7 +16,7 @@ class YeuThichController extends Controller
     public function index()
     {
         $lstyeuThich=YeuThich::all();
-        return view('wishlist',['lstyeuThich'=>$lstyeuThich]);
+        return view('pages.wishlist',['lstyeuThich'=>$lstyeuThich]);
     }
 
     /**
