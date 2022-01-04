@@ -35,24 +35,24 @@
                                 <div class="form-group">
                                     <label for="">ID</label>
                                     <input type="id" class="form-control" name="id"
-                                        value="1" readonly>
+                                        value="{{ $hinhAnh->id }}" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="InputFile">File Picture Input</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-" type="file" accept="image/*" name="file">
-                                            <label class="custom-file-label" for="InputFile">Choose file</label>
-                                        </div>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">Upload</span>
-                                        </div>
+                                    <div class="custom-file">
+                                      <input type="file" class="custom-file-input" id="customFile" name="file" accept="image/*" value="{{ $hinhAnh->hinh_anh }}">
+                                      <label class="custom-file-label" for="customFile">Choose file</label>
                                     </div>
-                                </div>
+                                  </div>
                                 <div class="form-group">
                                     <label for="">ID Detail Product</label>
-                                    <input type="id" class="form-control" name="ctsanpham"
-                                        value="1" readonly>
+                                    <select class="form-control" name="ctsanpham">
+                                        @foreach ($lstctsp as $ctsp)
+                                        <option value="{{ $ctsp->id }}" @if($ctsp->id == $hinhAnh->chi_tiet_san_pham_id) selected @endif>
+                                            {{ $ctsp->id }}
+                                        </option>
+                                    @endforeach
+                                      </select>
                                 </div>
                             </div>
                             <!-- /.card-body -->

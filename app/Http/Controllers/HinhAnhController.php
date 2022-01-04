@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ChiTietSanPham;
 use App\Models\HinhAnh;
 use App\Models\SanPham;
 use Illuminate\Http\Request;
