@@ -53,6 +53,13 @@
                                     @endforeach
                                       </select>
                                 </div>
+                                <div class="form-group">
+                                    <label for="">Avatar</label>
+                                    <select class="form-control" name="avatar">
+                                        <option value="0">Not Avatar</option>
+                                        <option value="1">Avatar</option>
+                                    </select>
+                                </div>
                             </div>
                             <!-- /.card-body -->
 

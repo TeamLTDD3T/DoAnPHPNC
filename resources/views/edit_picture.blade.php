@@ -54,6 +54,13 @@
                                     @endforeach
                                       </select>
                                 </div>
+                                <div class="form-group">
+                                    <label for="">Avatar</label>
+                                    <select class="form-control" name="avatar">
+                                        <option value="0" @if($hinhAnh->hinh_dai_dien == 0) selected @endif>Not Avatar</option>
+                                        <option value="1" @if($hinhAnh->hinh_dai_dien == 1) selected @endif>Avatar</option>
+                                    </select>
+                                </div>
                             </div>
                             <!-- /.card-body -->
 

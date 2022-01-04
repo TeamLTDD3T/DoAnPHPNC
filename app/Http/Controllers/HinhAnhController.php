@@ -55,8 +55,9 @@ class HinhAnhController extends Controller
     {
         $hinhAnh= new HinhAnh;
         $hinhAnh->fill([
+            'hinh_dai_dien'=>$request->input('avatar'),
             'hinh_anh'=>'',
-            'chi_tiet_san_pham_id'=>$request->input('ctsanpham'),
+            'chi_tiet_san_pham_id'=>$request->input('ctsanpham'),        
         ]);
         $hinhAnh->save();
         if ($request->hasFile('file')) 
@@ -104,7 +105,7 @@ class HinhAnhController extends Controller
             $hinhAnh->hinh_anh = $request->file('file')->store('image/'.$hinhAnh->id, 'public');
         }
         $hinhAnh->fill([
-            'hinh_anh'=>$request->input('file'),
+            'hinh_dai_dien'=>$request->input('avatar'),
             'chi_tiet_san_pham_id'=>$request->input('ctsanpham'),
         ]);
         $hinhAnh->save();

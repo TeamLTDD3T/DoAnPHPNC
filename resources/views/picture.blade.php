@@ -53,6 +53,7 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
+                                            <th>Avatar</th>
                                             <th>Image</th>
                                             <th>ID Detail Product</th>
                                             <th>Status</th>
@@ -64,7 +65,8 @@
                                         @foreach ($lsthinhAnh as $ha)
                                             <tr>
                                                 <td>{{ $ha->id }}</td>
-                                                <td>{{ $ha->hinh_anh }}</td>
+                                                <td>{{ $ha->hinh_dai_dien }}</td>
+                                                <td><img src="{{ asset("/storage/$ha->hinh_anh") }}" style="width: 100px;"></td>
                                                 <td>{{ $ha->chi_tiet_san_pham_id }}</td>
                                                 <td><span class="tag tag-success">Active</span></td>
                                                 

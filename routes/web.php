@@ -8,6 +8,8 @@ use App\Http\Controllers\YeuThichController;
 use App\Http\Controllers\HinhAnhController;
 use App\Models\ChiTietSanPham;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MyTestMail;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +21,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('send-mail', function () {
+   
+    $details = [
+        'title' => 'Mail from 3TFashion',
+        'body' => 'This is for testing email using smtp'
+    ];
+   
+    Mail::to('0306191166@caothang.edu.vn')->send(new MyTestMail($details));
+   
+    dd("Email is Sent.");
+});
 
 Route::get('/', function () {
     return view('login');

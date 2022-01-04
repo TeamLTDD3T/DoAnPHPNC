@@ -15,6 +15,7 @@ class CreateHinhAnhsTable extends Migration
     {
         Schema::create('hinh_anhs', function (Blueprint $table) {
             $table->id();
+            $table->integer('hinh_dai_dien');
             $table->string('hinh_anh');
             $table->unsignedBigInteger('chi_tiet_san_pham_id');//Khóa ngoại
             $table->timestamps();
