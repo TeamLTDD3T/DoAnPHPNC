@@ -18,7 +18,7 @@ class HinhAnhController extends Controller
         {
             $hinhAnh->hinh_anh = Storage::url($hinhAnh->hinh_anh);
         }
-        else 
+        else
         {
             $hinhAnh->hinh_anh = '/img/default-150x150.png';
         }
@@ -31,7 +31,7 @@ class HinhAnhController extends Controller
     public function index()
     {
         $lsthinhAnh=HinhAnh::all();
-        return view('picture',['lsthinhAnh'=>$lsthinhAnh]);
+        return view('pages.picture',['lsthinhAnh'=>$lsthinhAnh]);
     }
 
     /**
@@ -41,8 +41,8 @@ class HinhAnhController extends Controller
      */
     public function create()
     {
-        $lstctsp=ChiTietSanPham::all();
-        return view('add_picture',['lstctsp'=>$lstctsp]);
+        $lstsp=SanPham::all();
+        return view('add.add_picture',['lstsp'=>$lstsp]);
     }
 
     /**
@@ -60,7 +60,7 @@ class HinhAnhController extends Controller
             'chi_tiet_san_pham_id'=>$request->input('ctsanpham'),        
         ]);
         $hinhAnh->save();
-        if ($request->hasFile('file')) 
+        if ($request->hasFile('file'))
         {
             $hinhAnh->hinh_anh = $request->file('file')->store('image/'.$hinhAnh->id, 'public');
         }
@@ -76,7 +76,7 @@ class HinhAnhController extends Controller
      */
     public function show(HinhAnh $hinhAnh)
     {
-       
+
     }
 
     /**
@@ -87,8 +87,8 @@ class HinhAnhController extends Controller
      */
     public function edit(HinhAnh $hinhAnh)
     {
-        $lstctsp=ChiTietSanPham::all();
-        return view('edit_picture',['hinhAnh'=>$hinhAnh,'lstctsp'=>$lstctsp]);
+        $lstsp=SanPham::all();
+        return view('edit.edit_picture',['hinhAnh'=>$hinhAnh,'lstsp'=>$lstsp]);
     }
 
     /**
@@ -100,7 +100,7 @@ class HinhAnhController extends Controller
      */
     public function update(Request $request, HinhAnh $hinhAnh)
     {
-        if ($request->hasFile('file')) 
+        if ($request->hasFile('file'))
         {
             $hinhAnh->hinh_anh = $request->file('file')->store('image/'.$hinhAnh->id, 'public');
         }
@@ -109,7 +109,7 @@ class HinhAnhController extends Controller
             'chi_tiet_san_pham_id'=>$request->input('ctsanpham'),
         ]);
         $hinhAnh->save();
-        
+
         // $hinhAnh->save();
         return Redirect::route('hinhAnh.index');
     }

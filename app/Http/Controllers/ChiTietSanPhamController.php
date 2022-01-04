@@ -22,7 +22,7 @@ class ChiTietSanPhamController extends Controller
     public function index(Request $request)
     {
         $sanPham =SanPham::where('id','=',$request->get('sanPham'))->first();
-        return view('detail_product',['lstCTSanPham'=>$sanPham->chiTietSanPhams,'sanPham'=>$sanPham]);
+        return view('pages.detail_product',['lstCTSanPham'=>$sanPham->chiTietSanPhams,'sanPham'=>$sanPham]);
     }
 
     /**
@@ -35,7 +35,7 @@ class ChiTietSanPhamController extends Controller
         // var_dump($sanPham);
         $lstsize=Size::all();
         $lstmau=Mau::all();
-        return view('add_detail_product',['lstsize'=>$lstsize,'lstmau'=>$lstmau,'sanPham'=>$request->get('sanPham')]);
+        return view('add.add_detail_product',['lstsize'=>$lstsize,'lstmau'=>$lstmau,'sanPham'=>$request->get('sanPham')]);
     }
 
     /**
@@ -55,7 +55,7 @@ class ChiTietSanPhamController extends Controller
             'so_luong'=>$request->input('soluong'),
         ]);
         $chiTietSanPham->save();
-        return view('detail_product',['lstCTSanPham'=>$sanPham->chiTietSanPhams,'sanPham'=>$sanPham]);
+        return view('pages.detail_product',['lstCTSanPham'=>$sanPham->chiTietSanPhams,'sanPham'=>$sanPham]);
     }
 
     /**
@@ -79,7 +79,7 @@ class ChiTietSanPhamController extends Controller
     {
         $lstsize=Size::all();
         $lstmau=Mau::all();
-        return view('edit_detail_product',['lstsize'=>$lstsize,'lstmau'=>$lstmau,'chiTietSanPham'=>$chiTietSanPham]);
+        return view('edit.edit_detail_product',['lstsize'=>$lstsize,'lstmau'=>$lstmau,'chiTietSanPham'=>$chiTietSanPham]);
     }
 
     /**
@@ -99,7 +99,7 @@ class ChiTietSanPhamController extends Controller
             'so_luong'=>$request->input('soluong'),
         ]);
         $chiTietSanPham->save();
-        return view('detail_product',['lstCTSanPham'=>$sanPham->chiTietSanPhams,'sanPham'=>$sanPham]);
+        return view('pages.detail_product',['lstCTSanPham'=>$sanPham->chiTietSanPhams,'sanPham'=>$sanPham]);
     }
 
     /**

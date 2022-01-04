@@ -6,6 +6,7 @@ use App\Http\Controllers\LoaiTaiKhoanController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\YeuThichController;
 use App\Http\Controllers\HinhAnhController;
+use App\Http\Controllers\AuthController;
 use App\Models\ChiTietSanPham;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
@@ -35,20 +36,23 @@ Route::get('send-mail', function () {
 });
 
 Route::get('/', function () {
-    return view('login');
+    return view('pages.login');
 });
 
-Route::get('/home', function () {
-    return view('home');
-});
+Route::get('login',[AuthController::class,'showLogin'])->name('login')->middleware('CheckUser');
 
-// Route::get('/account', function () {
-//     return view('account');
-// });
+Route::get('logout',[AuthController::class,'logout'])->name('logout');
+
+Route::post('login',[AuthController::class,'authenticate'])->name('login');
+
+Route::get('home', function () {
+    return view('pages.home');
+})->middleware('CheckLogout');
+
 
 Route::get('/producttype',[LoaiSanPhamController::class,'index']);
 
-Route::resource('sanPham', SanPhamController::class);
+Route::resource('sanPham', SanPhamController::class)->middleware('auth');
 
 Route::resource('chiTietSanPham',ChiTietSanPhamController::class);
 

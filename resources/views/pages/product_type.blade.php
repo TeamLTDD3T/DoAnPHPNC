@@ -55,7 +55,6 @@
                                             <th>ID</th>
                                             <th>Name</th>
                                             <th>Status</th>
-                                            <th>Detail</th>
                                             <th>Edit</th>
                                             <th>Delete</th>
                                         </tr>
@@ -66,13 +65,6 @@
                                             <td>{{ $loai ->id }}</td>
                                             <td>{{ $loai ->ten_loai_san_pham }}</td>
                                             <td><span class="tag tag-success">Active</span></td>
-                                            <td style="width: 20px;">
-                                                <a href='/detailproduct'>
-                                                    <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                            class="fas fa-info-circle"></i>
-                                                    </button>
-                                                </a>
-                                            </td>
                                             <td style=";width: 20px;">
                                                 <a href='/editproduct'>
                                                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i

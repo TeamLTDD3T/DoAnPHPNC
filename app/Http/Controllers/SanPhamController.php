@@ -19,7 +19,7 @@ class SanPhamController extends Controller
     public function index()
     {
         $lstsp=SanPham::all();
-        return view('product',['lstsp'=>$lstsp]);
+        return view('pages.product',['lstsp'=>$lstsp]);
     }
 
     /**
@@ -31,7 +31,7 @@ class SanPhamController extends Controller
     {
         $lstloai=LoaiSanPham::all();
         $lstthuonghieu=ThuongHieu::all();
-        return view('add_product',['lstloai'=>$lstloai,'lstthuonghieu'=>$lstthuonghieu]);
+        return view('add.add_product',['lstloai'=>$lstloai,'lstthuonghieu'=>$lstthuonghieu]);
     }
 
     /**
@@ -63,7 +63,7 @@ class SanPhamController extends Controller
     public function show(SanPham $sanPham)
     {
         // var_dump($sanPham);
-        return view('detail_product',['lstCTSanPham'=>$sanPham->chiTietSanPhams,'sanPham'=>$sanPham]);
+        return view('pages.detail_product',['lstCTSanPham'=>$sanPham->chiTietSanPhams,'sanPham'=>$sanPham]);
     }
 
     /**
@@ -76,7 +76,7 @@ class SanPhamController extends Controller
     {
         $lstloai=LoaiSanPham::all();
         $lstthuonghieu=ThuongHieu::all();
-        return view('edit_product',['sanPham'=>$sanPham,'lstloai'=>$lstloai,'lstthuonghieu'=>$lstthuonghieu]);
+        return view('edit.edit_product',['sanPham'=>$sanPham,'lstloai'=>$lstloai,'lstthuonghieu'=>$lstthuonghieu]);
     }
 
     /**
