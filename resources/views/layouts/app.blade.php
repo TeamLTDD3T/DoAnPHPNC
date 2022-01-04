@@ -78,7 +78,11 @@
                             alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Minh Tri</a>
+                        <a href="#" class="d-block">
+                            @auth
+                                {{ Auth::user()->email }}
+                            @endauth
+                        </a>
                     </div>
                 </div>
                 <!-- Sidebar Menu -->
@@ -175,7 +179,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/" class="nav-link">
+                            <a href="{{ route('logout') }}" class="nav-link">
                                 <i class="nav-icon fas fa-sign-out-alt"></i>
                                 <p>
                                     Logout
@@ -259,8 +263,8 @@
     <!-- bs-custom-file-input -->
     <script src="{{ asset('assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
     <script>
-        $(function () {
-          bsCustomFileInput.init();
+        $(function() {
+            bsCustomFileInput.init();
         });
     </script>
 </body>

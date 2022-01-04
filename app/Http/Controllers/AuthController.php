@@ -2,78 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TaiKhoan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-
-    public function Login(Request $request)
+    //
+    public function showLogin(){
+        return view('pages.login');
+    }
+    public function authenticate(Request $request)
     {
-        $request->validate([
-            'email' => 'required',
-            'password' => 'required',
-        ]);
+        if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')]))
+        {
+            // $request->session()->regenerate();
 
-        $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            return redirect()->intended('/home')
-                        ->withSuccess('Signed in');
+            return redirect()->intended('home');
         }
 
-        return redirect("/")->withSuccess('Login details are not valid');
-    }
-
-
-
-    public function registration()
-    {
-        return view('auth.registration');
-    }
-
-
-    public function customRegistration(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
         ]);
-
-        $data = $request->all();
-        $check = $this->create($data);
-
-        return redirect("dashboard")->withSuccess('You have signed-in');
     }
 
-
-    public function create(array $data)
-    {
-      return User::create([
-        'name' => $data['name'],
-        'email' => $data['email'],
-        'password' => Hash::make($data['password'])
-      ]);
-    }
-
-
-    public function dashboard()
-    {
-        if(Auth::check()){
-            return view('dashboard');
-        }
-
-        return redirect("login")->withSuccess('You are not allowed to access');
-    }
-
-
-    public function signOut() {
-        Session::flush();
+    public function logout(){
         Auth::logout();
-
-        return Redirect('login');
+        return redirect('login');
     }
 }
