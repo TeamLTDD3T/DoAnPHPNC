@@ -25,6 +25,10 @@ Route::get('/', function () {
     return view('pages.login');
 });
 
+Route::get('forgotpassword', function () {
+    return view('pages.forgotpassword');
+});
+
 Route::get('login',[AuthController::class,'showLogin'])->name('login')->middleware('CheckUser');
 
 Route::get('logout',[AuthController::class,'logout'])->name('logout');
