@@ -7,15 +7,20 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class APITaiKhoanController extends Controller
 {
     # Lấy ds  sản phẩm 
     function dangNhap(Request $request)
     {
-        $taiKhoan = TaiKhoan::where('email', $request['email'])->Where('matkhau', $request['matKhau'])->first();
-        if (!empty($taiKhoan))
+        $taiKhoan = []; 
+        if(Auth::attempt(['email' => $request['email'], 'password' => $request['matKhau']]))
+        {
+            $taiKhoan = TaiKhoan::where('email', $request['email'])->first();
             return response()->json($taiKhoan, 200);
+        }
+            
         //nguoc lai du lieu rong~ thi tra ve status 404
         return response()->json($taiKhoan, 404);
     }
@@ -27,7 +32,7 @@ class APITaiKhoanController extends Controller
             $taiKhoan = TaiKhoan::insert([
                 'email' => $request['email'],
                 'hoten' => $request['hoTen'],
-                'password' => $request['matKhau'],
+                'password' => bcrypt($request['matKhau']),
                 'ngaysinh' => Carbon::now('Asia/Ho_Chi_Minh'),
                 'diachi' => '',
                 'sdt' => '',
@@ -38,5 +43,5 @@ class APITaiKhoanController extends Controller
             }
         }
         return response()->json('', 404);
-    }
+    } 
 }

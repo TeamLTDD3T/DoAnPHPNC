@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\APISanPhamController;
+use App\Http\Controllers\APILoaiSanPhamController;
 use App\Http\Controllers\APITaiKhoanController;
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,7 @@ Route::get('san-pham/danh-sach-new', [APISanPhamController::class, 'layDanhSachS
 Route::post('tai-khoan/dang-nhap',[APITaiKhoanController::class, 'dangNhap']);
 
 Route::post('tai-khoan/dang-ky',[APITaiKhoanController::class, 'dangKy']);
+
+Route::get('san-pham/danh-sach-theo-loai/{loaiSanPham}', [APISanPhamController::class, 'layDanhSachTheoLoai']);
+
+Route::get('loai-san-pham/danh-sach-loai-sp', [APILoaiSanPhamController::class, 'layDanhSachLoaiSP']);

@@ -52,7 +52,9 @@ Route::get('home', function () {
 
 Route::get('/producttype',[LoaiSanPhamController::class,'index']);
 
-Route::resource('sanPham', SanPhamController::class)->middleware('auth');
+Route::resource('sanPham', SanPhamController::class);
+
+Route::resource('loaiSanPham', LoaiSanPhamController::class);
 
 Route::resource('chiTietSanPham',ChiTietSanPhamController::class);
 

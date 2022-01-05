@@ -7,12 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Models\LoaiSanPham;
 use Illuminate\Support\Facades\DB;
 
-class APISanPhamController extends Controller
+class APILoaiSanPhamController extends Controller
 {
     # Lấy ds loại sản phẩm 
-    function layDanhSach()
+    function layDanhSachLoaiSP()
     {
-        $danhSach = LoaiSanPham::
-        return response()->json($danhSach,200);
+        $danhsach = LoaiSanPham::all();
+        if(!empty($danhsach))
+            return response($danhsach,200);
+        return response($danhsach,404);
     }
 }
