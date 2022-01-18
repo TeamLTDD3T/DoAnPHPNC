@@ -1,8 +1,13 @@
 <?php
 use App\Http\Controllers\SanPhamController;
+use App\Http\Controllers\MauController;
+use App\Http\Controllers\ThuongHieuController;
+use App\Http\Controllers\DanhGiaController;
+use App\Http\Controllers\DonHangController;
 use App\Http\Controllers\ChiTietSanPhamController;
 use App\Http\Controllers\LoaiSanPhamController;
 use App\Models\ChiTietSanPham;
+use App\Models\ThuongHieu;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,42 +38,15 @@ Route::get('/producttype',[LoaiSanPhamController::class,'index']);
 Route::resource('sanPham', SanPhamController::class);
 
 Route::resource('chiTietSanPham',ChiTietSanPhamController::class);
-// Route::get('/adddetailproduct', function () {
-//     return view('add_detail_product');
-// });
-// Route::get('/editdetailproduct', function () {
-//     return view('edit_detail_product');
-// });
+
+Route::resource('mau', MauController::class);
+
+Route::resource('thuongHieu',ThuongHieuController::class);
+
+Route::resource('danhGia',DanhGiaController::class);
+
+Route::resource('donHang',DonHangController::class);
 
 
 
-// Route::get('/accounttype', function () {
-//     return view('account_type');
-// });
-// Route::get('/addaccounttype', function () {
-//     return view('add_account_type');
-// });
-// Route::get('/editaccounttype', function () {
-//     return view('edit_account_type');
-// });
-// Route::get('/size', function () {
-//     return view('size');
-// });
-// Route::get('/addsize', function () {
-//     return view('add_size');
-// });
-// Route::get('/editsize', function () {
-//     return view('edit_size');
-// });
-// Route::get('/wishlist', function () {
-//     return view('wishlist');
-// });
-// Route::get('/picture', function () {
-//     return view('picture');
-// });
-// Route::get('/addpicture', function () {
-//     return view('add_picture');
-// });
-// Route::get('/editpicture', function () {
-//     return view('edit_picture');
-// });
+

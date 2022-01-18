@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mau;
-use App\Http\Requests\StoreMauRequest;
-use App\Http\Requests\UpdateMauRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class MauController extends Controller
 {
@@ -15,7 +15,8 @@ class MauController extends Controller
      */
     public function index()
     {
-        //
+        $lstm = Mau::all();
+        return view('color', ['lstm' => $lstm]);
     }
 
     /**
@@ -25,7 +26,7 @@ class MauController extends Controller
      */
     public function create()
     {
-        //
+        return view('add_color');
     }
 
     /**
@@ -34,9 +35,14 @@ class MauController extends Controller
      * @param  \App\Http\Requests\StoreMauRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreMauRequest $request)
+    public function store(Request $request)
     {
-        //
+        $mau= new Mau;
+        $mau->fill([
+            'ten_mau'=>$request->input('tenmau'),
+        ]);
+        $mau->save();
+        return Redirect::route('mau.index');
     }
 
     /**
@@ -58,7 +64,7 @@ class MauController extends Controller
      */
     public function edit(Mau $mau)
     {
-        //
+        return view('edit_color',['mau'=>$mau]);
     }
 
     /**
@@ -68,9 +74,13 @@ class MauController extends Controller
      * @param  \App\Models\Mau  $mau
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateMauRequest $request, Mau $mau)
+    public function update(Request $request, Mau $mau)
     {
-        //
+        $mau->fill([
+            'ten_mau'=>$request->input('tenmau'),
+        ]);
+        $mau->save();
+        return Redirect::route('mau.index');
     }
 
     /**
@@ -81,6 +91,7 @@ class MauController extends Controller
      */
     public function destroy(Mau $mau)
     {
-        //
+        $mau->delete();
+        return Redirect::route('mau.index');
     }
 }

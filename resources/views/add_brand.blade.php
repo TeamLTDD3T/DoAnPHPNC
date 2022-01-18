@@ -10,7 +10,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('thuongHieu.index') }}">Brand</a></li>
                             <li class="breadcrumb-item active">Add Brand</li>
                         </ol>
                     </div>
@@ -28,16 +28,12 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form>
+                        <form method="post" action="{{ route('thuongHieu.store') }}">
+                            @csrf
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="">ID</label>
-                                    <input type="id" class="form-control" id=""
-                                        value="1" readonly>
-                                </div>
-                                <div class="form-group">
                                     <label for="">Name</label>
-                                    <input type="text" class="form-control" id=""
+                                    <input type="text" class="form-control" name="tenthuonghieu"
                                         placeholder="Name Brand">
                                 </div>
                             </div>

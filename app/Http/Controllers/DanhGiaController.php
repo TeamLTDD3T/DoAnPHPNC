@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\DanhGia;
-use App\Http\Requests\StoreDanhGiaRequest;
-use App\Http\Requests\UpdateDanhGiaRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use App\Models\TaiKhoan;
 
 class DanhGiaController extends Controller
 {
@@ -15,7 +16,13 @@ class DanhGiaController extends Controller
      */
     public function index()
     {
-        //
+        $lstdg = DanhGia::join('tai_khoans','tai_khoans.id','=','danh_gias.tai_khoan_id')
+                           ->join('chi_tiet_san_phams','chi_tiet_san_phams.id','=','danh_gias.chi_tiet_san_pham_id')
+                           ->join('san_phams','san_phams.id','=','chi_tiet_san_phams.san_pham_id')
+                           ->join('maus','maus.id','=','chi_tiet_san_phams.mau_id')
+                           ->join('sizes','sizes.id','=','chi_tiet_san_phams.size_id')
+                           ->select('san_phams.ten_san_pham','maus.ten_mau','sizes.ten_size','tai_khoans.email','danh_gias.*')->get();
+        return view('review',['lstdg'=>$lstdg]);
     }
 
     /**
@@ -34,7 +41,7 @@ class DanhGiaController extends Controller
      * @param  \App\Http\Requests\StoreDanhGiaRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDanhGiaRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -68,7 +75,7 @@ class DanhGiaController extends Controller
      * @param  \App\Models\DanhGia  $danhGia
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDanhGiaRequest $request, DanhGia $danhGia)
+    public function update(Request $request, DanhGia $danhGia)
     {
         //
     }
@@ -81,6 +88,7 @@ class DanhGiaController extends Controller
      */
     public function destroy(DanhGia $danhGia)
     {
-        //
+        $danhGia->delete();
+        return Redirect::route('danhGia.index');
     }
 }

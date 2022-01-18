@@ -10,7 +10,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="home">Home</a></li>
                             <li class="breadcrumb-item active">Color</li>
                         </ol>
                     </div><!-- /.col -->
@@ -27,7 +27,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">Color Management</h3>
                                 <div style="float: right;margin-left:20px;margin-top: -0.3rem;width: 100px;">
-                                    <a href='/addcolor'>
+                                    <a href='{{ route('mau.create') }}'>
                                         <button type="button" class="btn btn-block btn-default btn-sm">Add</button>
                                     </a>
                                 </div>
@@ -55,28 +55,41 @@
                                             <th>ID</th>
                                             <th>Name</th>
                                             <th>Status</th>
+                                            <th>Created At</th>
+                                            <th>Updated At</th>
                                             <th>Edit</th>
                                             <th>Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Red</td>
-                                            <td><span class="tag tag-success">Active</span></td>
-                                            <td style="width: 20px;">
-                                                <a href='/editcolor'>
-                                                    <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                            class="fas fa-edit"></i>
-                                                    </button>
-                                                </a>
-                                            </td>
-                                            <td style="width: 20px;">
-                                                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                        class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                        @foreach ($lstm as $m)
+                                            <tr>
+                                                <td>{{ $m->id }}</td>
+                                                <td>{{ $m->ten_mau}}</td>
+                                                <td><span class="tag tag-success">Active</span></td>
+                                                <td>{{ $m->created_at }}</td>
+                                                <td>{{ $m->updated_at }}</td>
+                                                <td style=";width: 20px;">
+                                                    <a href='{{ route('mau.edit',['mau' => $m]) }}'>
+                                                        <button type="button"
+                                                            class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                class="fas fa-edit"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                                <td style="width: 20px;">
+                                                    <form method="post"
+                                                        action="{{ route('mau.destroy', ['mau' => $m]) }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

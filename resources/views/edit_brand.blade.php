@@ -10,7 +10,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('thuongHieu.index') }}">Brand</a></li>
                             <li class="breadcrumb-item active">Edit Brand</li>
                         </ol>
                     </div>
@@ -28,17 +28,19 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form>
+                        <form method="post" action="{{ route('thuongHieu.update',['thuongHieu'=>$thuongHieu]) }}">
+                            @csrf
+                            @method('PATCH')
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="">ID</label>
-                                    <input type="id" class="form-control" id=""
-                                        value="1" readonly>
+                                    <input type="id" class="form-control" name="id"
+                                        value="{{ $thuongHieu->id }}" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Name</label>
-                                    <input type="text" class="form-control" id=""
-                                        placeholder="Name Brand" value="Nike">
+                                    <input type="text" class="form-control" name="tenthuonghieu"
+                                        placeholder="Name Brand" value="{{ $thuongHieu->ten_thuong_hieu }}">
                                 </div>
                             </div>
                             <!-- /.card-body -->

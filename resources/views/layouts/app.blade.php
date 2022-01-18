@@ -103,7 +103,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/brand" class="nav-link">
+                            <a href="{{ route('thuongHieu.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-bold"></i>
                                 <p>
                                     Brands
@@ -111,7 +111,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/color" class="nav-link">
+                            <a href="{{ route('mau.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-palette"></i>
                                 <p>
                                     Colors
@@ -119,7 +119,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/order" class="nav-link">
+                            <a href="{{ route('donHang.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-clipboard-list"></i>
                                 <p>
                                     Orders
@@ -151,7 +151,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/review" class="nav-link">
+                            <a href="{{ route('danhGia.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-comment-alt"></i>
                                 <p>
                                     Reviews

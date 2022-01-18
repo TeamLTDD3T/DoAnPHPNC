@@ -10,7 +10,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('donHang.index') }}">Order</a></li>
                             <li class="breadcrumb-item active">Detail Order</li>
                         </ol>
                     </div><!-- /.col -->
@@ -54,20 +54,20 @@
                                             <th>Size</th>
                                             <th>Quantity</th>
                                             <th>Price</th>
-                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($lstctdh as $ctdh)
                                         <tr>
-                                            <td>1</td>
-                                            <td>1</td>
-                                            <td>Shirt Nike</td>
-                                            <td>Red</td>
-                                            <td>S</td>
-                                            <td>2</td>
-                                            <td>100$</td>
-                                            <td><span class="tag tag-success">Confirmed</span></td>
+                                            <td>{{ $ctdh->id }}</td>
+                                            <td>{{ $ctdh->don_hang_id }}</td>
+                                            <td>{{ $ctdh->ten_san_pham }}</td>
+                                            <td>{{ $ctdh->ten_mau }}</td>
+                                            <td>{{ $ctdh->ten_size }}</td>
+                                            <td>{{ $ctdh->so_luong }}</td>
+                                            <td>{{ $ctdh->gia }}</td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

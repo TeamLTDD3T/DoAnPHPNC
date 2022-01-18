@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\DonHang;
-use App\Http\Requests\StoreDonHangRequest;
-use App\Http\Requests\UpdateDonHangRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use App\Models\ChiTietDonHang;
 
 class DonHangController extends Controller
 {
@@ -15,7 +16,10 @@ class DonHangController extends Controller
      */
     public function index()
     {
-        //
+        $lstdh = DonHang::join('tai_khoans as khach', 'khach.id', '=', 'don_hangs.tai_khoan_id')
+                        ->join('tai_khoans as nv', 'nv.id', '=', 'don_hangs.tai_khoan_nhan_vien_id')
+            ->select('khach.email as khachemail','nv.email as nvemail', 'don_hangs.*')->get();
+        return view('order', ['lstdh' => $lstdh]);
     }
 
     /**
@@ -34,7 +38,7 @@ class DonHangController extends Controller
      * @param  \App\Http\Requests\StoreDonHangRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDonHangRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -47,7 +51,13 @@ class DonHangController extends Controller
      */
     public function show(DonHang $donHang)
     {
-        //
+        $lstctdh = ChiTietDonHang::join('chi_tiet_san_phams', 'chi_tiet_san_phams.id', '=', 'chi_tiet_don_hangs.chi_tiet_san_pham_id')
+                                 ->join('san_phams', 'san_phams.id', '=', 'chi_tiet_san_phams.san_pham_id')
+                                 ->join('maus', 'maus.id', '=', 'chi_tiet_san_phams.mau_id')
+                                 ->join('sizes', 'sizes.id', '=', 'chi_tiet_san_phams.size_id')
+                                 ->select('san_phams.ten_san_pham','maus.ten_mau','sizes.ten_size','chi_tiet_don_hangs.*')
+                                 ->where('don_hang_id', '=', $donHang->id)->get();
+        return view('detail_order', ['lstctdh' => $lstctdh]);
     }
 
     /**
@@ -58,7 +68,7 @@ class DonHangController extends Controller
      */
     public function edit(DonHang $donHang)
     {
-        //
+        return view('edit_order',['dh'=>$donHang]);
     }
 
     /**
@@ -68,9 +78,13 @@ class DonHangController extends Controller
      * @param  \App\Models\DonHang  $donHang
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDonHangRequest $request, DonHang $donHang)
+    public function update(Request $request, DonHang $donHang)
     {
-        //
+        $donHang->fill([
+            'trang_thai'=>$request->input('trangthai'),
+        ]);
+        $donHang->save();
+        return Redirect::route('donHang.index');
     }
 
     /**

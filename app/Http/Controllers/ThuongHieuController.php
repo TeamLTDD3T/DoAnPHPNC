@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ThuongHieu;
-use App\Http\Requests\StoreThuongHieuRequest;
-use App\Http\Requests\UpdateThuongHieuRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class ThuongHieuController extends Controller
 {
@@ -15,7 +15,8 @@ class ThuongHieuController extends Controller
      */
     public function index()
     {
-        //
+        $lstth=ThuongHieu::all();
+        return view('brand',['lstth'=>$lstth]);
     }
 
     /**
@@ -25,7 +26,7 @@ class ThuongHieuController extends Controller
      */
     public function create()
     {
-        //
+        return view('add_brand');
     }
 
     /**
@@ -34,9 +35,14 @@ class ThuongHieuController extends Controller
      * @param  \App\Http\Requests\StoreThuongHieuRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreThuongHieuRequest $request)
+    public function store(Request $request)
     {
-        //
+        $thuongHieu= new ThuongHieu;
+        $thuongHieu->fill([
+            'ten_thuong_hieu'=>$request->input('tenthuonghieu'),
+        ]);
+        $thuongHieu->save();
+        return Redirect::route('thuongHieu.index');
     }
 
     /**
@@ -58,7 +64,7 @@ class ThuongHieuController extends Controller
      */
     public function edit(ThuongHieu $thuongHieu)
     {
-        //
+        return view('edit_brand',['thuongHieu'=>$thuongHieu]);
     }
 
     /**
@@ -68,9 +74,13 @@ class ThuongHieuController extends Controller
      * @param  \App\Models\ThuongHieu  $thuongHieu
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateThuongHieuRequest $request, ThuongHieu $thuongHieu)
+    public function update(Request $request, ThuongHieu $thuongHieu)
     {
-        //
+        $thuongHieu->fill([
+            'ten_thuong_hieu'=>$request->input('tenthuonghieu'),
+        ]);
+        $thuongHieu->save();
+        return Redirect::route('thuongHieu.index');
     }
 
     /**
@@ -81,6 +91,7 @@ class ThuongHieuController extends Controller
      */
     public function destroy(ThuongHieu $thuongHieu)
     {
-        //
+        $thuongHieu->delete();
+        return Redirect::route('thuongHieu.index');
     }
 }

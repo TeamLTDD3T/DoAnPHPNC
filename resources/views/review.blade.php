@@ -10,7 +10,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="home">Home</a></li>
                             <li class="breadcrumb-item active">Review</li>
                         </ol>
                     </div><!-- /.col -->
@@ -50,26 +50,42 @@
                                             <th>ID</th>
                                             <th>Content</th>
                                             <th>Star</th>
-                                            <th>Username</th>
-                                            <th>Product</th>
+                                            <th>Email</th>
+                                            <th>Product Name</th>
+                                            <th>Color</th>
+                                            <th>Size</th>
                                             <th>Status</th>
+                                            <th>Created At</th>
+                                            <th>Updated At</th>
                                             <th>Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Product is very good</td>
-                                            <td>5</td>
-                                            <td>Justin Test</td>
-                                            <td>Shirt Nike</td>
-                                            <td><span class="tag tag-success">Active</span></td>
-                                            <td style="width: 20px;">
-                                                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                        class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                        @foreach ($lstdg as $dg)
+                                            <tr>
+                                                <td>{{ $dg->id }}</td>
+                                                <td>{{ $dg->noi_dung}}</td>
+                                                <td>{{ $dg->so_sao}}</td>
+                                                <td>{{ $dg->email }}</td>
+                                                <td>{{ $dg->ten_san_pham }}</td>
+                                                <td>{{ $dg->ten_mau }}</td>
+                                                <td>{{ $dg->ten_size }}</td>
+                                                <td><span class="tag tag-success">Active</span></td>
+                                                <td>{{ $dg->created_at }}</td>
+                                                <td>{{ $dg->updated_at }}</td>
+                                                <td style="width: 20px;">
+                                                    <form method="post"
+                                                        action="{{ route('danhGia.destroy', ['danhGium' => $dg]) }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
