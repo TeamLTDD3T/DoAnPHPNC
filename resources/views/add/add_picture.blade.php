@@ -10,7 +10,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('hinhAnh.index') }}">Picture</a></li>
                             <li class="breadcrumb-item active">Add Detail Product</li>
                         </ol>
                     </div>
@@ -31,11 +31,6 @@
                         <form method="post" action="{{ route('hinhAnh.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
-                                {{-- <div class="form-group">
-                                    <label for="">ID</label>
-                                    <input type="id" class="form-control" id=""
-                                        value="2" readonly>
-                                </div> --}}
                                 <div class="form-group">
                                     <label for="InputFile">File Picture Input</label>
                                     <div class="custom-file">

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin 3TFashion | Log in</title>
+    <title>Admin 3TFashion | Recover Password</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -20,26 +20,21 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="/home"><b>Admin</b>3TFashion</a>
+            <a href="/home"><b>Recover Password </b></a>
         </div>
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
+                <p class="login-box-msg">Recover Password</p>
 
-                <form action="{{ route('login') }}" method="post">
+                <form action="{{ route('recover-password') }}" method="post">
                     @csrf
-                    @if ($errors->has('email'))
-                        <span class="text-danger">{{ $errors->first('email') }}</span>
-                    @endif
-                    <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email" name='email' required>
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
-                            </div>
-                        </div>
+                    @if(session()->has('fail'))
+                    <div class="alert alert-danger">
+                    {{ session()->get('fail') }}
                     </div>
+                    @endif
+                    <input type="hidden"  name="token" value="{{ request('token') }}">
                     <div class="input-group mb-3">
                         <input type="password" class="form-control" placeholder="Password" name='password' required>
                         <div class="input-group-append">
@@ -49,16 +44,31 @@
                         </div>
                     </div>
 
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Confirm Password" name='confirmpassword' required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="social-auth-links text-center mb-3">
-                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
                     </div>
                 </form>
+                @if (count($errors) > 0)
+                    <div class="error-message">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
 
 
                 <!-- /.social-auth-links -->
-                <p class="mb-1">
-                    <a href="forgotpassword">I forgot my password</a>
-                </p>
             </div>
             <!-- /.login-card-body -->
         </div>

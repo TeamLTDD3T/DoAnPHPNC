@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\TaiKhoan;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use App\Mail\MyMail;
+use Illuminate\Support\Facades\Mail;
 
 class APITaiKhoanController extends Controller
 {
@@ -36,7 +38,10 @@ class APITaiKhoanController extends Controller
                 'ngaysinh' => Carbon::now('Asia/Ho_Chi_Minh'),
                 'diachi' => '',
                 'sdt' => '',
-                'loai_tai_khoan_id' => 2
+                'loai_tai_khoan_id' => 2,
+                'token'=>Str::random(60),
+                'created_at'=>Carbon::now('Asia/Ho_Chi_Minh'),
+                'updated_at'=>null,
             ]);
             if ($taiKhoan != null) {
                 return response()->json($taiKhoan, 200);
@@ -44,4 +49,35 @@ class APITaiKhoanController extends Controller
         }
         return response()->json('', 404);
     } 
+
+    function layLaiMatKhau(Request $request)
+    {
+        $kiemtra = TaiKhoan::where('email',$request->input('email'))->first();
+        if(!empty($kiemtra))
+        {
+            $details = [
+                'title' => 'Password Recovery Mail from 3TFashion',
+                'body' => 'Click link to recover password: http://127.0.0.1:8001/recover?token='.$kiemtra->token,
+            ];
+            Mail::to($request->input('email'))->send(new MyMail($details));
+            return response()->json($kiemtra, 200);
+        }      
+        return response()->json($kiemtra, 404);
+    }
+
+    function layIDTaiKhoan(Request $request){
+        $taiKhoan = TaiKhoan::where('email',$request['email'])->first();
+        if ($taiKhoan != null) {
+            return response()->json($taiKhoan, 200);
+        }
+        return response()->json('',404);
+    }
+
+    function layThongTinTaiKhoan(Request $request){
+        $taiKhoan = TaiKhoan::where('id',$request['id'])->first();
+        if ($taiKhoan != null) {
+            return response()->json($taiKhoan, 200);
+        }
+        return response()->json('',404);
+    }
 }

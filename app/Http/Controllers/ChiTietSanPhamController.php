@@ -21,8 +21,14 @@ class ChiTietSanPhamController extends Controller
      */
     public function index(Request $request)
     {
+        $lstct = ChiTietSanPham::join('san_phams','san_phams.id','=','chi_tiet_san_phams.san_pham_id')
+        ->join('maus','maus.id','=','chi_tiet_san_phams.mau_id')
+        ->join('sizes','sizes.id','=','chi_tiet_san_phams.size_id')
+        ->where('san_phams.id','=',$request->get('sanPham'))
+        ->select('chi_tiet_san_phams.id','chi_tiet_san_phams.san_pham_id','maus.ten_mau','sizes.ten_size','chi_tiet_san_phams.so_luong','chi_tiet_san_phams.created_at','chi_tiet_san_phams.updated_at')
+        ->get();
         $sanPham =SanPham::where('id','=',$request->get('sanPham'))->first();
-        return view('pages.detail_product',['lstCTSanPham'=>$sanPham->chiTietSanPhams,'sanPham'=>$sanPham]);
+        return view('pages.detail_product',['lstCTSanPham'=>$lstct,'sanPham'=>$sanPham]);
     }
 
     /**
@@ -55,7 +61,13 @@ class ChiTietSanPhamController extends Controller
             'so_luong'=>$request->input('soluong'),
         ]);
         $chiTietSanPham->save();
-        return view('pages.detail_product',['lstCTSanPham'=>$sanPham->chiTietSanPhams,'sanPham'=>$sanPham]);
+        $lstct = ChiTietSanPham::join('san_phams','san_phams.id','=','chi_tiet_san_phams.san_pham_id')
+        ->join('maus','maus.id','=','chi_tiet_san_phams.mau_id')
+        ->join('sizes','sizes.id','=','chi_tiet_san_phams.size_id')
+        ->where('san_phams.id','=',$request->input('idproduct'))
+        ->select('chi_tiet_san_phams.id','chi_tiet_san_phams.san_pham_id','maus.ten_mau','sizes.ten_size','chi_tiet_san_phams.so_luong','chi_tiet_san_phams.created_at','chi_tiet_san_phams.updated_at')
+        ->get();
+        return view('pages.detail_product',['lstCTSanPham'=>$lstct,'sanPham'=>$sanPham]);
     }
 
     /**
@@ -99,7 +111,13 @@ class ChiTietSanPhamController extends Controller
             'so_luong'=>$request->input('soluong'),
         ]);
         $chiTietSanPham->save();
-        return view('pages.detail_product',['lstCTSanPham'=>$sanPham->chiTietSanPhams,'sanPham'=>$sanPham]);
+        $lstct = ChiTietSanPham::join('san_phams','san_phams.id','=','chi_tiet_san_phams.san_pham_id')
+        ->join('maus','maus.id','=','chi_tiet_san_phams.mau_id')
+        ->join('sizes','sizes.id','=','chi_tiet_san_phams.size_id')
+        ->where('san_phams.id','=',$request->input('idproduct'))
+        ->select('chi_tiet_san_phams.id','chi_tiet_san_phams.san_pham_id','maus.ten_mau','sizes.ten_size','chi_tiet_san_phams.so_luong','chi_tiet_san_phams.created_at','chi_tiet_san_phams.updated_at')
+        ->get();
+        return view('pages.detail_product',['lstCTSanPham'=>$lstct,'sanPham'=>$sanPham]);
     }
 
     /**

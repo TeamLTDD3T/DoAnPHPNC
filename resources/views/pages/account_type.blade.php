@@ -10,7 +10,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="home">Home</a></li>
                             <li class="breadcrumb-item active">Account Type</li>
                         </ol>
                     </div><!-- /.col -->
@@ -55,6 +55,8 @@
                                             <th>ID</th>
                                             <th>Name</th>
                                             <th>Status</th>
+                                            <th>Created At</th>
+                                            <th>Updated At</th>
                                             <th>Edit</th>
                                             <th>Delete</th>
                                         </tr>
@@ -65,7 +67,8 @@
                                                 <td>{{ $ltk->id }}</td>
                                                 <td>{{ $ltk->ten_loai_tai_khoan }}</td>
                                                 <td><span class="tag tag-success">Active</span></td>
-                                                
+                                                <td>{{ $ltk->created_at }}</td>
+                                                <td>{{ $ltk->updated_at }}</td>
                                                 <td style=";width: 20px;">
                                                     <a href='{{ route('loaiTaiKhoan.edit', ['loaiTaiKhoan' => $ltk]) }}'>
                                                         <button type="button"

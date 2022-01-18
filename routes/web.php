@@ -2,15 +2,16 @@
 use App\Http\Controllers\SanPhamController;
 use App\Http\Controllers\ChiTietSanPhamController;
 use App\Http\Controllers\LoaiSanPhamController;
+use App\Http\Controllers\TaiKhoanController;
 use App\Http\Controllers\LoaiTaiKhoanController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\YeuThichController;
 use App\Http\Controllers\HinhAnhController;
 use App\Http\Controllers\AuthController;
-use App\Models\ChiTietSanPham;
+use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\RecoverPasswordController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\MyTestMail;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,20 +24,20 @@ use App\Mail\MyTestMail;
 |
 */
 
-Route::get('send-mail', function () {
-   
-    $details = [
-        'title' => 'Mail from 3TFashion',
-        'body' => 'This is for testing email using smtp'
-    ];
-   
-    Mail::to('0306191166@caothang.edu.vn')->send(new MyTestMail($details));
-   
-    dd("Email is Sent.");
-});
+Route::post('send-mail', [ForgotPasswordController::class,'sendMailRecover'])->name('send-mail');
+
+Route::post('recover-password', [RecoverPasswordController::class,'recoverPassword'])->name('recover-password');
 
 Route::get('/', function () {
     return view('pages.login');
+});
+
+Route::get('/recover', function () {
+    return view("pages.recoverpassword");
+});
+
+Route::get('/recover-success', function () {
+    return view("pages.success_recover");
 });
 
 Route::get('forgotpassword', function () {
@@ -61,6 +62,12 @@ Route::resource('sanPham', SanPhamController::class);
 Route::resource('loaiSanPham', LoaiSanPhamController::class);
 
 Route::resource('chiTietSanPham',ChiTietSanPhamController::class);
+
+Route::resource('taiKhoan', TaiKhoanController::class);
+
+Route::get('taiKhoan/restore/one/{id}', [TaiKhoanController::class, 'restore'])->name('taiKhoan.restore');
+
+Route::get('taiKhoan/restore/all/{id}', [TaiKhoanController::class, 'restoreAll'])->name('taiKhoan.restore.all');
 
 Route::resource('loaiTaiKhoan', LoaiTaiKhoanController::class);
 

@@ -10,7 +10,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="home">Home</a></li>
                             <li class="breadcrumb-item active">Wishlist</li>
                         </ol>
                     </div><!-- /.col -->
@@ -50,6 +50,8 @@
                                             <th>ID</th>
                                             <th>ID Account</th>
                                             <th>ID Detail Product</th>
+                                            <th>Created At</th>
+                                            <th>Updated At</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -59,6 +61,8 @@
                                                 <td>{{ $yt->tai_khoan_id }}</td>
                                                 <td>{{ $yt->chi_tiet_san_pham_id }}</td>
                                                 <td><span class="tag tag-success">Active</span></td>
+                                                <td>{{ $yt->created_at }}</td>
+                                                <td>{{ $yt->updated_at }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

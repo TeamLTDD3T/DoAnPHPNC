@@ -10,7 +10,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="home">Home</a></li>
                             <li class="breadcrumb-item active">Picture</li>
                         </ol>
                     </div><!-- /.col -->
@@ -57,6 +57,8 @@
                                             <th>Image</th>
                                             <th>ID Detail Product</th>
                                             <th>Status</th>
+                                            <th>Created At</th>
+                                            <th>Updated At</th>
                                             <th>Edit</th>
                                             <th>Delete</th>
                                         </tr>
@@ -69,7 +71,8 @@
                                                 <td><img src="{{ asset("/storage/$ha->hinh_anh") }}" style="width: 100px;"></td>
                                                 <td>{{ $ha->chi_tiet_san_pham_id }}</td>
                                                 <td><span class="tag tag-success">Active</span></td>
-                                                
+                                                <td>{{ $ha->created_at }}</td>
+                                                <td>{{ $ha->updated_at }}</td>
                                                 <td style=";width: 20px;">
                                                     <a href='{{ route('hinhAnh.edit', ['hinhAnh' => $ha]) }}'>
                                                         <button type="button"

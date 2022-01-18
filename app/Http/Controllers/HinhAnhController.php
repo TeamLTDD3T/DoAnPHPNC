@@ -41,8 +41,8 @@ class HinhAnhController extends Controller
      */
     public function create()
     {
-        $lstsp=SanPham::all();
-        return view('add.add_picture',['lstsp'=>$lstsp]);
+        $lstctsp=SanPham::all();
+        return view('add.add_picture',['lstctsp'=>$lstctsp]);
     }
 
     /**
@@ -87,8 +87,8 @@ class HinhAnhController extends Controller
      */
     public function edit(HinhAnh $hinhAnh)
     {
-        $lstsp=SanPham::all();
-        return view('edit.edit_picture',['hinhAnh'=>$hinhAnh,'lstsp'=>$lstsp]);
+        $lstctsp=SanPham::all();
+        return view('edit.edit_picture',['hinhAnh'=>$hinhAnh,'lstctsp'=>$lstctsp]);
     }
 
     /**

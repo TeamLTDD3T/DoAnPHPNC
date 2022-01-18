@@ -10,7 +10,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('sanPham.index') }}">Product</a></li>
                             <li class="breadcrumb-item active">Detail Product</li>
                         </ol>
                     </div><!-- /.col -->
@@ -58,6 +58,8 @@
                                             <th>Size</th>
                                             <th>Quantity</th>
                                             <th>Status</th>
+                                            <th>Created At</th>
+                                            <th>Updated At</th>
                                             <th>Edit</th>
                                             <th>Delete</th>
                                         </tr>
@@ -67,10 +69,12 @@
                                         <tr>
                                             <td>{{ $ctsp->id }}</td>
                                             <td>{{ $ctsp->san_pham_id }}</td>
-                                            <td>{{ $ctsp->mau_id }}</td>
-                                            <td>{{ $ctsp->size_id }}</td>
+                                            <td>{{ $ctsp->ten_mau }}</td>
+                                            <td>{{ $ctsp->ten_size }}</td>
                                             <td>{{ $ctsp->so_luong }}</td>
                                             <td><span class="tag tag-success">Active</span></td>
+                                            <td>{{ $ctsp ->created_at }}</td>
+                                            <td>{{ $ctsp ->updated_at }}</td>
                                             <td style=";width: 20px;">
                                                 <a href='{{ route('chiTietSanPham.edit', ['chiTietSanPham' => $ctsp]) }}'>
                                                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i

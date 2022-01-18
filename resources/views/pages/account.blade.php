@@ -10,7 +10,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="home">Home</a></li>
                             <li class="breadcrumb-item active">Account</li>
                         </ol>
                     </div><!-- /.col -->
@@ -25,7 +25,17 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Account Management</h3>
+                                @if(request()->has('view_deleted'))
+                                <a href="{{ route('taiKhoan.index') }}" class="btn btn-info" style="margin-left:20px;margin-top: -0.3rem;">View All Accounts</a>
+                                <a href="{{ route('taiKhoan.restore.all',0) }}" class="btn btn-success" style="margin-left:20px;margin-top: -0.3rem;">Restore All</a>
+                            @else
+                                <a href="{{ route('taiKhoan.index', ['view_deleted' => 'DeletedRecords']) }}" class="btn btn-primary">View Delete Records</a>
+                            @endif
+                                <div style="float: right;margin-left:20px;margin-top: -0.3rem;width: 100px;">
+                                    <a href='{{ route('taiKhoan.create') }}'>
+                                        <button type="button" class="btn btn-block btn-default btn-sm">Add</button>
+                                    </a>
+                                </div>
                                 <div class="card-tools">
                                     <div class="input-group input-group-sm" style="width: 150px;">
                                         <input type="text" name="table_search" class="form-control float-right"
@@ -55,33 +65,69 @@
                                             <th>Phone</th>
                                             <th>Account Type</th>
                                             <th>Status</th>
+                                            <th>Created At</th>
+                                            <th>Updated At</th>
+                                            @if(request()->has('view_deleted'))
+                                            <th>Delete At</th>
+                                            <th>Restore</th>
+                                            @else                                           
                                             <th>Edit</th>
                                             <th>Delete</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @if(count($lsttk) > 0)
+                                        @foreach ($lsttk as $tk)
                                         <tr>
-                                            <td>1</td>
-                                            <td>test@gmail.com</td>
-                                            <td>Justin Test</td>
-                                            <td>1/1/1981</td>
-                                            <td>1/111 Paston, 1st NewYork</td>
-                                            <td>0836798621120</td>
-                                            <td>Customer</td>
+                                            <td>{{ $tk->id }}</td>
+                                            <td>{{ $tk->email }}</td>
+                                            <td>{{ $tk->hoten }}</td>
+                                            <td>{{ $tk->ngaysinh }}</td>
+                                            <td>{{ $tk->diachi }}</td>
+                                            <td>{{ $tk->sdt }}</td>
+                                            <td>{{ $tk->ten_loai_tai_khoan }}</td>
                                             <td><span class="tag tag-success">Active</span></td>
-                                            <td style="width: 20px;">
-                                                <a href='/'>
-                                                    <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
+                                            <td>{{ $tk->created_at }}</td>
+                                            <td>{{ $tk->updated_at }}</td>
+                                            @if(request()->has('view_deleted'))
+                                            <td>{{ $tk->deleted_at }}</td>
+                                            <td>
+                                                <a href="{{ route('taiKhoan.restore', $tk->id) }}" >
+                                                    <button type="button"
+                                                        class="btn btn-default btn-sm checkbox-toggle"><i
+                                                            class="fas fa-redo"></i>
+                                                    </button>
+                                                </a>
+                                            </td>
+                                            @else
+                                            <td style=";width: 20px;">
+                                                <a href='{{ route('taiKhoan.edit', ['taiKhoan' => $tk]) }}'>
+                                                    <button type="button"
+                                                        class="btn btn-default btn-sm checkbox-toggle"><i
                                                             class="fas fa-edit"></i>
                                                     </button>
                                                 </a>
                                             </td>
                                             <td style="width: 20px;">
-                                                <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                    class="fas fa-trash"></i>
-                                            </button>
+                                                <form method="post"
+                                                    action="{{ route('taiKhoan.destroy', ['taiKhoan' => $tk]) }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="btn btn-default btn-sm checkbox-toggle"><i
+                                                            class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
                                             </td>
+                                            @endif
                                         </tr>
+                                        @endforeach
+                                        @else
+                                        <tr>
+                                            <td colspan="100" class="text-center" style="font-style: italic;font-weight: bold;color: #4f5962;">No Post Found</td>
+                                        </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>

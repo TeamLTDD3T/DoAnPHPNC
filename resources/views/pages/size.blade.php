@@ -10,7 +10,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="home">Home</a></li>
                             <li class="breadcrumb-item active">Size</li>
                         </ol>
                     </div><!-- /.col -->
@@ -53,6 +53,8 @@
                                             <th>ID</th>
                                             <th>Name</th>
                                             <th>Status</th>
+                                            <th>Created At</th>
+                                            <th>Updated At</th>
                                             <th>Edit</th>
                                             <th>Delete</th>
                                         </tr>
@@ -63,7 +65,8 @@
                                                 <td>{{ $size->id }}</td>
                                                 <td>{{ $size->ten_size }}</td>
                                                 <td><span class="tag tag-success">Active</span></td>
-                                                
+                                                <td>{{ $size->created_at }}</td>
+                                                <td>{{ $size->updated_at }}</td>
                                                 <td style=";width: 20px;">
                                                     <a href='{{ route('size.edit', ['size' => $size]) }}'>
                                                         <button type="button"

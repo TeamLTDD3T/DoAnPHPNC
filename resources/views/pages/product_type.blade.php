@@ -10,7 +10,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="home">Home</a></li>
                             <li class="breadcrumb-item active">Product Type</li>
                         </ol>
                     </div><!-- /.col -->
@@ -56,6 +56,8 @@
                                             <th>Name</th>
                                             <th>Picture</th>
                                             <th>Status</th>
+                                            <th>Created_at</th>
+                                            <th>Updated_at</th>
                                             <th>Edit</th>
                                             <th>Delete</th>
                                         </tr>
@@ -67,6 +69,8 @@
                                             <td>{{ $loai ->ten_loai_san_pham }}</td>
                                             <td><img src="{{ asset("/storage/$loai->hinh_anh_loai_sp") }}" style="width: 100px;"></td>
                                             <td><span class="tag tag-success">Active</span></td>
+                                            <td>{{ $loai ->created_at }}</td>
+                                            <td>{{ $loai ->updated_at }}</td>
                                             <td style=";width: 20px;">
                                                 <a href='{{ route('loaiSanPham.edit', ['loaiSanPham' => $loai]) }}'>
                                                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i

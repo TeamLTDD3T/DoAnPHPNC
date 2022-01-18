@@ -10,7 +10,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href=" {{ route('size.index') }}">Size</a></li>
                             <li class="breadcrumb-item active">Add Size</li>
                         </ol>
                     </div>
@@ -31,28 +31,11 @@
                         <form method="post" action="{{ route('size.store') }}">
                             @csrf
                             <div class="card-body">
-                                {{-- <div class="form-group">
-                                    <label for="">ID</label>
-                                    <input type="id" class="form-control" id=""
-                                        value="2" readonly>
-                                </div> --}}
                                 <div class="form-group">
                                     <label for="">Name</label>
-                                    <input type="text" class="form-control" name="tensize"
+                                    <input type= "text" class= "form-control" name= "tensize"
                                         placeholder="Name Size">
                                 </div>
-                                {{-- <div class="form-group">
-                                    <label for="InputFile">File Picture Input</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="InputFile">
-                                            <label class="custom-file-label" for="InputFile">Choose file</label>
-                                        </div>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">Upload</span>
-                                        </div>
-                                    </div>
-                                </div> --}}
                             </div>
                             <!-- /.card-body -->
 

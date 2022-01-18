@@ -22,6 +22,7 @@ class CreateTaiKhoansTable extends Migration
             $table->string('diachi');
             $table->string('sdt');
             $table->unsignedBigInteger('loai_tai_khoan_id');//Khóa ngoại
+            $table->string('token');
             $table->timestamps();
             $table->softDeletes();
         });

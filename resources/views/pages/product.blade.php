@@ -10,7 +10,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="home">Home</a></li>
                             <li class="breadcrumb-item active">Product</li>
                         </ol>
                     </div><!-- /.col -->
@@ -59,6 +59,8 @@
                                             <th>Product Type</th>
                                             <th>Brand</th>
                                             <th>Status</th>
+                                            <th>Created At</th>
+                                            <th>Updated At</th>
                                             <th>Detail</th>
                                             <th>Edit</th>
                                             <th>Delete</th>
@@ -71,9 +73,11 @@
                                                 <td>{{ $sp->ten_san_pham }}</td>
                                                 <td>{{ $sp->mo_ta }}</td>
                                                 <td>{{ $sp->gia }}</td>
-                                                <td>{{ $sp->loai_san_pham_id }}</td>
-                                                <td>{{ $sp->thuong_hieu_id }}</td>
+                                                <td>{{ $sp->ten_loai_san_pham }}</td>
+                                                <td>{{ $sp->ten_thuong_hieu }}</td>                                              
                                                 <td><span class="tag tag-success">Active</span></td>
+                                                <td>{{ $sp->created_at }}</td>
+                                                <td>{{ $sp->updated_at }}</td>
                                                 <td style="width: 20px;">
                                                     <a href='{{ route('sanPham.show', ['sanPham' => $sp]) }}'>
                                                         <button type="button"

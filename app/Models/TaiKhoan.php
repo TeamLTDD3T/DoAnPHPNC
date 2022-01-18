@@ -3,18 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class TaiKhoan extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
     protected $table = 'tai_khoans';
      /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
+    protected $dates =['deleted_at'];
     protected $primaryKey ='id';
     protected $fillable = [
         'email', 'password','hoten','ngaysinh','diachi','sdt','loai_tai_khoan_id',

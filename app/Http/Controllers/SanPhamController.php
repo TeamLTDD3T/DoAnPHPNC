@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ChiTietSanPham;
 use App\Models\SanPham;
 use App\Models\LoaiSanPham;
 use App\Models\ThuongHieu;
@@ -18,7 +19,10 @@ class SanPhamController extends Controller
      */
     public function index()
     {
-        $lstsp=SanPham::all();
+        $lstsp=SanPham::join('loai_san_phams','loai_san_phams.id','=','san_phams.loai_san_pham_id')
+        ->join('thuong_hieus','thuong_hieus.id','=','san_phams.thuong_hieu_id')
+        ->select('san_phams.id','san_phams.ten_san_pham','san_phams.mo_ta','san_phams.gia','loai_san_phams.ten_loai_san_pham','thuong_hieus.ten_thuong_hieu','san_phams.created_at','san_phams.updated_at')
+        ->get();
         return view('pages.product',['lstsp'=>$lstsp]);
     }
 
@@ -62,8 +66,14 @@ class SanPhamController extends Controller
      */
     public function show(SanPham $sanPham)
     {
-        // var_dump($sanPham);
-        return view('pages.detail_product',['lstCTSanPham'=>$sanPham->chiTietSanPhams,'sanPham'=>$sanPham]);
+        //var_dump($sanPham);
+        $lstct = ChiTietSanPham::join('san_phams','san_phams.id','=','chi_tiet_san_phams.san_pham_id')
+        ->join('maus','maus.id','=','chi_tiet_san_phams.mau_id')
+        ->join('sizes','sizes.id','=','chi_tiet_san_phams.size_id')
+        ->where('san_phams.id',$sanPham->id)
+        ->select('chi_tiet_san_phams.id','chi_tiet_san_phams.san_pham_id','maus.ten_mau','sizes.ten_size','chi_tiet_san_phams.so_luong','chi_tiet_san_phams.created_at','chi_tiet_san_phams.updated_at')
+        ->get();
+        return view('pages.detail_product',['lstCTSanPham'=>$lstct,'sanPham'=>$sanPham]);
     }
 
     /**
