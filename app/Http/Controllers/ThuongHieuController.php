@@ -16,7 +16,7 @@ class ThuongHieuController extends Controller
     public function index()
     {
         $lstth=ThuongHieu::all();
-        return view('brand',['lstth'=>$lstth]);
+        return view('pages.brand',['lstth'=>$lstth]);
     }
 
     /**
@@ -26,7 +26,7 @@ class ThuongHieuController extends Controller
      */
     public function create()
     {
-        return view('add_brand');
+        return view('add.add_brand');
     }
 
     /**
@@ -64,7 +64,7 @@ class ThuongHieuController extends Controller
      */
     public function edit(ThuongHieu $thuongHieu)
     {
-        return view('edit_brand',['thuongHieu'=>$thuongHieu]);
+        return view('edit.edit_brand',['thuongHieu'=>$thuongHieu]);
     }
 
     /**

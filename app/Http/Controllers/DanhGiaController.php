@@ -22,7 +22,7 @@ class DanhGiaController extends Controller
                            ->join('maus','maus.id','=','chi_tiet_san_phams.mau_id')
                            ->join('sizes','sizes.id','=','chi_tiet_san_phams.size_id')
                            ->select('san_phams.ten_san_pham','maus.ten_mau','sizes.ten_size','tai_khoans.email','danh_gias.*')->get();
-        return view('review',['lstdg'=>$lstdg]);
+        return view('pages.review',['lstdg'=>$lstdg]);
     }
 
     /**

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\LoaiTaiKhoan;
-use App\Http\Requests\StoreLoaiTaiKhoanRequest;
-use App\Http\Requests\UpdateLoaiTaiKhoanRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class LoaiTaiKhoanController extends Controller
 {
@@ -15,7 +15,8 @@ class LoaiTaiKhoanController extends Controller
      */
     public function index()
     {
-        //
+        $lstltk=LoaiTaiKhoan::all();
+        return view('pages.account_type',['lstltk'=>$lstltk]);
     }
 
     /**
@@ -25,7 +26,7 @@ class LoaiTaiKhoanController extends Controller
      */
     public function create()
     {
-        //
+        return view('add.add_account_type');
     }
 
     /**
@@ -34,9 +35,14 @@ class LoaiTaiKhoanController extends Controller
      * @param  \App\Http\Requests\StoreLoaiTaiKhoanRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreLoaiTaiKhoanRequest $request)
+    public function store(Request $request)
     {
-        //
+        $loaiTaiKhoan= new LoaiTaiKhoan;
+        $loaiTaiKhoan->fill([
+            'ten_loai_tai_khoan'=>$request->input('tenltk'),
+        ]);
+        $loaiTaiKhoan->save();
+        return Redirect::route('loaiTaiKhoan.index');
     }
 
     /**
@@ -58,7 +64,7 @@ class LoaiTaiKhoanController extends Controller
      */
     public function edit(LoaiTaiKhoan $loaiTaiKhoan)
     {
-        //
+        return view('edit.edit_account_type',['loaiTaiKhoan'=>$loaiTaiKhoan]);
     }
 
     /**
@@ -68,9 +74,13 @@ class LoaiTaiKhoanController extends Controller
      * @param  \App\Models\LoaiTaiKhoan  $loaiTaiKhoan
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateLoaiTaiKhoanRequest $request, LoaiTaiKhoan $loaiTaiKhoan)
+    public function update(Request $request, LoaiTaiKhoan $loaiTaiKhoan)
     {
-        //
+        $loaiTaiKhoan->fill([
+            'ten_loai_tai_khoan'=>$request->input('tenltk'),
+        ]);
+        $loaiTaiKhoan->save();
+        return Redirect::route('loaiTaiKhoan.index');
     }
 
     /**
@@ -81,6 +91,7 @@ class LoaiTaiKhoanController extends Controller
      */
     public function destroy(LoaiTaiKhoan $loaiTaiKhoan)
     {
-        //
+        $loaiTaiKhoan->delete();
+        return Redirect::route('loaiTaiKhoan.index');
     }
 }

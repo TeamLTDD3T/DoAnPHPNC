@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Size;
-use App\Http\Requests\StoreSizeRequest;
-use App\Http\Requests\UpdateSizeRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class SizeController extends Controller
 {
@@ -15,7 +15,8 @@ class SizeController extends Controller
      */
     public function index()
     {
-        //
+        $lstsize=Size::all();
+        return view('pages.size',['lstsize'=>$lstsize]);
     }
 
     /**
@@ -25,7 +26,7 @@ class SizeController extends Controller
      */
     public function create()
     {
-        //
+        return view('add.add_size');
     }
 
     /**
@@ -34,9 +35,14 @@ class SizeController extends Controller
      * @param  \App\Http\Requests\StoreSizeRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSizeRequest $request)
+    public function store(Request $request)
     {
-        //
+        $size= new Size;
+        $size->fill([
+            'ten_size'=>$request->input('tensize'),
+        ]);
+        $size->save();
+        return Redirect::route('size.index');
     }
 
     /**
@@ -58,7 +64,7 @@ class SizeController extends Controller
      */
     public function edit(Size $size)
     {
-        //
+        return view('edit.edit_size',['size'=>$size]);
     }
 
     /**
@@ -68,9 +74,13 @@ class SizeController extends Controller
      * @param  \App\Models\Size  $size
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSizeRequest $request, Size $size)
+    public function update(Request $request, Size $size)
     {
-        //
+        $size->fill([
+            'ten_size'=>$request->input('tensize'),
+        ]);
+        $size->save();
+        return Redirect::route('size.index');
     }
 
     /**
@@ -81,6 +91,7 @@ class SizeController extends Controller
      */
     public function destroy(Size $size)
     {
-        //
+        $size->delete();
+        return Redirect::route('size.index');
     }
 }

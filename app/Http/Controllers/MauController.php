@@ -16,7 +16,7 @@ class MauController extends Controller
     public function index()
     {
         $lstm = Mau::all();
-        return view('color', ['lstm' => $lstm]);
+        return view('pages.color', ['lstm' => $lstm]);
     }
 
     /**
@@ -26,7 +26,7 @@ class MauController extends Controller
      */
     public function create()
     {
-        return view('add_color');
+        return view('add.add_color');
     }
 
     /**
@@ -64,7 +64,7 @@ class MauController extends Controller
      */
     public function edit(Mau $mau)
     {
-        return view('edit_color',['mau'=>$mau]);
+        return view('edit.edit_color',['mau'=>$mau]);
     }
 
     /**

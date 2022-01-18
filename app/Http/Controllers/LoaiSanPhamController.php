@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\LoaiSanPham;
-use App\Http\Requests\StoreLoaiSanPhamRequest;
-use App\Http\Requests\UpdateLoaiSanPhamRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class LoaiSanPhamController extends Controller
 {
@@ -16,7 +16,7 @@ class LoaiSanPhamController extends Controller
     public function index()
     {
         $lstloaisp=LoaiSanPham::all();
-        return view('product_type',['lstloaisp'=>$lstloaisp]);
+        return view('pages.product_type',['lstloaisp'=>$lstloaisp]);
     }
 
     /**
@@ -26,7 +26,7 @@ class LoaiSanPhamController extends Controller
      */
     public function create()
     {
-        //
+        return view('add.add_product_type');
     }
 
     /**
@@ -35,9 +35,20 @@ class LoaiSanPhamController extends Controller
      * @param  \App\Http\Requests\StoreLoaiSanPhamRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreLoaiSanPhamRequest $request)
+    public function store(Request $request)
     {
-        //
+        $loaiSanPham= new LoaiSanPham;
+        $loaiSanPham->fill([
+            'ten_loai_san_pham'=>$request->input('tenlsp'),
+            'hinh_anh_loai_sp'=>'', 
+        ]);
+        $loaiSanPham->save();
+        if ($request->hasFile('file'))
+        {
+            $loaiSanPham->hinh_anh_loai_sp = $request->file('file')->store('image/'.$loaiSanPham->id, 'public');
+        }
+        $loaiSanPham->save();
+        return Redirect::route('loaiSanPham.index');
     }
 
     /**
@@ -59,7 +70,7 @@ class LoaiSanPhamController extends Controller
      */
     public function edit(LoaiSanPham $loaiSanPham)
     {
-        //
+        return view('edit.edit_product_type',['loaiSanPham'=>$loaiSanPham]);
     }
 
     /**
@@ -69,9 +80,19 @@ class LoaiSanPhamController extends Controller
      * @param  \App\Models\LoaiSanPham  $loaiSanPham
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateLoaiSanPhamRequest $request, LoaiSanPham $loaiSanPham)
+    public function update(Request $request, LoaiSanPham $loaiSanPham)
     {
-        //
+        if ($request->hasFile('file'))
+        {
+            $loaiSanPham->hinh_anh_loai_sp = $request->file('file')->store('image/'.$loaiSanPham->id, 'public');
+        }
+        $loaiSanPham->fill([
+            'ten_loai_san_pham'=>$request->input('tenlsp'),
+        ]);
+        $loaiSanPham->save();
+
+        // $hinhAnh->save();
+        return Redirect::route('loaiSanPham.index');
     }
 
     /**
@@ -82,6 +103,7 @@ class LoaiSanPhamController extends Controller
      */
     public function destroy(LoaiSanPham $loaiSanPham)
     {
-        //
+        $loaiSanPham->delete();
+        return Redirect::route('loaiSanPham.index');
     }
 }

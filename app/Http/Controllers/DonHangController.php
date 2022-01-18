@@ -19,7 +19,7 @@ class DonHangController extends Controller
         $lstdh = DonHang::join('tai_khoans as khach', 'khach.id', '=', 'don_hangs.tai_khoan_id')
                         ->join('tai_khoans as nv', 'nv.id', '=', 'don_hangs.tai_khoan_nhan_vien_id')
             ->select('khach.email as khachemail','nv.email as nvemail', 'don_hangs.*')->get();
-        return view('order', ['lstdh' => $lstdh]);
+        return view('pages.order', ['lstdh' => $lstdh]);
     }
 
     /**
@@ -57,7 +57,7 @@ class DonHangController extends Controller
                                  ->join('sizes', 'sizes.id', '=', 'chi_tiet_san_phams.size_id')
                                  ->select('san_phams.ten_san_pham','maus.ten_mau','sizes.ten_size','chi_tiet_don_hangs.*')
                                  ->where('don_hang_id', '=', $donHang->id)->get();
-        return view('detail_order', ['lstctdh' => $lstctdh]);
+        return view('pages.detail_order', ['lstctdh' => $lstctdh]);
     }
 
     /**
@@ -68,7 +68,7 @@ class DonHangController extends Controller
      */
     public function edit(DonHang $donHang)
     {
-        return view('edit_order',['dh'=>$donHang]);
+        return view('edit.edit_order',['dh'=>$donHang]);
     }
 
     /**

@@ -2,12 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ChiTietSanPham;
 use App\Models\HinhAnh;
-use App\Http\Requests\StoreHinhAnhRequest;
-use App\Http\Requests\UpdateHinhAnhRequest;
+use App\Models\SanPham;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class HinhAnhController extends Controller
 {
+
+    protected function fixImage(HinhAnh $hinhAnh)
+    {
+        if (Storage::disk('public')->exists($hinhAnh->hinh_anh))
+        {
+            $hinhAnh->hinh_anh = Storage::url($hinhAnh->hinh_anh);
+        }
+        else
+        {
+            $hinhAnh->hinh_anh = '/img/default-150x150.png';
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +30,8 @@ class HinhAnhController extends Controller
      */
     public function index()
     {
-        //
+        $lsthinhAnh=HinhAnh::all();
+        return view('pages.picture',['lsthinhAnh'=>$lsthinhAnh]);
     }
 
     /**
@@ -25,7 +41,8 @@ class HinhAnhController extends Controller
      */
     public function create()
     {
-        //
+        $lstctsp=SanPham::all();
+        return view('add.add_picture',['lstctsp'=>$lstctsp]);
     }
 
     /**
@@ -34,9 +51,21 @@ class HinhAnhController extends Controller
      * @param  \App\Http\Requests\StoreHinhAnhRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreHinhAnhRequest $request)
+    public function store(Request $request)
     {
-        //
+        $hinhAnh= new HinhAnh;
+        $hinhAnh->fill([
+            'hinh_dai_dien'=>$request->input('avatar'),
+            'hinh_anh'=>'',
+            'chi_tiet_san_pham_id'=>$request->input('ctsanpham'),        
+        ]);
+        $hinhAnh->save();
+        if ($request->hasFile('file'))
+        {
+            $hinhAnh->hinh_anh = $request->file('file')->store('image/'.$hinhAnh->id, 'public');
+        }
+        $hinhAnh->save();
+        return Redirect::route('hinhAnh.index');
     }
 
     /**
@@ -47,7 +76,7 @@ class HinhAnhController extends Controller
      */
     public function show(HinhAnh $hinhAnh)
     {
-        //
+
     }
 
     /**
@@ -58,7 +87,8 @@ class HinhAnhController extends Controller
      */
     public function edit(HinhAnh $hinhAnh)
     {
-        //
+        $lstctsp=SanPham::all();
+        return view('edit.edit_picture',['hinhAnh'=>$hinhAnh,'lstctsp'=>$lstctsp]);
     }
 
     /**
@@ -68,9 +98,20 @@ class HinhAnhController extends Controller
      * @param  \App\Models\HinhAnh  $hinhAnh
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateHinhAnhRequest $request, HinhAnh $hinhAnh)
+    public function update(Request $request, HinhAnh $hinhAnh)
     {
-        //
+        if ($request->hasFile('file'))
+        {
+            $hinhAnh->hinh_anh = $request->file('file')->store('image/'.$hinhAnh->id, 'public');
+        }
+        $hinhAnh->fill([
+            'hinh_dai_dien'=>$request->input('avatar'),
+            'chi_tiet_san_pham_id'=>$request->input('ctsanpham'),
+        ]);
+        $hinhAnh->save();
+
+        // $hinhAnh->save();
+        return Redirect::route('hinhAnh.index');
     }
 
     /**
@@ -81,6 +122,7 @@ class HinhAnhController extends Controller
      */
     public function destroy(HinhAnh $hinhAnh)
     {
-        //
+        $hinhAnh->delete();
+        return Redirect::route('hinhAnh.index');
     }
 }
