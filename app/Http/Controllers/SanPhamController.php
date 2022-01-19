@@ -17,12 +17,15 @@ class SanPhamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $lstsp=SanPham::join('loai_san_phams','loai_san_phams.id','=','san_phams.loai_san_pham_id')
         ->join('thuong_hieus','thuong_hieus.id','=','san_phams.thuong_hieu_id')
         ->select('san_phams.id','san_phams.ten_san_pham','san_phams.mo_ta','san_phams.gia','loai_san_phams.ten_loai_san_pham','thuong_hieus.ten_thuong_hieu','san_phams.created_at','san_phams.updated_at')
         ->get();
+        if ($request->has('view_deleted')) {
+            $lstsp = SanPham::onlyTrashed()->get();
+        }
         return view('pages.product',['lstsp'=>$lstsp]);
     }
 
@@ -119,5 +122,19 @@ class SanPhamController extends Controller
     {
         $sanPham->delete();
         return Redirect::route('sanPham.index');
+    }
+
+    public function restore($id)
+    {
+        SanPham::withTrashed()->find($id)->restore();
+
+        return back();
+    }
+
+    public function restoreAll()
+    {
+        SanPham::onlyTrashed()->restore();
+
+        return back();
     }
 }

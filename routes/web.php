@@ -65,9 +65,21 @@ Route::get('/producttype',[LoaiSanPhamController::class,'index']);
 
 Route::resource('sanPham', SanPhamController::class);
 
+Route::get('sanPham/restore/one/{id}', [SanPhamController::class, 'restore'])->name('sanPham.restore');
+
+Route::get('sanPham/restore/all/{id}', [SanPhamController::class, 'restoreAll'])->name('sanPham.restore.all');
+
 Route::resource('loaiSanPham', LoaiSanPhamController::class);
 
+Route::get('loaiSanPham/restore/one/{id}', [LoaiSanPhamController::class, 'restore'])->name('loaiSanPham.restore');
+
+Route::get('loaiSanPham/restore/all/{id}', [LoaiSanPhamController::class, 'restoreAll'])->name('loaiSanPham.restore.all');
+
 Route::resource('chiTietSanPham',ChiTietSanPhamController::class);
+
+Route::get('chiTietSanPham/restore/one/{id}', [ChiTietSanPhamController::class, 'restore'])->name('chiTietSanPham.restore');
+
+Route::get('chiTietSanPham/restore/all/{id}', [ChiTietSanPhamController::class, 'restoreAll'])->name('chiTietSanPham.restore.all');
 
 Route::resource('mau', MauController::class);
 

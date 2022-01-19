@@ -25,7 +25,12 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Product Type Management</h3>
+                                @if(request()->has('view_deleted'))
+                                <a href="{{ route('loaiSanPham.index') }}" class="btn btn-info" style="margin-left:20px;margin-top: -0.3rem;">View All Product Types</a>
+                                <a href="{{ route('loaiSanPham.restore.all',0) }}" class="btn btn-success" style="margin-left:20px;margin-top: -0.3rem;">Restore All</a>
+                            @else
+                                <a href="{{ route('loaiSanPham.index', ['view_deleted' => 'DeletedRecords']) }}" class="btn btn-primary">View Delete Records</a>
+                            @endif
                                 <div style="float: right;margin-left:20px;margin-top: -0.3rem;width: 100px;">
                                     <a href='{{ route('loaiSanPham.create') }}'>
                                         <button type="button" class="btn btn-block btn-default btn-sm">Add</button>
@@ -58,11 +63,17 @@
                                             <th>Status</th>
                                             <th>Created_at</th>
                                             <th>Updated_at</th>
+                                            @if(request()->has('view_deleted'))
+                                            <th>Delete At</th>
+                                            <th>Restore</th>
+                                            @else
                                             <th>Edit</th>
                                             <th>Delete</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @if(count($lstloaisp) > 0)
                                         @foreach ($lstloaisp as $loai)
                                         <tr>
                                             <td>{{ $loai ->id }}</td>
@@ -71,6 +82,17 @@
                                             <td><span class="tag tag-success">Active</span></td>
                                             <td>{{ $loai ->created_at }}</td>
                                             <td>{{ $loai ->updated_at }}</td>
+                                            @if(request()->has('view_deleted'))
+                                            <td>{{ $loai->deleted_at }}</td>
+                                            <td>
+                                                <a href="{{ route('loaiSanPham.restore', $loai->id) }}" >
+                                                    <button type="button"
+                                                        class="btn btn-default btn-sm checkbox-toggle"><i
+                                                            class="fas fa-redo"></i>
+                                                    </button>
+                                                </a>
+                                            </td>
+                                            @else
                                             <td style=";width: 20px;">
                                                 <a href='{{ route('loaiSanPham.edit', ['loaiSanPham' => $loai]) }}'>
                                                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
@@ -89,9 +111,14 @@
                                                 </button>
                                             </form>
                                             </td>
+                                            @endif
                                         </tr>
                                         @endforeach
-
+                                        @else
+                                        <tr>
+                                            <td colspan="100" class="text-center" style="font-style: italic;font-weight: bold;color: #4f5962;">No Post Found</td>
+                                        </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>

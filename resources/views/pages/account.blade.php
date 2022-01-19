@@ -64,13 +64,12 @@
                                             <th>Address</th>
                                             <th>Phone</th>
                                             <th>Account Type</th>
-                                            <th>Status</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
                                             @if(request()->has('view_deleted'))
                                             <th>Delete At</th>
                                             <th>Restore</th>
-                                            @else                                           
+                                            @else
                                             <th>Edit</th>
                                             <th>Delete</th>
                                             @endif
@@ -87,7 +86,6 @@
                                             <td>{{ $tk->diachi }}</td>
                                             <td>{{ $tk->sdt }}</td>
                                             <td>{{ $tk->ten_loai_tai_khoan }}</td>
-                                            <td><span class="tag tag-success">Active</span></td>
                                             <td>{{ $tk->created_at }}</td>
                                             <td>{{ $tk->updated_at }}</td>
                                             @if(request()->has('view_deleted'))
