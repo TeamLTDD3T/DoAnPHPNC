@@ -13,9 +13,12 @@ class LoaiSanPhamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $lstloaisp=LoaiSanPham::all();
+        if ($request->has('view_deleted')) {
+            $lstloaisp = LoaiSanPham::onlyTrashed()->get();
+        }
         return view('pages.product_type',['lstloaisp'=>$lstloaisp]);
     }
 
@@ -40,7 +43,7 @@ class LoaiSanPhamController extends Controller
         $loaiSanPham= new LoaiSanPham;
         $loaiSanPham->fill([
             'ten_loai_san_pham'=>$request->input('tenlsp'),
-            'hinh_anh_loai_sp'=>'', 
+            'hinh_anh_loai_sp'=>'',
         ]);
         $loaiSanPham->save();
         if ($request->hasFile('file'))
@@ -105,5 +108,19 @@ class LoaiSanPhamController extends Controller
     {
         $loaiSanPham->delete();
         return Redirect::route('loaiSanPham.index');
+    }
+
+    public function restore($id)
+    {
+        LoaiSanPham::withTrashed()->find($id)->restore();
+
+        return back();
+    }
+
+    public function restoreAll()
+    {
+        LoaiSanPham::onlyTrashed()->restore();
+
+        return back();
     }
 }

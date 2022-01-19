@@ -25,7 +25,15 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Detail Product Management</h3>
+                                @if (request()->has('view_deleted'))
+                                    <a href="{{ route('chiTietSanPham.index',['sanPham'=>$sanPham]) }}" class="btn btn-info"
+                                        style="margin-left:20px;margin-top: -0.3rem;">View All Product Details</a>
+                                    <a href="{{ route('chiTietSanPham.restore.all', 0) }}" class="btn btn-success"
+                                        style="margin-left:20px;margin-top: -0.3rem;">Restore All</a>
+                                @else
+                                    <a href="{{ route('chiTietSanPham.index', ['view_deleted' => 'DeletedRecords','sanPham'=>$sanPham]) }}"
+                                        class="btn btn-primary">View Delete Records</a>
+                                @endif
                                 <div style="float: right;margin-left:20px;margin-top: -0.3rem;width: 100px;">
                                     <a href='{{ route('chiTietSanPham.create', ['sanPham' => $sanPham]) }}'>
                                         <button type="button" class="btn btn-block btn-default btn-sm">Add</button>
@@ -60,41 +68,68 @@
                                             <th>Status</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
-                                            <th>Edit</th>
-                                            <th>Delete</th>
+                                            @if (request()->has('view_deleted'))
+                                                <th>Delete At</th>
+                                                <th>Restore</th>
+                                            @else
+                                                <th>Edit</th>
+                                                <th>Delete</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($lstCTSanPham as $ctsp)
-                                        <tr>
-                                            <td>{{ $ctsp->id }}</td>
-                                            <td>{{ $ctsp->san_pham_id }}</td>
-                                            <td>{{ $ctsp->ten_mau }}</td>
-                                            <td>{{ $ctsp->ten_size }}</td>
-                                            <td>{{ $ctsp->so_luong }}</td>
-                                            <td><span class="tag tag-success">Active</span></td>
-                                            <td>{{ $ctsp ->created_at }}</td>
-                                            <td>{{ $ctsp ->updated_at }}</td>
-                                            <td style=";width: 20px;">
-                                                <a href='{{ route('chiTietSanPham.edit', ['chiTietSanPham' => $ctsp]) }}'>
-                                                    <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i
-                                                            class="fas fa-edit"></i>
-                                                    </button>
-                                                </a>
-                                            </td>
-                                            <td style="width: 20px;">
-                                                <form method="post"
-                                                        action="{{ route('chiTietSanPham.destroy', ['chiTietSanPham' => $ctsp,'sanPham'=>$sanPham]) }}">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit"
-                                                            class="btn btn-default btn-sm checkbox-toggle"><i
-                                                                class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                            </td>
-                                        </tr>
-                                        @endforeach
+                                        @if (count($lstCTSanPham) > 0)
+                                            @foreach ($lstCTSanPham as $ctsp)
+                                                <tr>
+                                                    <td>{{ $ctsp->id }}</td>
+                                                    <td>{{ $ctsp->san_pham_id }}</td>
+                                                    <td>{{ $ctsp->ten_mau }}</td>
+                                                    <td>{{ $ctsp->ten_size }}</td>
+                                                    <td>{{ $ctsp->so_luong }}</td>
+                                                    <td><span class="tag tag-success">Active</span></td>
+                                                    <td>{{ $ctsp->created_at }}</td>
+                                                    <td>{{ $ctsp->updated_at }}</td>
+                                                    @if (request()->has('view_deleted'))
+                                                        <td>{{ $ctsp->deleted_at }}</td>
+                                                        <td>
+                                                            <a href="{{ route('chiTietSanPham.restore', $ctsp->id) }}">
+                                                                <button type="button"
+                                                                    class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                        class="fas fa-redo"></i>
+                                                                </button>
+                                                            </a>
+                                                        </td>
+                                                    @else
+                                                        <td style=";width: 20px;">
+                                                            <a
+                                                                href='{{ route('chiTietSanPham.edit', ['chiTietSanPham' => $ctsp]) }}'>
+                                                                <button type="button"
+                                                                    class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                        class="fas fa-edit"></i>
+                                                                </button>
+                                                            </a>
+                                                        </td>
+                                                        <td style="width: 20px;">
+                                                            <form method="post"
+                                                                action="{{ route('chiTietSanPham.destroy', ['chiTietSanPham' => $ctsp, 'sanPham' => $sanPham]) }}">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                    class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                        class="fas fa-trash"></i>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    @endif
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="100" class="text-center"
+                                                    style="font-style: italic;font-weight: bold;color: #4f5962;">No Post
+                                                    Found</td>
+                                            </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -106,4 +141,4 @@
             </div><!-- /.container-fluid -->
         </section>
     </div>
-    @endsection
+@endsection

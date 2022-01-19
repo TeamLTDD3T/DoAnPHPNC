@@ -25,7 +25,15 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Product Management</h3>
+                                @if (request()->has('view_deleted'))
+                                    <a href="{{ route('sanPham.index') }}" class="btn btn-info"
+                                        style="margin-left:20px;margin-top: -0.3rem;">View All Products</a>
+                                    <a href="{{ route('sanPham.restore.all', 0) }}" class="btn btn-success"
+                                        style="margin-left:20px;margin-top: -0.3rem;">Restore All</a>
+                                @else
+                                    <a href="{{ route('sanPham.index', ['view_deleted' => 'DeletedRecords']) }}"
+                                        class="btn btn-primary">View Delete Records</a>
+                                @endif
                                 <div style="float: right;margin-left:20px;margin-top: -0.3rem;width: 100px;">
                                     <a href='{{ route('sanPham.create') }}'>
                                         <button type="button" class="btn btn-block btn-default btn-sm">Add</button>
@@ -61,52 +69,77 @@
                                             <th>Status</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
-                                            <th>Detail</th>
-                                            <th>Edit</th>
-                                            <th>Delete</th>
+                                            @if (request()->has('view_deleted'))
+                                                <th>Delete At</th>
+                                                <th>Restore</th>
+                                            @else
+                                                <th>Detail</th>
+                                                <th>Edit</th>
+                                                <th>Delete</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($lstsp as $sp)
+                                        @if (count($lstsp) > 0)
+                                            @foreach ($lstsp as $sp)
+                                                <tr>
+                                                    <td>{{ $sp->id }}</td>
+                                                    <td>{{ $sp->ten_san_pham }}</td>
+                                                    <td>{{ $sp->mo_ta }}</td>
+                                                    <td>{{ $sp->gia }}</td>
+                                                    <td>{{ $sp->ten_loai_san_pham }}</td>
+                                                    <td>{{ $sp->ten_thuong_hieu }}</td>
+                                                    <td><span class="tag tag-success">Active</span></td>
+                                                    <td>{{ $sp->created_at }}</td>
+                                                    <td>{{ $sp->updated_at }}</td>
+                                                    @if (request()->has('view_deleted'))
+                                                        <td>{{ $sp->deleted_at }}</td>
+                                                        <td>
+                                                            <a href="{{ route('sanPham.restore', $sp->id) }}">
+                                                                <button type="button"
+                                                                    class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                        class="fas fa-redo"></i>
+                                                                </button>
+                                                            </a>
+                                                        </td>
+                                                    @else
+                                                        <td style="width: 20px;">
+                                                            <a href='{{ route('sanPham.show', ['sanPham' => $sp]) }}'>
+                                                                <button type="button"
+                                                                    class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                        class="fas fa-info-circle"></i>
+                                                                </button>
+                                                            </a>
+                                                        </td>
+                                                        <td style=";width: 20px;">
+                                                            <a href='{{ route('sanPham.edit', ['sanPham' => $sp]) }}'>
+                                                                <button type="button"
+                                                                    class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                        class="fas fa-edit"></i>
+                                                                </button>
+                                                            </a>
+                                                        </td>
+                                                        <td style="width: 20px;">
+                                                            <form method="post"
+                                                                action="{{ route('sanPham.destroy', ['sanPham' => $sp]) }}">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                    class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                        class="fas fa-trash"></i>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    @endif
+                                                </tr>
+                                            @endforeach
+                                        @else
                                             <tr>
-                                                <td>{{ $sp->id }}</td>
-                                                <td>{{ $sp->ten_san_pham }}</td>
-                                                <td>{{ $sp->mo_ta }}</td>
-                                                <td>{{ $sp->gia }}</td>
-                                                <td>{{ $sp->ten_loai_san_pham }}</td>
-                                                <td>{{ $sp->ten_thuong_hieu }}</td>                                              
-                                                <td><span class="tag tag-success">Active</span></td>
-                                                <td>{{ $sp->created_at }}</td>
-                                                <td>{{ $sp->updated_at }}</td>
-                                                <td style="width: 20px;">
-                                                    <a href='{{ route('sanPham.show', ['sanPham' => $sp]) }}'>
-                                                        <button type="button"
-                                                            class="btn btn-default btn-sm checkbox-toggle"><i
-                                                                class="fas fa-info-circle"></i>
-                                                        </button>
-                                                    </a>
-                                                </td>
-                                                <td style=";width: 20px;">
-                                                    <a href='{{ route('sanPham.edit', ['sanPham' => $sp]) }}'>
-                                                        <button type="button"
-                                                            class="btn btn-default btn-sm checkbox-toggle"><i
-                                                                class="fas fa-edit"></i>
-                                                        </button>
-                                                    </a>
-                                                </td>
-                                                <td style="width: 20px;">
-                                                    <form method="post"
-                                                        action="{{ route('sanPham.destroy', ['sanPham' => $sp]) }}">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit"
-                                                            class="btn btn-default btn-sm checkbox-toggle"><i
-                                                                class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>
+                                                <td colspan="100" class="text-center"
+                                                    style="font-style: italic;font-weight: bold;color: #4f5962;">No Post
+                                                    Found</td>
                                             </tr>
-                                        @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>

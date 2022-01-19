@@ -27,6 +27,13 @@ class ChiTietSanPhamController extends Controller
         ->where('san_phams.id','=',$request->get('sanPham'))
         ->select('chi_tiet_san_phams.id','chi_tiet_san_phams.san_pham_id','maus.ten_mau','sizes.ten_size','chi_tiet_san_phams.so_luong','chi_tiet_san_phams.created_at','chi_tiet_san_phams.updated_at')
         ->get();
+        if ($request->has('view_deleted')) {
+            $lstct = ChiTietSanPham::onlyTrashed()->join('san_phams','san_phams.id','=','chi_tiet_san_phams.san_pham_id')
+            ->join('maus','maus.id','=','chi_tiet_san_phams.mau_id')
+            ->join('sizes','sizes.id','=','chi_tiet_san_phams.size_id')
+            ->select('chi_tiet_san_phams.id','chi_tiet_san_phams.san_pham_id','maus.ten_mau','sizes.ten_size','chi_tiet_san_phams.so_luong','chi_tiet_san_phams.created_at','chi_tiet_san_phams.updated_at','chi_tiet_san_phams.deleted_at')
+            ->get();
+        }
         $sanPham =SanPham::where('id','=',$request->get('sanPham'))->first();
         return view('pages.detail_product',['lstCTSanPham'=>$lstct,'sanPham'=>$sanPham]);
     }
@@ -131,5 +138,19 @@ class ChiTietSanPhamController extends Controller
         $idsp=$request->get('sanPham');
         $chiTietSanPham->delete();
         return Redirect::route('chiTietSanPham.index',['sanPham'=>$idsp]);
+    }
+
+    public function restore($id)
+    {
+        ChiTietSanPham::withTrashed()->find($id)->restore();
+
+        return back();
+    }
+
+    public function restoreAll()
+    {
+        ChiTietSanPham::onlyTrashed()->restore();
+
+        return back();
     }
 }
