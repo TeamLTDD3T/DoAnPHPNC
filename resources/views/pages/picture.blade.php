@@ -25,7 +25,12 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Picture Management</h3>
+                                @if(request()->has('view_deleted'))
+                                    <a href="{{ route('hinhAnh.index') }}" class="btn btn-info" style="margin-left:20px;margin-top: -0.3rem;">View All Accounts</a>
+                                    <a href="{{ route('hinhAnh.restore.all',0) }}" class="btn btn-success" style="margin-left:20px;margin-top: -0.3rem;">Restore All</a>
+                                @else
+                                    <a href="{{ route('hinhAnh.index', ['view_deleted' => 'DeletedRecords']) }}" class="btn btn-primary">View Delete Records</a>
+                                @endif
                                 <div style="float: right;margin-left:20px;margin-top: -0.3rem;width: 100px;">
                                     <a href='{{ route('hinhAnh.create') }}'>
                                         <button type="button" class="btn btn-block btn-default btn-sm">Add</button>
@@ -56,23 +61,38 @@
                                             <th>Avatar</th>
                                             <th>Image</th>
                                             <th>ID Detail Product</th>
-                                            <th>Status</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
+                                            @if(request()->has('view_deleted'))
+                                            <th>Delete At</th>
+                                            <th>Restore</th>
+                                            @else                                           
                                             <th>Edit</th>
                                             <th>Delete</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @if(count($lsthinhAnh) > 0)
                                         @foreach ($lsthinhAnh as $ha)
                                             <tr>
                                                 <td>{{ $ha->id }}</td>
                                                 <td>{{ $ha->hinh_dai_dien }}</td>
                                                 <td><img src="{{ asset("/storage/$ha->hinh_anh") }}" style="width: 100px;"></td>
                                                 <td>{{ $ha->chi_tiet_san_pham_id }}</td>
-                                                <td><span class="tag tag-success">Active</span></td>
                                                 <td>{{ $ha->created_at }}</td>
                                                 <td>{{ $ha->updated_at }}</td>
+                                                @if(request()->has('view_deleted'))
+                                                <td>{{ $ha->deleted_at }}</td>
+                                                <td>
+                                                    <a href="{{ route('hinhAnh.restore', $ha->id) }}" >
+                                                        <button type="button"
+                                                            class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                class="fas fa-redo"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                                @else
                                                 <td style=";width: 20px;">
                                                     <a href='{{ route('hinhAnh.edit', ['hinhAnh' => $ha]) }}'>
                                                         <button type="button"
@@ -92,8 +112,14 @@
                                                         </button>
                                                     </form>
                                                 </td>
+                                                @endif
                                             </tr>
                                         @endforeach
+                                        @else
+                                        <tr>
+                                            <td colspan="100" class="text-center" style="font-style: italic;font-weight: bold;color: #4f5962;">No Post Found</td>
+                                        </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
