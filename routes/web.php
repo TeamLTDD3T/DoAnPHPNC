@@ -103,11 +103,19 @@ Route::get('taiKhoan/restore/all/{id}', [TaiKhoanController::class, 'restoreAll'
 
 Route::resource('loaiTaiKhoan', LoaiTaiKhoanController::class);
 
+Route::get('/searchLoaiTaiKhoan', [LoaiTaiKhoanController::class, 'search'])->name('loaiTaiKhoan.search');
+
+Route::get('/searchLoaiTaiKhoanXoa', [LoaiTaiKhoanController::class, 'searchLoaiTaiKhoanXoa'])->name('loaiTaiKhoanXoa.search');
+
 Route::get('loaiTaiKhoan/restore/one/{id}', [LoaiTaiKhoanController::class, 'restore'])->name('loaiTaiKhoan.restore');
 
 Route::get('loaiTaiKhoan/restore/all/{id}', [LoaiTaiKhoanController::class, 'restoreAll'])->name('loaiTaiKhoan.restore.all');
 
 Route::resource('size', SizeController::class);
+
+Route::get('/searchSize', [SizeController::class, 'search'])->name('size.search');
+
+Route::get('/searchSizeXoa', [SizeController::class, 'searchSizeXoa'])->name('sizeXoa.search');
 
 Route::get('size/restore/one/{id}', [SizeController::class, 'restore'])->name('size.restore');
 
@@ -115,7 +123,13 @@ Route::get('size/restore/all/{id}', [SizeController::class, 'restoreAll'])->name
 
 Route::resource('yeuThich', YeuThichController::class);
 
+Route::get('/searchYeuThich', [YeuThichController::class, 'search'])->name('yeuThich.search');
+
 Route::resource('hinhAnh', HinhAnhController::class);
+
+Route::get('/searchHinhAnh', [HinhAnhController::class, 'search'])->name('hinhAnh.search');
+
+Route::get('/searchHinhAnhXoa', [HinhAnhController::class, 'searchHinhAnhXoa'])->name('hinhAnhXoa.search');
 
 Route::get('hinhAnh/restore/one/{id}', [HinhAnhController::class, 'restore'])->name('hinhAnh.restore');
 

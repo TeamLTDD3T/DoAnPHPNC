@@ -111,4 +111,65 @@ class SizeController extends Controller
   
         return back();
     }
+
+    public function search(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = '';
+            $sizes = Size::where('ten_size', 'LIKE', '%' . $request->search . '%')
+            ->get();
+            if ($sizes) {
+                foreach ($sizes as $key => $size) {
+                    $output .= '<tr>
+                    <td>' . $size->id . '</td>
+                    <td>' . $size->ten_size . '</td>
+                    <td>' . $size->created_at . '</td>
+                    <td>' . $size->updated_at . '</td>
+                    <td style=";width: 20px;">
+                     <a href="'.route('size.edit', ['size' => $size]).'">
+                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-edit"></i></button>
+                     </a>
+                     </td>
+                     <td style="width: 20px;">
+                     <form method="post" action="'.route('size.destroy', ['size' => $size]).'">
+                     '.@csrf_field().'
+                     '.@method_field("DELETE").'
+                     <button type="submit" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-trash"></i></button>
+                     </form>
+                     </td>
+                    </tr>';
+                }
+            }
+
+            return Response($output);
+        }
+    }
+
+    public function searchSizeXoa(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = '';
+            $sizes = Size::where('ten_size', 'LIKE', '%' . $request->search . '%')
+            ->onlyTrashed()
+            ->get();
+            if ($sizes) {
+                foreach ($sizes as $key => $size) {
+                    $output .= '<tr>
+                    <td>' . $size->id . '</td>
+                    <td>' . $size->ten_size . '</td>
+                    <td>' . $size->created_at . '</td>
+                    <td>' . $size->updated_at . '</td>
+                    <td>' . $size->deleted_at . '</td>
+                    <td style=";width: 20px;">
+                     <a href="'.route('size.restore', $size->id).'">
+                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-edit"></i></button>
+                     </a>
+                     </td>
+                    </tr>';
+                }
+            }
+
+            return Response($output);
+        }
+    }
 }

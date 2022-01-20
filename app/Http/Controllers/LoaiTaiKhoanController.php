@@ -111,4 +111,65 @@ class LoaiTaiKhoanController extends Controller
   
         return back();
     }
+
+    public function search(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = '';
+            $accounttypes = LoaiTaiKhoan::where('ten_loai_tai_khoan', 'LIKE', '%' . $request->search . '%')
+            ->get();
+            if ($accounttypes) {
+                foreach ($accounttypes as $key => $ltk) {
+                    $output .= '<tr>
+                    <td>' . $ltk->id . '</td>
+                    <td>' . $ltk->ten_loai_tai_khoan . '</td>
+                    <td>' . $ltk->created_at . '</td>
+                    <td>' . $ltk->updated_at . '</td>
+                    <td style=";width: 20px;">
+                     <a href="'.route('loaiTaiKhoan.edit', ['loaiTaiKhoan' => $ltk]).'">
+                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-edit"></i></button>
+                     </a>
+                     </td>
+                     <td style="width: 20px;">
+                     <form method="post" action="'.route('loaiTaiKhoan.destroy', ['loaiTaiKhoan' => $ltk]).'">
+                     '.@csrf_field().'
+                     '.@method_field("DELETE").'
+                     <button type="submit" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-trash"></i></button>
+                     </form>
+                     </td>
+                    </tr>';
+                }
+            }
+
+            return Response($output);
+        }
+    }
+
+    public function searchLoaiTaiKhoanXoa(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = '';
+            $accounttypes = LoaiTaiKhoan::where('ten_loai_tai_khoan', 'LIKE', '%' . $request->search . '%')
+            ->onlyTrashed()
+            ->get();
+            if ($accounttypes) {
+                foreach ($accounttypes as $key => $ltk) {
+                    $output .= '<tr>
+                    <td>' . $ltk->id . '</td>
+                    <td>' . $ltk->ten_loai_tai_khoan . '</td>
+                    <td>' . $ltk->created_at . '</td>
+                    <td>' . $ltk->updated_at . '</td>
+                    <td>' . $ltk->deleted_at . '</td>
+                    <td style=";width: 20px;">
+                     <a href="'.route('loaiTaiKhoan.restore', $ltk->id).'">
+                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-edit"></i></button>
+                     </a>
+                     </td>
+                    </tr>';
+                }
+            }
+
+            return Response($output);
+        }
+    }
 }

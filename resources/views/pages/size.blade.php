@@ -38,8 +38,8 @@
                                 </div>
                                 <div class="card-tools">
                                     <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" name="table_search" class="form-control float-right"
-                                            placeholder="Search">
+                                        <input type="text" name="table_search" class="form-control float-right" id="search" name="search"
+                                            placeholder="Search by Name">
 
                                         <div class="input-group-append">
                                             <button type="submit" class="btn btn-default">
@@ -126,4 +126,42 @@
             </div><!-- /.container-fluid -->
         </section>
     </div>
+    <script type="text/javascript">
+    $flag = <?php echo "'I" . request()->has('view_deleted') . "I'"; ?>;
+        if ($flag == "II") {
+            $flag = 1;
+        } else {
+            $flag = 0;
+        }
+        $('#search').on('keyup',function(){
+            $value = $(this).val();
+            if ($flag == 0) {
+                $.ajax({
+                    type: 'get',
+                    url: '{{ URL::to('searchSizeXoa') }}',
+                    data: {
+                        'search': $value
+                    },
+    
+                    success: function(data) {
+                        $('tbody').html(data);
+                    }
+                });
+            }
+            else {
+                $.ajax({
+                type: 'get',
+                url: '{{ URL::to('searchSize') }}',
+                data: {
+                    'search': $value
+                },
+                success:function(data){
+                    $('tbody').html(data);
+                }
+            });
+            }
+            
+        })
+        $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+    </script>
     @endsection

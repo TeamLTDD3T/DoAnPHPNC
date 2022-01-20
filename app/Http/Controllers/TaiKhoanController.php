@@ -169,17 +169,17 @@ class TaiKhoanController extends Controller
                     <td>' . $tk->created_at . '</td>
                     <td>' . $tk->updated_at . '</td>
                     <td style=";width: 20px;">
-                     <a href="'.route('taiKhoan.edit', ['taiKhoan' => $tk]).'">
-                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-edit"></i></button>
-                     </a>
-                     </td>
-                     <td style="width: 20px;">
-                     <form method="post" action="'.route('taiKhoan.destroy', ['taiKhoan' => $tk]).'">
-                     '.@csrf_field().'
-                     '.@method_field("DELETE").'
-                     <button type="submit" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-trash"></i></button>
-                     </form>
-                     </td>
+                        <a href="'.route('taiKhoan.edit', ['taiKhoan' => $tk]).'">
+                            <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-edit"></i></button>
+                        </a>
+                    </td>
+                    <td style="width: 20px;">
+                        <form method="post" action="'.route('taiKhoan.destroy', ['taiKhoan' => $tk]).'">
+                        '.@csrf_field().'
+                        '.@method_field("DELETE").'
+                            <button type="submit" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </td>
                     </tr>';
                 }
             }

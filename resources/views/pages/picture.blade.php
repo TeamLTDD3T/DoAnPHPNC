@@ -38,11 +38,10 @@
                                 </div>
                                 <div class="card-tools">
                                     <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" name="table_search" class="form-control float-right"
-                                            placeholder="Search">
-
+                                        <input type="text" name="table_search" class="form-control float-right" id="search" name="search"
+                                            placeholder="Search by Name">
+                                            
                                         <div class="input-group-append">
-
                                             <button type="submit" class="btn btn-default">
                                                 <i class="fas fa-search"></i>
                                             </button>
@@ -60,7 +59,7 @@
                                             <th>ID</th>
                                             <th>Avatar</th>
                                             <th>Image</th>
-                                            <th>ID Detail Product</th>
+                                            <th>Product's Name</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
                                             @if(request()->has('view_deleted'))
@@ -79,7 +78,7 @@
                                                 <td>{{ $ha->id }}</td>
                                                 <td>{{ $ha->hinh_dai_dien }}</td>
                                                 <td><img src="{{ asset("/storage/$ha->hinh_anh") }}" style="width: 100px;"></td>
-                                                <td>{{ $ha->chi_tiet_san_pham_id }}</td>
+                                                <td>{{ $ha->ten_san_pham }}</td>
                                                 <td>{{ $ha->created_at }}</td>
                                                 <td>{{ $ha->updated_at }}</td>
                                                 @if(request()->has('view_deleted'))
@@ -131,4 +130,42 @@
             </div><!-- /.container-fluid -->
         </section>
     </div>
+    <script type="text/javascript">
+    $flag = <?php echo "'I" . request()->has('view_deleted') . "I'"; ?>;
+        if ($flag == "II") {
+            $flag = 1;
+        } else {
+            $flag = 0;
+        }
+        $('#search').on('keyup',function(){
+            $value = $(this).val();
+            if ($flag == 0) {
+                $.ajax({
+                    type: 'get',
+                    url: '{{ URL::to('searchHinhAnhXoa') }}',
+                    data: {
+                        'search': $value
+                    },
+    
+                    success: function(data) {
+                        $('tbody').html(data);
+                    }
+                });
+            }
+            else {
+                $.ajax({
+                type: 'get',
+                url: '{{ URL::to('searchHinhAnh') }}',
+                data: {
+                    'search': $value
+                },
+                success:function(data){
+                    $('tbody').html(data);
+                }
+            });
+            }
+            
+        })
+        $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+    </script>
     @endsection
