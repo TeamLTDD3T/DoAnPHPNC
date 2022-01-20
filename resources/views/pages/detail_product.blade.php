@@ -26,12 +26,13 @@
                         <div class="card">
                             <div class="card-header">
                                 @if (request()->has('view_deleted'))
-                                    <a href="{{ route('chiTietSanPham.index',['sanPham'=>$sanPham]) }}" class="btn btn-info"
-                                        style="margin-left:20px;margin-top: -0.3rem;">View All Product Details</a>
+                                    <a href="{{ route('chiTietSanPham.index', ['sanPham' => $sanPham]) }}"
+                                        class="btn btn-info" style="margin-left:20px;margin-top: -0.3rem;">View All
+                                        Product Details</a>
                                     <a href="{{ route('chiTietSanPham.restore.all', 0) }}" class="btn btn-success"
                                         style="margin-left:20px;margin-top: -0.3rem;">Restore All</a>
                                 @else
-                                    <a href="{{ route('chiTietSanPham.index', ['view_deleted' => 'DeletedRecords','sanPham'=>$sanPham]) }}"
+                                    <a href="{{ route('chiTietSanPham.index', ['view_deleted' => 'DeletedRecords', 'sanPham' => $sanPham]) }}"
                                         class="btn btn-primary">View Delete Records</a>
                                 @endif
                                 <div style="float: right;margin-left:20px;margin-top: -0.3rem;width: 100px;">
@@ -41,8 +42,8 @@
                                 </div>
                                 <div class="card-tools">
                                     <div class="input-group input-group-sm" style="width: 170px;">
-                                        <input type="text" name="table_search" class="form-control float-right" id="search" name="search"
-                                            placeholder="Search by Color/Size">
+                                        <input type="text" name="table_search" class="form-control float-right" id="search"
+                                            name="search" placeholder="Search by Color/Size">
 
                                         <div class="input-group-append">
 
@@ -140,12 +141,31 @@
         </section>
     </div>
     <script type="text/javascript">
-
-    // console.log(this.$sanPham.data);
-        $('#search').on('keyup',function(){
-            $id = <?php echo $sanPham ?>;
+        $flag = <?php echo "'I" . request()->has('view_deleted') . "I'"; ?>;
+        if ($flag == "II") {
+            $flag = 1;
+        } else {
+            $flag = 0;
+        }
+        $('#search').on('keyup', function() {
+            $id = <?php echo $sanPham; ?>;
             $value = $(this).val();
-            $.ajax({
+            if ($flag == 0){
+                $.ajax({
+                type: 'get',
+                url: '{{ URL::to('searchChiTietSanPhamXoa') }}',
+                data: {
+                    'search': $value,
+                    'sanPham': $id
+                },
+
+                success: function(data) {
+                    $('tbody').html(data);
+                }
+            });
+            }
+            else{
+                $.ajax({
                 type: 'get',
                 url: '{{ URL::to('searchChiTietSanPham') }}',
                 data: {
@@ -153,11 +173,16 @@
                     'sanPham': $id
                 },
 
-                success:function(data){
+                success: function(data) {
                     $('tbody').html(data);
                 }
             });
+            }
         })
-        $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+        $.ajaxSetup({
+            headers: {
+                'csrftoken': '{{ csrf_token() }}'
+            }
+        });
     </script>
 @endsection

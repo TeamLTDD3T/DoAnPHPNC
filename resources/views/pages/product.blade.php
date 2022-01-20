@@ -41,7 +41,8 @@
                                 </div>
                                 <div class="card-tools">
                                     <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search by Name" id="search" name="search">
+                                        <input type="text" name="table_search" class="form-control float-right"
+                                            placeholder="Search by Name" id="search" name="search">
                                         <div class="input-group-append">
                                             <button type="submit" class="btn btn-default">
                                                 <i class="fas fa-search"></i>
@@ -62,7 +63,6 @@
                                             <th>Price</th>
                                             <th>Product Type</th>
                                             <th>Brand</th>
-                                            <th>Status</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
                                             @if (request()->has('view_deleted'))
@@ -85,7 +85,6 @@
                                                     <td>{{ $sp->gia }}</td>
                                                     <td>{{ $sp->ten_loai_san_pham }}</td>
                                                     <td>{{ $sp->ten_thuong_hieu }}</td>
-                                                    <td><span class="tag tag-success">Active</span></td>
                                                     <td>{{ $sp->created_at }}</td>
                                                     <td>{{ $sp->updated_at }}</td>
                                                     @if (request()->has('view_deleted'))
@@ -148,19 +147,42 @@
         </section>
     </div>
     <script type="text/javascript">
-        $('#search').on('keyup',function(){
+        $flag = <?php echo "'I" . request()->has('view_deleted') ."I'" ?>;
+        if ($flag == "II") {
+            $flag = 1;
+        } else {
+            $flag = 0;
+        }
+        $('#search').on('keyup', function() {
             $value = $(this).val();
-            $.ajax({
-                type: 'get',
-                url: '{{ URL::to('searchSanPham') }}',
-                data: {
-                    'search': $value
-                },
-                success:function(data){
-                    $('tbody').html(data);
-                }
-            });
+            if ($flag == 0) {
+                $.ajax({
+                    type: 'get',
+                    url: '{{ URL::to('searchSanPhamXoa') }}',
+                    data: {
+                        'search': $value
+                    },
+                    success: function(data) {
+                        $('tbody').html(data);
+                    }
+                });
+            } else {
+                $.ajax({
+                    type: 'get',
+                    url: '{{ URL::to('searchSanPham') }}',
+                    data: {
+                        'search': $value
+                    },
+                    success: function(data) {
+                        $('tbody').html(data);
+                    }
+                });
+            }
         })
-        $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+        $.ajaxSetup({
+            headers: {
+                'csrftoken': '{{ csrf_token() }}'
+            }
+        });
     </script>
 @endsection
