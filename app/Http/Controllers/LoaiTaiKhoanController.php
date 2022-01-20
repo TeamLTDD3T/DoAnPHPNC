@@ -13,9 +13,12 @@ class LoaiTaiKhoanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(Request $request)
+    { 
         $lstltk=LoaiTaiKhoan::all();
+        if ($request->has('view_deleted')) {
+            $lstltk = LoaiTaiKhoan::onlyTrashed()->get();
+        } 
         return view('pages.account_type',['lstltk'=>$lstltk]);
     }
 
@@ -93,5 +96,19 @@ class LoaiTaiKhoanController extends Controller
     {
         $loaiTaiKhoan->delete();
         return Redirect::route('loaiTaiKhoan.index');
+    }
+
+    public function restore($id)
+    {
+        LoaiTaiKhoan::withTrashed()->find($id)->restore();
+  
+        return back();
+    }  
+  
+    public function restoreAll()
+    {
+        LoaiTaiKhoan::onlyTrashed()->restore();
+  
+        return back();
     }
 }

@@ -28,9 +28,12 @@ class HinhAnhController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $lsthinhAnh=HinhAnh::all();
+        if ($request->has('view_deleted')) {
+            $lsthinhAnh = HinhAnh::onlyTrashed()->get();
+        }  
         return view('pages.picture',['lsthinhAnh'=>$lsthinhAnh]);
     }
 
@@ -124,5 +127,19 @@ class HinhAnhController extends Controller
     {
         $hinhAnh->delete();
         return Redirect::route('hinhAnh.index');
+    }
+
+    public function restore($id)
+    {
+        HinhAnh::withTrashed()->find($id)->restore();
+  
+        return back();
+    }  
+  
+    public function restoreAll()
+    {
+        HinhAnh::onlyTrashed()->restore();
+  
+        return back();
     }
 }

@@ -103,11 +103,23 @@ Route::get('taiKhoan/restore/all/{id}', [TaiKhoanController::class, 'restoreAll'
 
 Route::resource('loaiTaiKhoan', LoaiTaiKhoanController::class);
 
+Route::get('loaiTaiKhoan/restore/one/{id}', [LoaiTaiKhoanController::class, 'restore'])->name('loaiTaiKhoan.restore');
+
+Route::get('loaiTaiKhoan/restore/all/{id}', [LoaiTaiKhoanController::class, 'restoreAll'])->name('loaiTaiKhoan.restore.all');
+
 Route::resource('size', SizeController::class);
+
+Route::get('size/restore/one/{id}', [SizeController::class, 'restore'])->name('size.restore');
+
+Route::get('size/restore/all/{id}', [SizeController::class, 'restoreAll'])->name('size.restore.all');
 
 Route::resource('yeuThich', YeuThichController::class);
 
 Route::resource('hinhAnh', HinhAnhController::class);
+
+Route::get('hinhAnh/restore/one/{id}', [HinhAnhController::class, 'restore'])->name('hinhAnh.restore');
+
+Route::get('hinhAnh/restore/all/{id}', [HinhAnhController::class, 'restoreAll'])->name('hinhAnh.restore.all');
 
 // Route::get('/adddetailproduct', function () {
 //     return view('add_detail_product');

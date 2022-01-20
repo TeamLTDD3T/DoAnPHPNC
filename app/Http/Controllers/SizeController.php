@@ -13,9 +13,12 @@ class SizeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $lstsize=Size::all();
+        if ($request->has('view_deleted')) {
+            $lstsize = Size::onlyTrashed()->get();
+        }  
         return view('pages.size',['lstsize'=>$lstsize]);
     }
 
@@ -93,5 +96,19 @@ class SizeController extends Controller
     {
         $size->delete();
         return Redirect::route('size.index');
+    }
+
+    public function restore($id)
+    {
+        Size::withTrashed()->find($id)->restore();
+  
+        return back();
+    }  
+  
+    public function restoreAll()
+    {
+        Size::onlyTrashed()->restore();
+  
+        return back();
     }
 }
