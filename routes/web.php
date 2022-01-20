@@ -65,6 +65,8 @@ Route::resource('sanPham', SanPhamController::class);
 
 Route::get('/searchSanPham', [SanPhamController::class, 'search'])->name('sanPham.search');
 
+Route::get('/searchSanPhamXoa', [SanPhamController::class, 'searchSanPhamXoa'])->name('sanPhamXoa.search');
+
 Route::get('sanPham/restore/one/{id}', [SanPhamController::class, 'restore'])->name('sanPham.restore');
 
 Route::get('sanPham/restore/all/{id}', [SanPhamController::class, 'restoreAll'])->name('sanPham.restore.all');
@@ -73,6 +75,8 @@ Route::resource('loaiSanPham', LoaiSanPhamController::class);
 
 Route::get('/searchLoaiSanPham', [LoaiSanPhamController::class, 'search'])->name('loaiSanPham.search');
 
+Route::get('/searchLoaiSanPhamXoa', [LoaiSanPhamController::class, 'searchLoaiSanPhamXoa'])->name('loaiSanPhamXoa.search');
+
 Route::get('loaiSanPham/restore/one/{id}', [LoaiSanPhamController::class, 'restore'])->name('loaiSanPham.restore');
 
 Route::get('loaiSanPham/restore/all/{id}', [LoaiSanPhamController::class, 'restoreAll'])->name('loaiSanPham.restore.all');
@@ -80,6 +84,8 @@ Route::get('loaiSanPham/restore/all/{id}', [LoaiSanPhamController::class, 'resto
 Route::resource('chiTietSanPham',ChiTietSanPhamController::class);
 
 Route::get('/searchChiTietSanPham', [ChiTietSanPhamController::class, 'search'])->name('chiTietSanPham.search');
+
+Route::get('/searchChiTietSanPhamXoa', [ChiTietSanPhamController::class, 'searchChiTietSanPhamXoa'])->name('chiTietSanPhamXoa.search');
 
 Route::get('chiTietSanPham/restore/one/{id}', [ChiTietSanPhamController::class, 'restore'])->name('chiTietSanPham.restore');
 
@@ -96,6 +102,8 @@ Route::resource('donHang',DonHangController::class);
 Route::resource('taiKhoan', TaiKhoanController::class);
 
 Route::get('/searchTaiKhoan', [TaiKhoanController::class, 'search'])->name('taiKhoan.search');
+
+Route::get('/searchTaiKhoanXoa', [TaiKhoanController::class, 'searchTaiKhoanXoa'])->name('taiKhoanXoa.search');
 
 Route::get('taiKhoan/restore/one/{id}', [TaiKhoanController::class, 'restore'])->name('taiKhoan.restore');
 
