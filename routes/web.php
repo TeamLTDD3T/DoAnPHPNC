@@ -6,8 +6,6 @@ use App\Http\Controllers\DanhGiaController;
 use App\Http\Controllers\DonHangController;
 use App\Http\Controllers\ChiTietSanPhamController;
 use App\Http\Controllers\LoaiSanPhamController;
-use App\Models\ChiTietSanPham;
-use App\Models\ThuongHieu;
 use App\Http\Controllers\TaiKhoanController;
 use App\Http\Controllers\LoaiTaiKhoanController;
 use App\Http\Controllers\SizeController;
@@ -65,17 +63,23 @@ Route::get('/producttype',[LoaiSanPhamController::class,'index']);
 
 Route::resource('sanPham', SanPhamController::class);
 
+Route::get('/searchSanPham', [SanPhamController::class, 'search'])->name('sanPham.search');
+
 Route::get('sanPham/restore/one/{id}', [SanPhamController::class, 'restore'])->name('sanPham.restore');
 
 Route::get('sanPham/restore/all/{id}', [SanPhamController::class, 'restoreAll'])->name('sanPham.restore.all');
 
 Route::resource('loaiSanPham', LoaiSanPhamController::class);
 
+Route::get('/searchLoaiSanPham', [LoaiSanPhamController::class, 'search'])->name('loaiSanPham.search');
+
 Route::get('loaiSanPham/restore/one/{id}', [LoaiSanPhamController::class, 'restore'])->name('loaiSanPham.restore');
 
 Route::get('loaiSanPham/restore/all/{id}', [LoaiSanPhamController::class, 'restoreAll'])->name('loaiSanPham.restore.all');
 
 Route::resource('chiTietSanPham',ChiTietSanPhamController::class);
+
+Route::get('/searchChiTietSanPham', [ChiTietSanPhamController::class, 'search'])->name('chiTietSanPham.search');
 
 Route::get('chiTietSanPham/restore/one/{id}', [ChiTietSanPhamController::class, 'restore'])->name('chiTietSanPham.restore');
 
@@ -90,6 +94,8 @@ Route::resource('danhGia',DanhGiaController::class);
 Route::resource('donHang',DonHangController::class);
 
 Route::resource('taiKhoan', TaiKhoanController::class);
+
+Route::get('/searchTaiKhoan', [TaiKhoanController::class, 'search'])->name('taiKhoan.search');
 
 Route::get('taiKhoan/restore/one/{id}', [TaiKhoanController::class, 'restore'])->name('taiKhoan.restore');
 

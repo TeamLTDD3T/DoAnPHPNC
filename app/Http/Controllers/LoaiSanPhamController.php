@@ -123,4 +123,37 @@ class LoaiSanPhamController extends Controller
 
         return back();
     }
+
+    public function search(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = '';
+            $producttypes = LoaiSanPham::where('ten_loai_san_pham', 'LIKE', '%' . $request->search . '%')->get();
+            if ($producttypes) {
+                foreach ($producttypes as $key => $pdt) {
+                    $output .= '<tr>
+                    <td>' . $pdt->id . '</td>
+                    <td>' . $pdt->ten_loai_san_pham . '</td>
+                    <td><img src="{{ asset("/storage/'.$pdt->hinh_anh_loai_sp.'") }}" style="width: 100px;"></td>
+                    <td>' . $pdt->created_at . '</td>
+                    <td>' . $pdt->updated_at . '</td>
+                    <td style=";width: 20px;">
+                     <a href="'.route("loaiSanPham.edit", ["loaiSanPham" =>$pdt]).'">
+                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-edit"></i></button>
+                     </a>
+                     </td>
+                     <td style="width: 20px;">
+                     <form method="post" action="'.route("loaiSanPham.destroy", ["loaiSanPham" =>$pdt]).'">
+                     '.@csrf_field().'
+                     '.@method_field("DELETE").'
+                     <button type="submit" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-trash"></i></button>
+                     </form>
+                     </td>
+                    </tr>';
+                }
+            }
+
+            return Response($output);
+        }
+    }
 }

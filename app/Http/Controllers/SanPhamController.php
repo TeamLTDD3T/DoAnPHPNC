@@ -74,7 +74,7 @@ class SanPhamController extends Controller
         ->join('maus','maus.id','=','chi_tiet_san_phams.mau_id')
         ->join('sizes','sizes.id','=','chi_tiet_san_phams.size_id')
         ->where('san_phams.id',$sanPham->id)
-        ->select('chi_tiet_san_phams.id','chi_tiet_san_phams.san_pham_id','maus.ten_mau','sizes.ten_size','chi_tiet_san_phams.so_luong','chi_tiet_san_phams.created_at','chi_tiet_san_phams.updated_at')
+        ->select('chi_tiet_san_phams.id','san_phams.ten_san_pham','maus.ten_mau','sizes.ten_size','chi_tiet_san_phams.so_luong','chi_tiet_san_phams.created_at','chi_tiet_san_phams.updated_at')
         ->get();
         return view('pages.detail_product',['lstCTSanPham'=>$lstct,'sanPham'=>$sanPham]);
     }
@@ -136,5 +136,50 @@ class SanPhamController extends Controller
         SanPham::onlyTrashed()->restore();
 
         return back();
+    }
+
+    public function search(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = '';
+            $products = SanPham::join('loai_san_phams','loai_san_phams.id','=','san_phams.loai_san_pham_id')
+            ->join('thuong_hieus','thuong_hieus.id','=','san_phams.thuong_hieu_id')
+            ->select('san_phams.id','san_phams.ten_san_pham','san_phams.mo_ta','san_phams.gia','loai_san_phams.ten_loai_san_pham','thuong_hieus.ten_thuong_hieu','san_phams.created_at','san_phams.updated_at')
+            ->where('ten_san_pham', 'LIKE', '%' . $request->search . '%')
+            ->get();
+            if ($products) {
+                foreach ($products as $key => $p) {
+                    $output .= '<tr>
+                    <td>' . $p->id . '</td>
+                    <td>' . $p->ten_san_pham . '</td>
+                    <td>' . $p->mo_ta . '</td>
+                    <td>' . $p->gia . '</td>
+                    <td>' . $p->ten_loai_san_pham . '</td>
+                    <td>' . $p->ten_thuong_hieu . '</td>
+                    <td>' . $p->created_at . '</td>
+                    <td>' . $p->updated_at . '</td>
+                    <td style=";width: 20px;">
+                     <a href="'.route('sanPham.show', ['sanPham' => $p]).'">
+                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-edit"></i></button>
+                     </a>
+                     </td>
+                    <td style=";width: 20px;">
+                     <a href="'.route('sanPham.edit', ['sanPham' => $p]).'">
+                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-edit"></i></button>
+                     </a>
+                     </td>
+                     <td style="width: 20px;">
+                     <form method="post" action="'.route('sanPham.destroy', ['sanPham' => $p]).'">
+                     '.@csrf_field().'
+                     '.@method_field("DELETE").'
+                     <button type="submit" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-trash"></i></button>
+                     </form>
+                     </td>
+                    </tr>';
+                }
+            }
+
+            return Response($output);
+        }
     }
 }

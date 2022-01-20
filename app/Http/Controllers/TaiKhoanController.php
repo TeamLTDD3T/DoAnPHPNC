@@ -24,7 +24,7 @@ class TaiKhoanController extends Controller
             ->get();
         if ($request->has('view_deleted')) {
             $lsttk = TaiKhoan::onlyTrashed()->get();
-        }  
+        }
         return view('pages.account', ['lsttk' => $lsttk]);
     }
 
@@ -137,14 +137,54 @@ class TaiKhoanController extends Controller
     public function restore($id)
     {
         TaiKhoan::withTrashed()->find($id)->restore();
-  
+
         return back();
-    }  
-  
+    }
+
     public function restoreAll()
     {
         TaiKhoan::onlyTrashed()->restore();
-  
+
         return back();
+    }
+
+    public function search(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = '';
+            $accounts = TaiKhoan::join('loai_tai_khoans', 'loai_tai_khoans.id', '=', 'tai_khoans.loai_tai_khoan_id')
+            ->select('tai_khoans.id', 'tai_khoans.email', 'tai_khoans.hoten', 'tai_khoans.ngaysinh', 'tai_khoans.diachi', 'tai_khoans.sdt', 'loai_tai_khoans.ten_loai_tai_khoan', 'token', 'tai_khoans.created_at', 'tai_khoans.updated_at')
+            ->where('email', 'LIKE', '%' . $request->search . '%')
+            ->get();
+            if ($accounts) {
+                foreach ($accounts as $key => $tk) {
+                    $output .= '<tr>
+                    <td>' . $tk->id . '</td>
+                    <td>' . $tk->email . '</td>
+                    <td>' . $tk->hoten . '</td>
+                    <td>' . $tk->ngaysinh . '</td>
+                    <td>' . $tk->diachi . '</td>
+                    <td>' . $tk->sdt . '</td>
+                    <td>' . $tk->ten_loai_tai_khoan . '</td>
+                    <td>' . $tk->created_at . '</td>
+                    <td>' . $tk->updated_at . '</td>
+                    <td style=";width: 20px;">
+                     <a href="'.route('taiKhoan.edit', ['taiKhoan' => $tk]).'">
+                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-edit"></i></button>
+                     </a>
+                     </td>
+                     <td style="width: 20px;">
+                     <form method="post" action="'.route('taiKhoan.destroy', ['taiKhoan' => $tk]).'">
+                     '.@csrf_field().'
+                     '.@method_field("DELETE").'
+                     <button type="submit" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-trash"></i></button>
+                     </form>
+                     </td>
+                    </tr>';
+                }
+            }
+
+            return Response($output);
+        }
     }
 }

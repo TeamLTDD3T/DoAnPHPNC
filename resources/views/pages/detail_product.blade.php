@@ -40,9 +40,9 @@
                                     </a>
                                 </div>
                                 <div class="card-tools">
-                                    <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" name="table_search" class="form-control float-right"
-                                            placeholder="Search">
+                                    <div class="input-group input-group-sm" style="width: 170px;">
+                                        <input type="text" name="table_search" class="form-control float-right" id="search" name="search"
+                                            placeholder="Search by Color/Size">
 
                                         <div class="input-group-append">
 
@@ -61,11 +61,10 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>ID Product</th>
+                                            <th>Product Name</th>
                                             <th>Color</th>
                                             <th>Size</th>
                                             <th>Quantity</th>
-                                            <th>Status</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
                                             @if (request()->has('view_deleted'))
@@ -82,11 +81,10 @@
                                             @foreach ($lstCTSanPham as $ctsp)
                                                 <tr>
                                                     <td>{{ $ctsp->id }}</td>
-                                                    <td>{{ $ctsp->san_pham_id }}</td>
+                                                    <td>{{ $ctsp->ten_san_pham }}</td>
                                                     <td>{{ $ctsp->ten_mau }}</td>
                                                     <td>{{ $ctsp->ten_size }}</td>
                                                     <td>{{ $ctsp->so_luong }}</td>
-                                                    <td><span class="tag tag-success">Active</span></td>
                                                     <td>{{ $ctsp->created_at }}</td>
                                                     <td>{{ $ctsp->updated_at }}</td>
                                                     @if (request()->has('view_deleted'))
@@ -141,4 +139,25 @@
             </div><!-- /.container-fluid -->
         </section>
     </div>
+    <script type="text/javascript">
+
+    // console.log(this.$sanPham.data);
+        $('#search').on('keyup',function(){
+            $id = <?php echo $sanPham ?>;
+            $value = $(this).val();
+            $.ajax({
+                type: 'get',
+                url: '{{ URL::to('searchChiTietSanPham') }}',
+                data: {
+                    'search': $value,
+                    'sanPham': $id
+                },
+
+                success:function(data){
+                    $('tbody').html(data);
+                }
+            });
+        })
+        $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+    </script>
 @endsection

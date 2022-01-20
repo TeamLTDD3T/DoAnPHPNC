@@ -38,8 +38,8 @@
                                 </div>
                                 <div class="card-tools">
                                     <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" name="table_search" class="form-control float-right"
-                                            placeholder="Search">
+                                        <input type="text" name="table_search" class="form-control float-right" id="search" name="search"
+                                            placeholder="Search by Email">
 
                                         <div class="input-group-append">
 
@@ -137,4 +137,20 @@
             </div><!-- /.container-fluid -->
         </section>
     </div>
+    <script type="text/javascript">
+        $('#search').on('keyup',function(){
+            $value = $(this).val();
+            $.ajax({
+                type: 'get',
+                url: '{{ URL::to('searchTaiKhoan') }}',
+                data: {
+                    'search': $value
+                },
+                success:function(data){
+                    $('tbody').html(data);
+                }
+            });
+        })
+        $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+    </script>
     @endsection

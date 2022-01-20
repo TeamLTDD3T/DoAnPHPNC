@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta name="_token" content="{{ csrf_token() }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -27,6 +28,8 @@
     <link rel="stylesheet" href="{{ asset('/storage/assets/plugins/daterangepicker/daterangepicker.css') }}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('/storage/assets/plugins/summernote/summernote-bs4.min.css') }}">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <title>Admin 3TFashion</title>
 </head>
 
@@ -221,7 +224,6 @@
         for (let i = 0; i < menuLength; i++) {
             if (menuItem[i].href == currentLocation) {
                 c = menuItem[i].childNodes;
-                console.log(c.length);
                 c[1].className = "far fa-check-circle nav-icon";
             }
         }

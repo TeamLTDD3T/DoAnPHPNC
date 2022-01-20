@@ -38,15 +38,11 @@
                                 </div>
                                 <div class="card-tools">
                                     <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" name="table_search" class="form-control float-right"
-                                            placeholder="Search">
-
+                                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search by Name" id="search" name="search">
                                         <div class="input-group-append">
-
                                             <button type="submit" class="btn btn-default">
                                                 <i class="fas fa-search"></i>
                                             </button>
-
                                         </div>
                                     </div>
                                 </div>
@@ -60,7 +56,6 @@
                                             <th>ID</th>
                                             <th>Name</th>
                                             <th>Picture</th>
-                                            <th>Status</th>
                                             <th>Created_at</th>
                                             <th>Updated_at</th>
                                             @if(request()->has('view_deleted'))
@@ -79,7 +74,6 @@
                                             <td>{{ $loai ->id }}</td>
                                             <td>{{ $loai ->ten_loai_san_pham }}</td>
                                             <td><img src="{{ asset("/storage/$loai->hinh_anh_loai_sp") }}" style="width: 100px;"></td>
-                                            <td><span class="tag tag-success">Active</span></td>
                                             <td>{{ $loai ->created_at }}</td>
                                             <td>{{ $loai ->updated_at }}</td>
                                             @if(request()->has('view_deleted'))
@@ -130,4 +124,20 @@
             </div><!-- /.container-fluid -->
         </section>
     </div>
+    <script type="text/javascript">
+        $('#search').on('keyup',function(){
+            $value = $(this).val();
+            $.ajax({
+                type: 'get',
+                url: '{{ URL::to('searchLoaiSanPham') }}',
+                data: {
+                    'search': $value
+                },
+                success:function(data){
+                    $('tbody').html(data);
+                }
+            });
+        })
+        $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+    </script>
     @endsection
