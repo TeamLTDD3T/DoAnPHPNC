@@ -127,7 +127,7 @@
                                         @else
                                             <tr>
                                                 <td colspan="100" class="text-center"
-                                                    style="font-style: italic;font-weight: bold;color: #4f5962;">No Post
+                                                    style="font-style: italic;font-weight: bold;color: #4f5962;">No Account
                                                     Found</td>
                                             </tr>
                                         @endif

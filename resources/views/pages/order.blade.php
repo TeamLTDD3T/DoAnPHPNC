@@ -60,6 +60,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if(count($lstdh) > 0)
                                     @foreach ($lstdh as $dh)
                                     <tr>
                                         <td>{{ $dh->id }}</td>
@@ -119,6 +120,11 @@
 
                                     </tr>
                                     @endforeach
+                                    @else
+                                    <tr>
+                                        <td colspan="100" class="text-center" style="font-style: italic;font-weight: bold;color: #4f5962;">No Order Found</td>
+                                    </tr>
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

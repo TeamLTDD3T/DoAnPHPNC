@@ -117,7 +117,7 @@
                                         @endforeach
                                         @else
                                         <tr>
-                                            <td colspan="100" class="text-center" style="font-style: italic;font-weight: bold;color: #4f5962;">No Post Found</td>
+                                            <td colspan="100" class="text-center" style="font-style: italic;font-weight: bold;color: #4f5962;">No Brand Found</td>
                                         </tr>
                                         @endif
                                     </tbody>

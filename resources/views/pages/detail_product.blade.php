@@ -125,7 +125,7 @@
                                         @else
                                             <tr>
                                                 <td colspan="100" class="text-center"
-                                                    style="font-style: italic;font-weight: bold;color: #4f5962;">No Post
+                                                    style="font-style: italic;font-weight: bold;color: #4f5962;">No Detail Product
                                                     Found</td>
                                             </tr>
                                         @endif

@@ -58,6 +58,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @if (count($lstctdh) > 0)
                                         @foreach ($lstctdh as $ctdh)
                                         <tr>
                                             <td>{{ $ctdh->id }}</td>
@@ -74,6 +75,13 @@
                                                 @endif
                                         </tr>
                                         @endforeach
+                                        @else
+                                        <tr>
+                                            <td colspan="100" class="text-center"
+                                                style="font-style: italic;font-weight: bold;color: #4f5962;">No Detail Order
+                                                Found</td>
+                                        </tr>
+                                    @endif
                                     </tbody>
                                 </table>
                             </div>
