@@ -36,9 +36,10 @@ class APIDonHangController extends Controller
                 'so_luong' => 1,
                 'gia' => $sanpham->gia,
                 'don_hang_id' => $donhangid->id,
+                'trang_thai_danh_gia'=> 0,
                 'chi_tiet_san_pham_id' => $chiTietSanPham->id,
             ]);
-            if ($chiTietDonHang != null) {
+            if ($chiTietDonHang != true) {
                 return response()->json($chiTietDonHang, 200);
             }
             return response()->json('', 404);
@@ -51,6 +52,7 @@ class APIDonHangController extends Controller
                     'so_luong' => 1,
                     'gia' => $sanpham->gia,
                     'don_hang_id' => $donhangid->id,
+                    'trang_thai_danh_gia'=> 0,
                     'chi_tiet_san_pham_id' => $chiTietSanPham->id,
                 ]);
                 if ($chiTietDonHang != null) {
@@ -59,7 +61,8 @@ class APIDonHangController extends Controller
                 return response()->json('', 404);
             } else {
                 $soluongsp = ChiTietDonHang::where('chi_tiet_san_pham_id', $chiTietSanPham->id)->select('chi_tiet_don_hangs.so_luong')->first();
-                if ($soluongsp < 10) {
+                // return response()->json($soluongsp, 200);
+                if ($soluongsp->so_luong < 10) {
                     $sptontaitronggio->fill([
                         'so_luong' => $sptontaitronggio->so_luong + 1,
                     ]);

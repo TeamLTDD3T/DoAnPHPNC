@@ -13,10 +13,13 @@ class MauController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lstm = Mau::all();
-        return view('pages.color', ['lstm' => $lstm]);
+        $lstmau = Mau::all();
+        if ($request->has('view_deleted')) {
+            $lstmau = Mau::onlyTrashed()->get();
+        }  
+        return view('pages.color', ['lstmau' => $lstmau]);
     }
 
     /**
@@ -93,5 +96,80 @@ class MauController extends Controller
     {
         $mau->delete();
         return Redirect::route('mau.index');
+    }
+
+    public function restore($id)
+    {
+        Mau::withTrashed()->find($id)->restore();
+  
+        return back();
+    }  
+  
+    public function restoreAll()
+    {
+        Mau::onlyTrashed()->restore();
+  
+        return back();
+    }
+
+    public function search(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = '';
+            $maus = Mau::where('ten_mau', 'LIKE', '%' . $request->search . '%')
+            ->get();
+            if ($maus) {
+                foreach ($maus as $key => $mau) {
+                    $output .= '<tr>
+                    <td>' . $mau->id . '</td>
+                    <td>' . $mau->ten_mau . '</td>
+                    <td>' . $mau->created_at . '</td>
+                    <td>' . $mau->updated_at . '</td>
+                    <td style=";width: 20px;">
+                     <a href="'.route('mau.edit', ['mau' => $mau]).'">
+                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-edit"></i></button>
+                     </a>
+                     </td>
+                     <td style="width: 20px;">
+                     <form method="post" action="'.route('mau.destroy', ['mau' => $mau]).'">
+                     '.@csrf_field().'
+                     '.@method_field("DELETE").'
+                     <button type="submit" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-trash"></i></button>
+                     </form>
+                     </td>
+                    </tr>';
+                }
+            }
+
+            return Response($output);
+        }
+    }
+
+    public function searchMauXoa(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = '';
+            $maus = Mau::where('ten_mau', 'LIKE', '%' . $request->search . '%')
+            ->onlyTrashed()
+            ->get();
+            if ($maus) {
+                foreach ($maus as $key => $mau) {
+                    $output .= '<tr>
+                    <td>' . $mau->id . '</td>
+                    <td>' . $mau->ten_mau . '</td>
+                    <td>' . $mau->created_at . '</td>
+                    <td>' . $mau->updated_at . '</td>
+                    <td>' . $mau->deleted_at . '</td>
+                    <td style=";width: 20px;">
+                     <a href="'.route('mau.restore', $mau->id).'">
+                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-redo"></i></button>
+                     </a>
+                     </td>
+                    </tr>';
+                }
+            }
+
+            return Response($output);
+        }
     }
 }

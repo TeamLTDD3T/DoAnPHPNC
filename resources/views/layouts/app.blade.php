@@ -150,7 +150,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/producttype" class="nav-link">
+                            <a href="{{ route('loaiSanPham.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-tags"></i>
                                 <p>
                                     Product Types
@@ -178,6 +178,14 @@
                                 <i class="nav-icon fas fa-heart"></i>
                                 <p>
                                     Wishlist
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('banner.index') }}" class="nav-link">
+                                <i class="nav-icon far fa-images"></i>
+                                <p>
+                                    Banners
                                 </p>
                             </a>
                         </li>

@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SanPhamController;
 use App\Http\Controllers\MauController;
 use App\Http\Controllers\ThuongHieuController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\HinhAnhController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\RecoverPasswordController;
+use App\Http\Controllers\BannerController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -54,12 +56,10 @@ Route::get('logout',[AuthController::class,'logout'])->name('logout');
 
 Route::post('login',[AuthController::class,'authenticate'])->name('login');
 
-Route::get('home', function () {
-    return view('pages.home');
-})->middleware('CheckLogout');
-
-
-Route::get('/producttype',[LoaiSanPhamController::class,'index']);
+// Route::get('home', function () {
+//     return view('pages.home');
+// });
+Route::get('home',[HomeController::class,'index'])->name('logout')->middleware('CheckLogout');
 
 Route::resource('sanPham', SanPhamController::class);
 
@@ -93,11 +93,37 @@ Route::get('chiTietSanPham/restore/all/{id}', [ChiTietSanPhamController::class, 
 
 Route::resource('mau', MauController::class);
 
+Route::get('/searchMau', [MauController::class, 'search'])->name('mau.search');
+
+Route::get('/searchMauXoa', [MauController::class, 'searchMauXoa'])->name('mauXoa.search');
+
+Route::get('mau/restore/one/{id}', [MauController::class, 'restore'])->name('mau.restore');
+
+Route::get('mau/restore/all/{id}', [MauController::class, 'restoreAll'])->name('mau.restore.all');
+
 Route::resource('thuongHieu',ThuongHieuController::class);
+
+Route::get('/searchThuongHieu', [ThuongHieuController::class, 'search'])->name('thuongHieu.search');
+
+Route::get('/searchThuongHieuXoa', [ThuongHieuController::class, 'searchThuongHieuXoa'])->name('thuongHieuXoa.search');
+
+Route::get('thuongHieu/restore/one/{id}', [ThuongHieuController::class, 'restore'])->name('thuongHieu.restore');
+
+Route::get('thuongHieu/restore/all/{id}', [ThuongHieuController::class, 'restoreAll'])->name('thuongHieu.restore.all');
 
 Route::resource('danhGia',DanhGiaController::class);
 
+Route::get('/searchDanhGia', [DanhGiaController::class, 'search'])->name('danhGia.search');
+
+Route::get('/searchDanhGiaXoa', [DanhGiaController::class, 'searchDanhGiaXoa'])->name('danhGiaXoa.search');
+
+Route::get('danhGia/restore/one/{id}', [DanhGiaController::class, 'restore'])->name('danhGia.restore');
+
+Route::get('danhGia/restore/all/{id}', [DanhGiaController::class, 'restoreAll'])->name('danhGia.restore.all');
+
 Route::resource('donHang',DonHangController::class);
+
+Route::get('/searchDonHang', [DonHangController::class, 'search'])->name('donHang.search');
 
 Route::resource('taiKhoan', TaiKhoanController::class);
 
@@ -143,12 +169,15 @@ Route::get('hinhAnh/restore/one/{id}', [HinhAnhController::class, 'restore'])->n
 
 Route::get('hinhAnh/restore/all/{id}', [HinhAnhController::class, 'restoreAll'])->name('hinhAnh.restore.all');
 
-// Route::get('/adddetailproduct', function () {
-//     return view('add_detail_product');
-// });
-// Route::get('/editdetailproduct', function () {
-//     return view('edit_detail_product');
-// });
+Route::resource('banner', BannerController::class);
+
+Route::get('/searchBanner', [BannerController::class, 'search'])->name('banner.search');
+
+Route::get('/searchBannerXoa', [BannerController::class, 'searchBannerXoa'])->name('bannerXoa.search');
+
+Route::get('banner/restore/one/{id}', [BannerController::class, 'restore'])->name('banner.restore');
+
+Route::get('banner/restore/all/{id}', [BannerController::class, 'restoreAll'])->name('banner.restore.all');
 
 
 

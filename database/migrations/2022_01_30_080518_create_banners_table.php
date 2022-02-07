@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateYeuThichesTable extends Migration
+class CreateBannersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateYeuThichesTable extends Migration
      */
     public function up()
     {
-        Schema::create('yeu_thiches', function (Blueprint $table) {
+        Schema::create('banners', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('tai_khoan_id');//Khóa ngoại
-            $table->unsignedBigInteger('chi_tiet_san_pham_id');//Khóa ngoại
-            $table->integer('trang_thai');
+            $table->string('ten_banner');
+            $table->string('hinh_anh_banner');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -29,6 +29,6 @@ class CreateYeuThichesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('yeu_thiches');
+        Schema::dropIfExists('banners');
     }
 }

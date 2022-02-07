@@ -13,10 +13,13 @@ class ThuongHieuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $lstth=ThuongHieu::all();
-        return view('pages.brand',['lstth'=>$lstth]);
+        $lstth = ThuongHieu::all();
+        if ($request->has('view_deleted')) {
+            $lstth = ThuongHieu::onlyTrashed()->get();
+        }
+        return view('pages.brand', ['lstth' => $lstth]);
     }
 
     /**
@@ -37,9 +40,9 @@ class ThuongHieuController extends Controller
      */
     public function store(Request $request)
     {
-        $thuongHieu= new ThuongHieu;
+        $thuongHieu = new ThuongHieu;
         $thuongHieu->fill([
-            'ten_thuong_hieu'=>$request->input('tenthuonghieu'),
+            'ten_thuong_hieu' => $request->input('tenthuonghieu'),
         ]);
         $thuongHieu->save();
         return Redirect::route('thuongHieu.index');
@@ -64,7 +67,7 @@ class ThuongHieuController extends Controller
      */
     public function edit(ThuongHieu $thuongHieu)
     {
-        return view('edit.edit_brand',['thuongHieu'=>$thuongHieu]);
+        return view('edit.edit_brand', ['thuongHieu' => $thuongHieu]);
     }
 
     /**
@@ -77,7 +80,7 @@ class ThuongHieuController extends Controller
     public function update(Request $request, ThuongHieu $thuongHieu)
     {
         $thuongHieu->fill([
-            'ten_thuong_hieu'=>$request->input('tenthuonghieu'),
+            'ten_thuong_hieu' => $request->input('tenthuonghieu'),
         ]);
         $thuongHieu->save();
         return Redirect::route('thuongHieu.index');
@@ -93,5 +96,77 @@ class ThuongHieuController extends Controller
     {
         $thuongHieu->delete();
         return Redirect::route('thuongHieu.index');
+    }
+
+    public function restore($id)
+    {
+        ThuongHieu::withTrashed()->find($id)->restore();
+
+        return back();
+    }
+
+    public function restoreAll()
+    {
+        ThuongHieu::onlyTrashed()->restore();
+
+        return back();
+    }
+
+    public function search(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = '';
+            $brands = ThuongHieu::where('ten_thuong_hieu', 'LIKE', '%' . $request->search . '%')->get();
+            if ($brands) {
+                foreach ($brands as $key => $th) {
+                    $output .= '<tr>
+                    <td>' . $th->id . '</td>
+                    <td>' . $th->ten_thuong_hieu . '</td>
+                    <td>' . $th->created_at . '</td>
+                    <td>' . $th->updated_at . '</td>
+                    <td style=";width: 20px;">
+                        <a href="' . route('thuongHieu.edit', ['thuongHieu' => $th]) . '">
+                            <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-edit"></i></button>
+                        </a>
+                    </td>
+                    <td style="width: 20px;">
+                        <form method="post" action="' . route('thuongHieu.destroy', ['thuongHieu' => $th]) . '">
+                        ' . @csrf_field() . '
+                        ' . @method_field("DELETE") . '
+                            <button type="submit" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </td>
+                    </tr>';
+                }
+            }
+
+            return Response($output);
+        }
+    }
+
+    public function searchThuongHieuXoa(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = '';
+            $brands = ThuongHieu::where('ten_thuong_hieu', 'LIKE', '%' . $request->search . '%')->onlyTrashed()->get();
+            if ($brands) {
+                foreach ($brands as $key => $th) {
+                    $output .= '<tr>
+                    <td>' . $th->id . '</td>
+                    <td>' . $th->ten_thuong_hieu . '</td>
+                    <td>' . $th->created_at . '</td>
+                    <td>' . $th->updated_at . '</td>
+                    <td>' . $th->deleted_at . '</td>
+                    <td style=";width: 20px;">
+                     <a href="' . route('thuongHieu.restore', $th->id) . '">
+                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-redo"></i></button>
+                     </a>
+                     </td>
+                    </tr>';
+                }
+            }
+
+            return Response($output);
+        }
     }
 }

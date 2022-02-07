@@ -54,6 +54,7 @@
                                             <th>Size</th>
                                             <th>Quantity</th>
                                             <th>Price</th>
+                                            <th>Review Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -66,6 +67,11 @@
                                             <td>{{ $ctdh->ten_size }}</td>
                                             <td>{{ $ctdh->so_luong }}</td>
                                             <td>{{ $ctdh->gia }}</td>
+                                            @if($ctdh->trang_thai_danh_gia == 1)
+                                                <td>Reviewed</td>
+                                                @else
+                                                <td>Not Yet Review</td>   
+                                                @endif
                                         </tr>
                                         @endforeach
                                     </tbody>

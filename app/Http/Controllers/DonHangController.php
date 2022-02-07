@@ -97,4 +97,66 @@ class DonHangController extends Controller
     {
         //
     }
+
+    public function search(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = '';
+            $donhangs = DonHang::join('tai_khoans as khach', 'khach.id', '=', 'don_hangs.tai_khoan_id')
+            ->join('tai_khoans as nv', 'nv.id', '=', 'don_hangs.tai_khoan_nhan_vien_id')
+            ->select('khach.email as khachemail','nv.email as nvemail', 'don_hangs.*')
+            ->where('khach.email', 'LIKE', '%' . $request->search . '%')
+            ->get();
+            if ($donhangs) {
+                foreach ($donhangs as $key => $dh) {
+                    $trangthai='';
+                    switch($dh->trang_thai){
+                        case(-1):
+                            $trangthai='Cart';
+                            break;
+                        case(0):
+                            $trangthai='Processing';
+                            break;
+                        case(1):
+                            $trangthai='Processed';
+                            break;
+                        case(2):
+                            $trangthai='Delivering';
+                            break;
+                        case(3):
+                            $trangthai='Delivered';
+                            break;
+                        default:
+                            $trangthai='Canceled';
+                    }
+                    $output .= '<tr>
+                    <td>' . $dh->id . '</td>
+                    <td>' . $dh->ten_nguoi_nhan . '</td>
+                    <td>' . $dh->dia_chi_nguoi_nhan . '</td>
+                    <td>' . $dh->sdt_nguoi_nhan . '</td>
+                    <td>' . $dh->ghi_chu . '</td>
+                    <td>' . $dh->khachemail . '</td>
+                    <td>' . $dh->nvemail . '</td>
+                    <td>' . $trangthai . '</td>
+                    <td>' . $dh->created_at . '</td>
+                    <td>' . $dh->updated_at . '</td>
+                    <td style=";width: 20px;">
+                     <a href="'.route('donHang.edit', ['donHang' => $dh]).'">
+                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-edit"></i></button>
+                     </a>
+                     </td>
+                     <td style="width: 20px;">
+                     <form method="post" action="'.route('donHang.destroy', ['donHang' => $dh]).'">
+                     '.@csrf_field().'
+                     '.@method_field("DELETE").'
+                     <button type="submit" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-trash"></i></button>
+                     </form>
+                     </td>
+                    </tr>';
+                }
+            }
+
+            return Response($output);
+        }
+    }
 }

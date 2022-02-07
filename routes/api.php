@@ -7,6 +7,9 @@ use App\Http\Controllers\APILoaiSanPhamController;
 use App\Http\Controllers\APITaiKhoanController;
 use App\Http\Controllers\APIDonHangController;
 use App\Http\Controllers\APISizeController;
+use App\Http\Controllers\APIYeuThichController;
+use App\Http\Controllers\APIDanhGiaController;
+use App\Http\Controllers\APIBannerController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -42,6 +45,8 @@ Route::get('san-pham/danh-sach-theo-loai/{loaiSanPham}', [APISanPhamController::
 
 Route::get('loai-san-pham/danh-sach-loai-sp', [APILoaiSanPhamController::class, 'layDanhSachLoaiSP']);
 
+Route::get('banner/danh-sach-banner', [APIBannerController::class, 'layDanhSachBanner']);
+
 Route::post('gio-hang/them-san-pham/{chiTietSanPham}', [APIDonHangController::class, 'themSanPhamVaoGio']);
 
 Route::get('gio-hang/lay-gio-hang/{taiKhoan}', [APIDonHangController::class, 'layGioHang']);
@@ -68,3 +73,28 @@ Route::post('don-hang/lay-ct-don-hang', [APIDonHangController::class, 'layCTDonH
 
 Route::post('don-hang/huy-don-hang', [APIDonHangController::class, 'huyDonHang']);
 
+Route::post('search', [APISanPhamController::class, 'search']);
+
+Route::post('tai-khoan/doi-mat-khau', [APITaiKhoanController::class, 'doiMatKhau']);
+
+Route::post('tai-khoan/cap-nhat-tai-khoan', [APITaiKhoanController::class, 'capNhatTaiKhoan']);
+
+Route::post('yeu-thich/them-hoac-xoa-yeu-thich', [APIYeuThichController::class, 'themHoacXoaYeuThich']);
+
+Route::post('yeu-thich/lay-trang-thai', [APIYeuThichController::class, 'layTrangThai']);
+
+Route::post('yeu-thich/lay-danh-sach-yeu-thich', [APIYeuThichController::class, 'layDanhSachYeuThich']);
+
+Route::post('yeu-thich/xoa-yeu-thich', [APIYeuThichController::class, 'xoaYeuThich']);
+
+Route::post('danh-gia/lay-danh-sach-chua-danh-gia', [APIDanhGiaController::class, 'layDanhSachChuaDanhGia']);
+
+Route::post('danh-gia/lay-danh-sach-da-danh-gia', [APIDanhGiaController::class, 'layDanhSachDaDanhGia']);
+
+Route::post('danh-gia/them-danh-gia', [APIDanhGiaController::class, 'themDanhGia']);
+
+Route::post('danh-gia/lay-danh-gia-theo-san-pham', [APIDanhGiaController::class, 'layDanhGiaTheoSanPham']);
+
+Route::post('danh-gia/trung-binh-sao', [APIDanhGiaController::class, 'trungBinhSao']);
+
+Route::post('tai-khoan/dang-nhap-bang-social', [APITaiKhoanController::class, 'dangNhapBangSocial']);

@@ -27,16 +27,14 @@
                         <div class="card-header">
                             <h3 class="card-title">Order Management</h3>
                             <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 150px;">
-                                    <input type="text" name="table_search" class="form-control float-right"
-                                        placeholder="Search">
+                                <div class="input-group input-group-sm" style="width: 180px;">
+                                    <input type="text" name="table_search" class="form-control float-right" id="search" name="search"
+                                        placeholder="Search by UserEmail">
 
                                     <div class="input-group-append">
-
                                         <button type="submit" class="btn btn-default">
                                             <i class="fas fa-search"></i>
                                         </button>
-
                                     </div>
                                 </div>
                             </div>
@@ -132,4 +130,20 @@
         </div><!-- /.container-fluid -->
     </section>
 </div>
+<script type="text/javascript">
+$('#search').on('keyup',function(){
+            $value = $(this).val();
+    $.ajax({
+        type: 'get',
+        url: '{{ URL::to('searchDonHang') }}',
+        data: {
+            'search': $value
+        },
+        success:function(data){
+            $('tbody').html(data);
+        }
+    });
+        $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+})
+    </script>
 @endsection

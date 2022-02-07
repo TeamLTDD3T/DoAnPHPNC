@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ChiTietSanPham;
 use App\Models\LoaiSanPham;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class APISanPhamController extends Controller
 {
@@ -89,6 +90,26 @@ class APISanPhamController extends Controller
         if (!empty($danhSach))
             return response()->json($danhSach, 200);
         return response()->json($danhSach, 404);
+    }
+
+    function search(Request $request){
+        $idLSP = $request['idLSP'];
+        if($request['idLSP'] == 0)
+        {
+            $idLSP ='';
+        }
+        $sanPham = SanPham::join('chi_tiet_san_phams', 'chi_tiet_san_phams.san_pham_id', '=', 'san_phams.id')
+        ->join('hinh_anhs', 'hinh_anhs.chi_tiet_san_pham_id', '=', 'chi_tiet_san_phams.id')
+        ->join('thuong_hieus', 'thuong_hieus.id', '=', 'san_phams.thuong_hieu_id')
+        ->select('chi_tiet_san_phams.id','san_phams.ten_san_pham','san_phams.mo_ta','san_phams.gia','san_phams.loai_san_pham_id','san_phams.thuong_hieu_id','thuong_hieus.ten_thuong_hieu', 'hinh_anhs.hinh_anh')
+        ->where('hinh_anhs.hinh_dai_dien', '=', 1)
+        ->where('ten_san_pham','LIKE','%'.$request['query'].'%')
+        ->where('san_phams.loai_san_pham_id','LIKE','%'.$idLSP.'%')
+        ->get();
+        if ($sanPham != null) {
+            return response()->json($sanPham, 200);
+        }
+        return response()->json('', 404);
     }
 
 }

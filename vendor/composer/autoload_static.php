@@ -513,11 +513,13 @@ class ComposerStaticInitcc1ed742dcb7ac372f1df45a9ae82b4b
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\APIDanhGiaController' => __DIR__ . '/../..' . '/app/Http/Controllers/APIDanhGiaController.php',
         'App\\Http\\Controllers\\APIDonHangController' => __DIR__ . '/../..' . '/app/Http/Controllers/APIDonHangController.php',
         'App\\Http\\Controllers\\APILoaiSanPhamController' => __DIR__ . '/../..' . '/app/Http/Controllers/APILoaiSanPhamController.php',
         'App\\Http\\Controllers\\APISanPhamController' => __DIR__ . '/../..' . '/app/Http/Controllers/APISanPhamController.php',
         'App\\Http\\Controllers\\APISizeController' => __DIR__ . '/../..' . '/app/Http/Controllers/APISizeController.php',
         'App\\Http\\Controllers\\APITaiKhoanController' => __DIR__ . '/../..' . '/app/Http/Controllers/APITaiKhoanController.php',
+        'App\\Http\\Controllers\\APIYeuThichController' => __DIR__ . '/../..' . '/app/Http/Controllers/APIYeuThichController.php',
         'App\\Http\\Controllers\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/AuthController.php',
         'App\\Http\\Controllers\\ChiTietDonHangController' => __DIR__ . '/../..' . '/app/Http/Controllers/ChiTietDonHangController.php',
         'App\\Http\\Controllers\\ChiTietSanPhamController' => __DIR__ . '/../..' . '/app/Http/Controllers/ChiTietSanPhamController.php',

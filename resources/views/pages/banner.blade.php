@@ -6,12 +6,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Brand</h1>
+                        <h1 class="m-0">Banner</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="home">Home</a></li>
-                            <li class="breadcrumb-item active">Brand</li>
+                            <li class="breadcrumb-item active">Banner</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -26,34 +26,30 @@
                         <div class="card">
                             <div class="card-header">
                                 @if (request()->has('view_deleted'))
-                                    <a href="{{ route('thuongHieu.index') }}" class="btn btn-info"
-                                        style="margin-left:20px;margin-top: -0.3rem;">View All Brands</a>
-                                    <a href="{{ route('thuongHieu.restore.all', 0) }}" class="btn btn-success"
+                                    <a href="{{ route('banner.index') }}" class="btn btn-info"
+                                        style="margin-left:20px;margin-top: -0.3rem;">View All Banners</a>
+                                    <a href="{{ route('banner.restore.all', 0) }}" class="btn btn-success"
                                         style="margin-left:20px;margin-top: -0.3rem;">Restore All</a>
                                 @else
-                                    <a href="{{ route('thuongHieu.index', ['view_deleted' => 'DeletedRecords']) }}"
+                                    <a href="{{ route('banner.index', ['view_deleted' => 'DeletedRecords']) }}"
                                         class="btn btn-primary">View Delete Records</a>
                                 @endif
                                 <div style="float: right;margin-left:20px;margin-top: -0.3rem;width: 100px;">
-                                    <a href="{{ route('thuongHieu.create') }}">
+                                    <a href='{{ route('banner.create') }}'>
                                         <button type="button" class="btn btn-block btn-default btn-sm">Add</button>
                                     </a>
                                 </div>
                                 <div class="card-tools">
                                     <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" name="table_search" class="form-control float-right" id="search"
-                                            name="search" placeholder="Search by Name">
-
+                                        <input type="text" name="table_search" class="form-control float-right"
+                                            placeholder="Search by Name" id="search" name="search">
                                         <div class="input-group-append">
-
                                             <button type="submit" class="btn btn-default">
                                                 <i class="fas fa-search"></i>
                                             </button>
-
                                         </div>
                                     </div>
                                 </div>
-
 
                             </div>
                             <!-- /.card-header -->
@@ -63,8 +59,9 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Name</th>
-                                            <th>Created At</th>
-                                            <th>Updated At</th>
+                                            <th>Picture</th>
+                                            <th>Created_at</th>
+                                            <th>Updated_at</th>
                                             @if (request()->has('view_deleted'))
                                                 <th>Delete At</th>
                                                 <th>Restore</th>
@@ -75,17 +72,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if(count($lstth) > 0)
-                                        @foreach ($lstth as $th)
-                                            <tr>
-                                                <td>{{ $th->id }}</td>
-                                                <td>{{ $th->ten_thuong_hieu}}</td>
-                                                <td>{{ $th->created_at }}</td>
-                                                <td>{{ $th->updated_at }}</td>
-                                                @if (request()->has('view_deleted'))
-                                                        <td>{{ $th->deleted_at }}</td>
+                                        @if (count($lstbanner) > 0)
+                                            @foreach ($lstbanner as $banner)
+                                                <tr>
+                                                    <td>{{ $banner->id }}</td>
+                                                    <td>{{ $banner->ten_banner }}</td>
+                                                    <td><img src="{{ asset("/storage/$banner->hinh_anh_banner") }}"
+                                                            style="width: 100px;"></td>
+                                                    <td>{{ $banner->created_at }}</td>
+                                                    <td>{{ $banner->updated_at }}</td>
+                                                    @if (request()->has('view_deleted'))
+                                                        <td>{{ $banner->deleted_at }}</td>
                                                         <td>
-                                                            <a href="{{ route('thuongHieu.restore', $th->id) }}">
+                                                            <a href="{{ route('banner.restore', $banner->id) }}">
                                                                 <button type="button"
                                                                     class="btn btn-default btn-sm checkbox-toggle"><i
                                                                         class="fas fa-redo"></i>
@@ -94,7 +93,8 @@
                                                         </td>
                                                     @else
                                                         <td style=";width: 20px;">
-                                                            <a href="{{ route('thuongHieu.edit', ['thuongHieu' => $th]) }}">
+                                                            <a
+                                                                href='{{ route('banner.edit', ['banner' => $banner]) }}'>
                                                                 <button type="button"
                                                                     class="btn btn-default btn-sm checkbox-toggle"><i
                                                                         class="fas fa-edit"></i>
@@ -103,7 +103,7 @@
                                                         </td>
                                                         <td style="width: 20px;">
                                                             <form method="post"
-                                                                action="{{ route('thuongHieu.destroy', ['thuongHieu' => $th]) }}">
+                                                                action="{{ route('banner.destroy', ['banner' => $banner]) }}">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit"
@@ -113,12 +113,14 @@
                                                             </form>
                                                         </td>
                                                     @endif
-                                            </tr>
-                                        @endforeach
+                                                </tr>
+                                            @endforeach
                                         @else
-                                        <tr>
-                                            <td colspan="100" class="text-center" style="font-style: italic;font-weight: bold;color: #4f5962;">No Post Found</td>
-                                        </tr>
+                                            <tr>
+                                                <td colspan="100" class="text-center"
+                                                    style="font-style: italic;font-weight: bold;color: #4f5962;">No Banner
+                                                    Found</td>
+                                            </tr>
                                         @endif
                                     </tbody>
                                 </table>
@@ -140,10 +142,22 @@
         }
         $('#search').on('keyup', function() {
             $value = $(this).val();
-            if ($flag == 0) {
+            if ($flag == 0){
+                $.ajax({
+                type: 'get',
+                url: '{{ URL::to('searchBannerXoa') }}',
+                data: {
+                    'search': $value
+                },
+                success: function(data) {
+                    $('tbody').html(data);
+                }
+            });
+            }
+            else {
                 $.ajax({
                     type: 'get',
-                    url: '{{ URL::to('searchThuongHieuXoa') }}',
+                    url: '{{ URL::to('searchBanner') }}',
                     data: {
                         'search': $value
                     },
@@ -152,18 +166,7 @@
                     }
                 });
             }
-            else{
-                $.ajax({
-                    type: 'get',
-                    url: '{{ URL::to('searchThuongHieu') }}',
-                    data: {
-                        'search': $value
-                    },
-                    success: function(data) {
-                        $('tbody').html(data);
-                    }
-                });
-            }
+
         })
         $.ajaxSetup({
             headers: {
@@ -171,4 +174,4 @@
             }
         });
     </script>
-    @endsection
+@endsection

@@ -52,6 +52,7 @@
                                             <th>Product's Name</th>
                                             <th>Color</th>
                                             <th>Size</th>
+                                            <th>Status</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
                                         </tr>
@@ -65,6 +66,11 @@
                                                 <td>{{ $yt->ten_san_pham }}</td>
                                                 <td>{{ $yt->ten_mau }}</td>
                                                 <td>{{ $yt->ten_size }}</td>
+                                                @if($yt->trang_thai == 1)
+                                                <td>Favorite</td>
+                                                @else
+                                                <td>Not Favorite</td>   
+                                                @endif
                                                 <td>{{ $yt->created_at }}</td>
                                                 <td>{{ $yt->updated_at }}</td>
                                             </tr>

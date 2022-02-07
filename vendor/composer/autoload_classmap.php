@@ -8,11 +8,13 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Http\\Controllers\\APIDanhGiaController' => $baseDir . '/app/Http/Controllers/APIDanhGiaController.php',
     'App\\Http\\Controllers\\APIDonHangController' => $baseDir . '/app/Http/Controllers/APIDonHangController.php',
     'App\\Http\\Controllers\\APILoaiSanPhamController' => $baseDir . '/app/Http/Controllers/APILoaiSanPhamController.php',
     'App\\Http\\Controllers\\APISanPhamController' => $baseDir . '/app/Http/Controllers/APISanPhamController.php',
     'App\\Http\\Controllers\\APISizeController' => $baseDir . '/app/Http/Controllers/APISizeController.php',
     'App\\Http\\Controllers\\APITaiKhoanController' => $baseDir . '/app/Http/Controllers/APITaiKhoanController.php',
+    'App\\Http\\Controllers\\APIYeuThichController' => $baseDir . '/app/Http/Controllers/APIYeuThichController.php',
     'App\\Http\\Controllers\\AuthController' => $baseDir . '/app/Http/Controllers/AuthController.php',
     'App\\Http\\Controllers\\ChiTietDonHangController' => $baseDir . '/app/Http/Controllers/ChiTietDonHangController.php',
     'App\\Http\\Controllers\\ChiTietSanPhamController' => $baseDir . '/app/Http/Controllers/ChiTietSanPhamController.php',

@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class DanhGia extends Model
+class Banner extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
-    protected $guarded = []; 
+    use HasFactory,SoftDeletes;
+    protected $guarded = [];
 }

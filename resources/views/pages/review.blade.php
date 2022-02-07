@@ -25,18 +25,21 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Review Management</h3>
+                                @if(request()->has('view_deleted'))
+                                    <a href="{{ route('danhGia.index') }}" class="btn btn-info" style="margin-left:20px;margin-top: -0.3rem;">View All Reviews</a>
+                                    <a href="{{ route('danhGia.restore.all',0) }}" class="btn btn-success" style="margin-left:20px;margin-top: -0.3rem;">Restore All</a>
+                                @else
+                                    <a href="{{ route('danhGia.index', ['view_deleted' => 'DeletedRecords']) }}" class="btn btn-primary">View Delete Records</a>
+                                @endif
                                 <div class="card-tools">
-                                    <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" name="table_search" class="form-control float-right"
-                                            placeholder="Search">
+                                    <div class="input-group input-group-sm" style="width: 180px;">
+                                        <input type="text" name="table_search" class="form-control float-right" id="search" name="search"
+                                            placeholder="Search by Email">
 
                                         <div class="input-group-append">
-
                                             <button type="submit" class="btn btn-default">
                                                 <i class="fas fa-search"></i>
                                             </button>
-
                                         </div>
                                     </div>
                                 </div>
@@ -54,13 +57,18 @@
                                             <th>Product Name</th>
                                             <th>Color</th>
                                             <th>Size</th>
-                                            <th>Status</th>
                                             <th>Created At</th>
                                             <th>Updated At</th>
+                                            @if(request()->has('view_deleted'))
+                                            <th>Delete At</th>
+                                            <th>Restore</th>
+                                            @else
                                             <th>Delete</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @if(count($lstdg) > 0)
                                         @foreach ($lstdg as $dg)
                                             <tr>
                                                 <td>{{ $dg->id }}</td>
@@ -70,9 +78,19 @@
                                                 <td>{{ $dg->ten_san_pham }}</td>
                                                 <td>{{ $dg->ten_mau }}</td>
                                                 <td>{{ $dg->ten_size }}</td>
-                                                <td><span class="tag tag-success">Active</span></td>
                                                 <td>{{ $dg->created_at }}</td>
                                                 <td>{{ $dg->updated_at }}</td>
+                                                @if(request()->has('view_deleted'))
+                                                <td>{{ $dg->deleted_at }}</td>
+                                                <td>
+                                                    <a href="{{ route('danhGia.restore', $dg->id) }}" >
+                                                        <button type="button"
+                                                            class="btn btn-default btn-sm checkbox-toggle"><i
+                                                                class="fas fa-redo"></i>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                                @else
                                                 <td style="width: 20px;">
                                                     <form method="post"
                                                         action="{{ route('danhGia.destroy', ['danhGium' => $dg]) }}">
@@ -84,8 +102,14 @@
                                                         </button>
                                                     </form>
                                                 </td>
+                                                @endif
                                             </tr>
                                         @endforeach
+                                        @else
+                                        <tr>
+                                            <td colspan="100" class="text-center" style="font-style: italic;font-weight: bold;color: #4f5962;">No Post Found</td>
+                                        </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -97,4 +121,43 @@
             </div><!-- /.container-fluid -->
         </section>
     </div>
+
+    <script type="text/javascript">
+        $flag = <?php echo "'I" . request()->has('view_deleted') . "I'"; ?>;
+            if ($flag == "II") {
+                $flag = 1;
+            } else {
+                $flag = 0;
+            }
+            $('#search').on('keyup',function(){
+                $value = $(this).val();
+                if ($flag == 0) {
+                    $.ajax({
+                        type: 'get',
+                        url: '{{ URL::to('searchDanhGiaXoa') }}',
+                        data: {
+                            'search': $value
+                        },
+        
+                        success: function(data) {
+                            $('tbody').html(data);
+                        }
+                    });
+                }
+                else {
+                    $.ajax({
+                    type: 'get',
+                    url: '{{ URL::to('searchDanhGia') }}',
+                    data: {
+                        'search': $value
+                    },
+                    success:function(data){
+                        $('tbody').html(data);
+                    }
+                });
+                }
+                
+            })
+            $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+        </script>
     @endsection

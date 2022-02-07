@@ -17,6 +17,7 @@ class CreateChiTietDonHangsTable extends Migration
             $table->id();
             $table->integer('so_luong');
             $table->float('gia');
+            $table->integer('trang_thai_danh_gia');
             $table->unsignedBigInteger('don_hang_id');//Khóa ngoại
             $table->unsignedBigInteger('chi_tiet_san_pham_id');//Khóa ngoại
             $table->timestamps();

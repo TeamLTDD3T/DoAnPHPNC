@@ -162,7 +162,7 @@ class LoaiTaiKhoanController extends Controller
                     <td>' . $ltk->deleted_at . '</td>
                     <td style=";width: 20px;">
                      <a href="'.route('loaiTaiKhoan.restore', $ltk->id).'">
-                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-edit"></i></button>
+                     <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fas fa-redo"></i></button>
                      </a>
                      </td>
                     </tr>';

@@ -80,4 +80,57 @@ class APITaiKhoanController extends Controller
         }
         return response()->json('',404);
     }
+
+    function doiMatKhau(Request $request){
+        $taiKhoan = []; 
+        if(Auth::attempt(['email' => $request['email'], 'password' => $request['matKhau']]))
+        {
+            $taiKhoan = TaiKhoan::where('email',$request['email'])->first();
+            $taiKhoan->fill([
+                'password'=> bcrypt($request['matKhauMoi']),
+            ]);
+            $taiKhoan->save();
+            return response()->json($taiKhoan, 200);
+        }
+        return response()->json($taiKhoan, 404);  
+    }
+
+    function capNhatTaiKhoan(Request $request){
+        $taiKhoan = [];
+        $taiKhoan = TaiKhoan::where('email',$request['email'])->first();
+        $taiKhoan->fill([
+            'hoten'=>$request['hoTen'],
+            'ngaysinh'=>$request['ngaySinh'],
+            'diachi'=>$request['diaChi'],
+            'sdt'=>$request['sdt'],
+        ]);
+        $taiKhoan->save();
+        if(!empty($taiKhoan)){
+            return response()->json($taiKhoan, 200);
+        }
+        return response()->json($taiKhoan, 404);
+    }
+
+    function dangNhapBangSocial(Request $request){
+        $taiKhoan = TaiKhoan::where('email',$request['email'])->first();
+        if(empty($taiKhoan)){
+            $taiKhoan = TaiKhoan::insert([
+                'email' => $request['email'],
+                'hoten' => $request['name'],
+                'password' => bcrypt(Str::random(50)),
+                'ngaysinh' => Carbon::now('Asia/Ho_Chi_Minh'),
+                'diachi' => '',
+                'sdt' => '',
+                'loai_tai_khoan_id' => 2,
+                'token'=>Str::random(60),
+                'created_at'=>Carbon::now('Asia/Ho_Chi_Minh'),
+                'updated_at'=>null,
+            ]);
+            if ($taiKhoan != null) {
+                return response()->json($taiKhoan, 200);
+            }
+            return response()->json($taiKhoan, 404);
+        }
+        return response()->json($taiKhoan, 200);
+    }
 }
