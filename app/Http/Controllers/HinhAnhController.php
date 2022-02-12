@@ -47,7 +47,7 @@ class HinhAnhController extends Controller
      */
     public function create()
     {
-        $lstctsp = SanPham::all();
+        $lstctsp = ChiTietSanPham::all();
         return view('add.add_picture', ['lstctsp' => $lstctsp]);
     }
 
@@ -91,7 +91,7 @@ class HinhAnhController extends Controller
      */
     public function edit(HinhAnh $hinhAnh)
     {
-        $lstctsp = SanPham::all();
+        $lstctsp = ChiTietSanPham::all();
         return view('edit.edit_picture', ['hinhAnh' => $hinhAnh, 'lstctsp' => $lstctsp]);
     }
 

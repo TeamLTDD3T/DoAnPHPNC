@@ -36,10 +36,10 @@ class APIDonHangController extends Controller
                 'so_luong' => 1,
                 'gia' => $sanpham->gia,
                 'don_hang_id' => $donhangid->id,
-                'trang_thai_danh_gia'=> 0,
+                'trang_thai_danh_gia' => 0,
                 'chi_tiet_san_pham_id' => $chiTietSanPham->id,
             ]);
-            if ($chiTietDonHang != true) {
+            if ($chiTietDonHang == true) {
                 return response()->json($chiTietDonHang, 200);
             }
             return response()->json('', 404);
@@ -52,7 +52,7 @@ class APIDonHangController extends Controller
                     'so_luong' => 1,
                     'gia' => $sanpham->gia,
                     'don_hang_id' => $donhangid->id,
-                    'trang_thai_danh_gia'=> 0,
+                    'trang_thai_danh_gia' => 0,
                     'chi_tiet_san_pham_id' => $chiTietSanPham->id,
                 ]);
                 if ($chiTietDonHang != null) {
@@ -118,17 +118,16 @@ class APIDonHangController extends Controller
             ->where('mau_id', $request['mauid'])
             ->select('chi_tiet_san_phams.id')
             ->first();
-        $kiemtra = ChiTietDonHang::where('chi_tiet_don_hangs.chi_tiet_san_pham_id', $idctspupdate->id)->first();
-        // return response()->json($kiemtra, 200);
+        $kiemtra = ChiTietDonHang::where('chi_tiet_don_hangs.id', $chiTietDonHang->id)
+        ->where('chi_tiet_don_hangs.chi_tiet_san_pham_id', $idctspupdate->id)  
+        ->first();
         if (empty($kiemtra)) {
             $ctdh = ChiTietDonHang::where('chi_tiet_don_hangs.id', $chiTietDonHang->id)->first();
             $ctdh->fill([
                 'chi_tiet_san_pham_id' => $idctspupdate->id,
             ]);
             $ctdh->save();
-            if ($ctdh != null) {
-                return response()->json($ctdh, 200);
-            }
+            return response()->json($ctdh, 200);
         }
         return response()->json('', 404);
     }
@@ -165,19 +164,19 @@ class APIDonHangController extends Controller
         $kiemtrasoluongCTDH = ChiTietDonHang::join('don_hangs', 'don_hangs.id', '=', 'chi_tiet_don_hangs.don_hang_id')
             ->join('chi_tiet_san_phams', 'chi_tiet_san_phams.id', '=', 'chi_tiet_don_hangs.chi_tiet_san_pham_id')
             ->join('san_phams', 'san_phams.id', '=', 'chi_tiet_san_phams.san_pham_id')
-            ->join('maus','maus.id','=','chi_tiet_san_phams.mau_id')
-            ->join('sizes','sizes.id','=','chi_tiet_san_phams.size_id')
+            ->join('maus', 'maus.id', '=', 'chi_tiet_san_phams.mau_id')
+            ->join('sizes', 'sizes.id', '=', 'chi_tiet_san_phams.size_id')
             ->where('don_hang_id', $iddonhang->id)
             // ->where('chi_tiet_don_hangs.so_luong', '>' ,'chi_tiet_san_phams.so_luong')
-            ->select('chi_tiet_don_hangs.chi_tiet_san_pham_id','chi_tiet_don_hangs.so_luong', 'san_phams.ten_san_pham','san_phams.ten_san_pham','maus.ten_mau','sizes.ten_size')
+            ->select('chi_tiet_don_hangs.chi_tiet_san_pham_id', 'chi_tiet_don_hangs.so_luong', 'san_phams.ten_san_pham', 'san_phams.ten_san_pham', 'maus.ten_mau', 'sizes.ten_size')
             ->get();
         // return response()->json($kiemtrasoluongCTDH[0]->so_luong,200);
         // 2 1 5
         $kiemtrasoluongCTSP = ChiTietDonHang::join('don_hangs', 'don_hangs.id', '=', 'chi_tiet_don_hangs.don_hang_id')
             ->join('chi_tiet_san_phams', 'chi_tiet_san_phams.id', '=', 'chi_tiet_don_hangs.chi_tiet_san_pham_id')
             ->join('san_phams', 'san_phams.id', '=', 'chi_tiet_san_phams.san_pham_id')
-            ->join('maus','maus.id','=','chi_tiet_san_phams.mau_id')
-            ->join('sizes','sizes.id','=','chi_tiet_san_phams.size_id')
+            ->join('maus', 'maus.id', '=', 'chi_tiet_san_phams.mau_id')
+            ->join('sizes', 'sizes.id', '=', 'chi_tiet_san_phams.size_id')
             ->where('don_hang_id', $iddonhang->id)
             // ->where('chi_tiet_don_hangs.so_luong', '>' , 'chi_tiet_san_phams.so_luong')
             ->select('chi_tiet_san_phams.so_luong')
@@ -186,53 +185,55 @@ class APIDonHangController extends Controller
         // 1 25 25            
         for ($i = 0; $i < count($kiemtrasoluongCTDH); $i++) {
             if ((int)$kiemtrasoluongCTDH[$i]->so_luong > (int)$kiemtrasoluongCTSP[$i]->so_luong) {
-                $list[] = $kiemtrasoluongCTDH[$i]->ten_san_pham.' - '.$kiemtrasoluongCTDH[$i]->ten_mau.' - '.$kiemtrasoluongCTDH[$i]->ten_size;
+                $list[] = $kiemtrasoluongCTDH[$i]->ten_san_pham . ' - ' . $kiemtrasoluongCTDH[$i]->ten_mau . ' - ' . $kiemtrasoluongCTDH[$i]->ten_size;
             }
         }
-        if(empty($list))
-        {
-            for ($i=0; $i < count($kiemtrasoluongCTDH); $i++) {
-                $chiTietSanPham = ChiTietSanPham::where('id',$kiemtrasoluongCTDH[$i]->chi_tiet_san_pham_id)->first();
+        if (empty($list)) {
+            for ($i = 0; $i < count($kiemtrasoluongCTDH); $i++) {
+                $chiTietSanPham = ChiTietSanPham::where('id', $kiemtrasoluongCTDH[$i]->chi_tiet_san_pham_id)->first();
                 $chiTietSanPham->fill([
                     'so_luong' => (int)$chiTietSanPham->so_luong - (int)$kiemtrasoluongCTDH[$i]->so_luong,
                 ]);
                 $chiTietSanPham->save();
             }
             $iddonhang->fill([
-                'ten_nguoi_nhan'=>$request['tenNguoiNhan'],
-                'dia_chi_nguoi_nhan'=>$request['diaChiNguoiNhan'],
-                'sdt_nguoi_nhan'=>$request['sdtNguoiNhan'],
-                'ghi_chu'=>$request['ghiChu'],
-                'trang_thai'=> 0,
+                'ten_nguoi_nhan' => $request['tenNguoiNhan'],
+                'dia_chi_nguoi_nhan' => $request['diaChiNguoiNhan'],
+                'sdt_nguoi_nhan' => $request['sdtNguoiNhan'],
+                'ghi_chu' => $request['ghiChu'],
+                'trang_thai' => 0,
             ]);
             $iddonhang->save();
         }
         return response()->json($list, 200);
     }
-    function layDonHang(Request $request){
-        $donhang = DonHang::where('tai_khoan_id',$request['taiKhoanId'])->where('trang_thai','!=',-1)->get();
+    function layDonHang(Request $request)
+    {
+        $donhang = DonHang::where('tai_khoan_id', $request['taiKhoanId'])->where('trang_thai', '!=', -1)->get();
         return response()->json($donhang, 200);
     }
-    function layCTDonHang(Request $request){
+    function layCTDonHang(Request $request)
+    {
         $danhsach = DonHang::join('chi_tiet_don_hangs', 'chi_tiet_don_hangs.don_hang_id', '=', 'don_hangs.id')
-        ->join('chi_tiet_san_phams', 'chi_tiet_san_phams.id', '=', 'chi_tiet_don_hangs.chi_tiet_san_pham_id')
-        ->join('san_phams', 'san_phams.id', '=', 'chi_tiet_san_phams.san_pham_id')
-        ->join('thuong_hieus', 'thuong_hieus.id', '=', 'san_phams.thuong_hieu_id')
-        ->join('sizes','sizes.id','=','chi_tiet_san_phams.size_id')
-        // ->join('hinh_anhs', 'hinh_anhs.chi_tiet_san_pham_id', '=', 'chi_tiet_san_phams.id')
-        ->join('tai_khoans', 'tai_khoans.id', '=', 'don_hangs.tai_khoan_id')
-        ->where('don_hangs.id', $request['donHangId'])
-        // ->where('hinh_anhs.hinh_dai_dien', '=', 1)
-        ->select('chi_tiet_don_hangs.id', 'sizes.ten_size', 'chi_tiet_san_phams.mau_id', 'chi_tiet_don_hangs.chi_tiet_san_pham_id', 'san_phams.ten_san_pham', 'san_phams.gia', 'chi_tiet_don_hangs.so_luong', 'thuong_hieus.ten_thuong_hieu')
-        ->get();
-    if ($danhsach != null) {
-        return response()->json($danhsach, 200);
+            ->join('chi_tiet_san_phams', 'chi_tiet_san_phams.id', '=', 'chi_tiet_don_hangs.chi_tiet_san_pham_id')
+            ->join('san_phams', 'san_phams.id', '=', 'chi_tiet_san_phams.san_pham_id')
+            ->join('thuong_hieus', 'thuong_hieus.id', '=', 'san_phams.thuong_hieu_id')
+            ->join('sizes', 'sizes.id', '=', 'chi_tiet_san_phams.size_id')
+            // ->join('hinh_anhs', 'hinh_anhs.chi_tiet_san_pham_id', '=', 'chi_tiet_san_phams.id')
+            ->join('tai_khoans', 'tai_khoans.id', '=', 'don_hangs.tai_khoan_id')
+            ->where('don_hangs.id', $request['donHangId'])
+            // ->where('hinh_anhs.hinh_dai_dien', '=', 1)
+            ->select('chi_tiet_don_hangs.id', 'sizes.ten_size', 'chi_tiet_san_phams.mau_id', 'chi_tiet_don_hangs.chi_tiet_san_pham_id', 'san_phams.ten_san_pham', 'san_phams.gia', 'chi_tiet_don_hangs.so_luong', 'thuong_hieus.ten_thuong_hieu')
+            ->get();
+        if ($danhsach != null) {
+            return response()->json($danhsach, 200);
+        }
     }
-    }
-    function huyDonHang(Request $request){
-        $donhang = DonHang::where('id',$request['donHangId'])->first();
+    function huyDonHang(Request $request)
+    {
+        $donhang = DonHang::where('id', $request['donHangId'])->first();
         $donhang->fill([
-            'trang_thai'=> 4,
+            'trang_thai' => 4,
         ]);
         $donhang->save();
         if ($donhang != null) {

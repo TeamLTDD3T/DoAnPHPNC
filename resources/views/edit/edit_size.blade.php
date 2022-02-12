@@ -32,22 +32,10 @@
                             @csrf
                             @method('PATCH')
                             <div class="card-body">
-                                {{-- <div class="form-group">
-                                    <label for="">ID</label>
-                                    <input type="id" class="form-control" name="id"
-                                        value="1" readonly>
-                                </div> --}}
                                 <div class="form-group">
                                     <label for="">Name</label>
                                     <input type="id" class="form-control" name="tensize"
                                     value="{{ $size ->ten_size }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Status</label>
-                                    <select class="form-control">
-                                        <option>option 1</option>
-                                        <option>option 2</option>
-                                    </select>
                                 </div>
                             </div>
                             <!-- /.card-body -->

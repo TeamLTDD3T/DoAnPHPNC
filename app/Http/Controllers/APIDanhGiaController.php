@@ -37,10 +37,9 @@ class APIDanhGiaController extends Controller
         ->join('san_phams', 'san_phams.id', '=', 'chi_tiet_san_phams.san_pham_id')
         ->join('sizes', 'sizes.id', '=', 'chi_tiet_san_phams.size_id')
         ->join('thuong_hieus', 'thuong_hieus.id', '=', 'san_phams.thuong_hieu_id')
-        ->join('danh_gias','danh_gias.chi_tiet_san_pham_id','=','chi_tiet_san_phams.id')
-        ->where('tai_khoans.id', $request['taiKhoanID'])
+        ->join('danh_gias','danh_gias.tai_khoan_id','=','tai_khoans.id')
+        ->where('danh_gias.tai_khoan_id', $request['taiKhoanID'])
         ->where('chi_tiet_don_hangs.trang_thai_danh_gia', 1)
-        ->where('don_hangs.trang_thai', 3)
         ->select('danh_gias.id','danh_gias.so_sao','danh_gias.noi_dung','chi_tiet_don_hangs.chi_tiet_san_pham_id', 'thuong_hieus.ten_thuong_hieu', 'san_phams.ten_san_pham', 'san_phams.gia', 'sizes.ten_size')
         ->get();
         if(!empty($danhSach)){
@@ -79,6 +78,9 @@ class APIDanhGiaController extends Controller
         ->where('chi_tiet_san_phams.san_pham_id',$idsp->san_pham_id)
         ->where('chi_tiet_san_phams.mau_id',$idmau->mau_id)
         ->avg('danh_gias.so_sao');
+        if($tb == null){
+            return response()->json(0, 200);
+        }
         return response()->json($tb, 200);
     }
 
@@ -88,7 +90,9 @@ class APIDanhGiaController extends Controller
             'trang_thai_danh_gia'=>1
         ]);
         $ctdh->save();
-        $danhGia = DanhGia::where('chi_tiet_san_pham_id',$request['ctspID'])->first();
+        $danhGia = DanhGia::where('chi_tiet_san_pham_id',$request['ctspID'])
+        ->where('danh_gias.tai_khoan_id', $request['taiKhoanID'])
+        ->first();
         if(empty($danhGia)){
             if(DanhGia::insert([
                 'noi_dung'=>$request['noiDung'],

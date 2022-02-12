@@ -50,6 +50,7 @@ class TaiKhoanController extends Controller
         $validatedData = $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:6',
+            'ngaysinh' => 'required',
             'sdt' => 'required|regex:/(09)[0-9]{8}/',
             'hoten' => 'required|max:255',
             'diachi' => 'max:255',

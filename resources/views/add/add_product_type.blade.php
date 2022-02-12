@@ -31,11 +31,6 @@
                         <form method="post" action="{{ route('loaiSanPham.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
-                                {{-- <div class="form-group">
-                                    <label for="">ID</label>
-                                    <input type="id" class="form-control" name="id"
-                                        value="1" readonly>
-                                </div> --}}
                                 <div class="form-group">
                                     <label for="">Name</label>
                                     <input type="id" class="form-control" name="tenlsp">
@@ -46,14 +41,8 @@
                                       <input type="file" class="custom-file-input" id="customFile" name="file" accept="image/*" >
                                       <label class="custom-file-label" for="customFile">Choose file</label>
                                     </div>
-                                  </div>
-                                <div class="form-group">
-                                    <label for="">Status</label>
-                                    <select class="form-control">
-                                        <option>option 1</option>
-                                        <option>option 2</option>
-                                    </select>
                                 </div>
+                                
                             </div>
                             <!-- /.card-body -->
 

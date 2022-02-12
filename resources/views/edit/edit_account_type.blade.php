@@ -37,13 +37,6 @@
                                     <input type="id" class="form-control" name="tenltk"
                                     value="{{ $loaiTaiKhoan ->ten_loai_tai_khoan }}">
                                 </div>
-                                <div class="form-group">
-                                    <label for="">Status</label>
-                                    <select class="form-control">
-                                        <option>option 1</option>
-                                        <option>option 2</option>
-                                    </select>
-                                </div>
                             </div>
                             <!-- /.card-body -->
 
