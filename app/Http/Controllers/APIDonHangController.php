@@ -28,7 +28,7 @@ class APIDonHangController extends Controller
                 'ghi_chu' => '',
                 'trang_thai' => -1,
                 'tai_khoan_id' => $request['id'],
-                'tai_khoan_nhan_vien_id' => 2,
+                'tai_khoan_nhan_vien_id' => 3,
                 'created_at' => Carbon::now('Asia/Ho_Chi_Minh')
             ]);
             $donhangid = DonHang::where('tai_khoan_id', $request['id'])->where('trang_thai', -1)->select('don_hangs.id')->first();

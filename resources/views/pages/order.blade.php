@@ -100,7 +100,7 @@
                                                 </button>
                                             </a>
                                         </td>
-                                        @if ($dh->trang_thai!=4 && $dh->trang_thai!=3)
+                                        @if ($dh->trang_thai!=4 && $dh->trang_thai!=3 && $dh->trang_thai!=-1)
                                         <td style="width: 20px">
                                             <a href='{{ route('donHang.edit', ['donHang'=> $dh]) }}'>
                                                 <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i

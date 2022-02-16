@@ -59,7 +59,7 @@ Route::post('login',[AuthController::class,'authenticate'])->name('login');
 // Route::get('home', function () {
 //     return view('pages.home');
 // });
-Route::get('home',[HomeController::class,'index'])->name('logout')->middleware('CheckLogout');
+Route::get('home',[HomeController::class,'index'])->name('home')->middleware('CheckLogout');
 
 Route::resource('sanPham', SanPhamController::class);
 
@@ -71,7 +71,7 @@ Route::get('sanPham/restore/one/{id}', [SanPhamController::class, 'restore'])->n
 
 Route::get('sanPham/restore/all/{id}', [SanPhamController::class, 'restoreAll'])->name('sanPham.restore.all');
 
-Route::resource('loaiSanPham', LoaiSanPhamController::class);
+Route::resource('loaiSanPham', LoaiSanPhamController::class)->middleware('CheckLogout');
 
 Route::get('/searchLoaiSanPham', [LoaiSanPhamController::class, 'search'])->name('loaiSanPham.search');
 
@@ -81,7 +81,7 @@ Route::get('loaiSanPham/restore/one/{id}', [LoaiSanPhamController::class, 'resto
 
 Route::get('loaiSanPham/restore/all/{id}', [LoaiSanPhamController::class, 'restoreAll'])->name('loaiSanPham.restore.all');
 
-Route::resource('chiTietSanPham',ChiTietSanPhamController::class);
+Route::resource('chiTietSanPham',ChiTietSanPhamController::class)->middleware('CheckLogout');
 
 Route::get('/searchChiTietSanPham', [ChiTietSanPhamController::class, 'search'])->name('chiTietSanPham.search');
 
@@ -91,7 +91,7 @@ Route::get('chiTietSanPham/restore/one/{id}', [ChiTietSanPhamController::class, 
 
 Route::get('chiTietSanPham/restore/all/{id}', [ChiTietSanPhamController::class, 'restoreAll'])->name('chiTietSanPham.restore.all');
 
-Route::resource('mau', MauController::class);
+Route::resource('mau', MauController::class)->middleware('CheckLogout');
 
 Route::get('/searchMau', [MauController::class, 'search'])->name('mau.search');
 
@@ -101,7 +101,7 @@ Route::get('mau/restore/one/{id}', [MauController::class, 'restore'])->name('mau
 
 Route::get('mau/restore/all/{id}', [MauController::class, 'restoreAll'])->name('mau.restore.all');
 
-Route::resource('thuongHieu',ThuongHieuController::class);
+Route::resource('thuongHieu',ThuongHieuController::class)->middleware('CheckLogout');
 
 Route::get('/searchThuongHieu', [ThuongHieuController::class, 'search'])->name('thuongHieu.search');
 
@@ -111,7 +111,7 @@ Route::get('thuongHieu/restore/one/{id}', [ThuongHieuController::class, 'restore
 
 Route::get('thuongHieu/restore/all/{id}', [ThuongHieuController::class, 'restoreAll'])->name('thuongHieu.restore.all');
 
-Route::resource('danhGia',DanhGiaController::class);
+Route::resource('danhGia',DanhGiaController::class)->middleware('CheckLogout');
 
 Route::get('/searchDanhGia', [DanhGiaController::class, 'search'])->name('danhGia.search');
 
@@ -121,11 +121,11 @@ Route::get('danhGia/restore/one/{id}', [DanhGiaController::class, 'restore'])->n
 
 Route::get('danhGia/restore/all/{id}', [DanhGiaController::class, 'restoreAll'])->name('danhGia.restore.all');
 
-Route::resource('donHang',DonHangController::class);
+Route::resource('donHang',DonHangController::class)->middleware('CheckLogout');
 
 Route::get('/searchDonHang', [DonHangController::class, 'search'])->name('donHang.search');
 
-Route::resource('taiKhoan', TaiKhoanController::class);
+Route::resource('taiKhoan', TaiKhoanController::class)->middleware('CheckLogout');
 
 Route::get('/searchTaiKhoan', [TaiKhoanController::class, 'search'])->name('taiKhoan.search');
 
@@ -135,7 +135,7 @@ Route::get('taiKhoan/restore/one/{id}', [TaiKhoanController::class, 'restore'])-
 
 Route::get('taiKhoan/restore/all/{id}', [TaiKhoanController::class, 'restoreAll'])->name('taiKhoan.restore.all');
 
-Route::resource('loaiTaiKhoan', LoaiTaiKhoanController::class);
+Route::resource('loaiTaiKhoan', LoaiTaiKhoanController::class)->middleware('CheckLogout');
 
 Route::get('/searchLoaiTaiKhoan', [LoaiTaiKhoanController::class, 'search'])->name('loaiTaiKhoan.search');
 
@@ -145,7 +145,7 @@ Route::get('loaiTaiKhoan/restore/one/{id}', [LoaiTaiKhoanController::class, 'res
 
 Route::get('loaiTaiKhoan/restore/all/{id}', [LoaiTaiKhoanController::class, 'restoreAll'])->name('loaiTaiKhoan.restore.all');
 
-Route::resource('size', SizeController::class);
+Route::resource('size', SizeController::class)->middleware('CheckLogout');
 
 Route::get('/searchSize', [SizeController::class, 'search'])->name('size.search');
 
@@ -155,11 +155,11 @@ Route::get('size/restore/one/{id}', [SizeController::class, 'restore'])->name('s
 
 Route::get('size/restore/all/{id}', [SizeController::class, 'restoreAll'])->name('size.restore.all');
 
-Route::resource('yeuThich', YeuThichController::class);
+Route::resource('yeuThich', YeuThichController::class)->middleware('CheckLogout');
 
 Route::get('/searchYeuThich', [YeuThichController::class, 'search'])->name('yeuThich.search');
 
-Route::resource('hinhAnh', HinhAnhController::class);
+Route::resource('hinhAnh', HinhAnhController::class)->middleware('CheckLogout');
 
 Route::get('/searchHinhAnh', [HinhAnhController::class, 'search'])->name('hinhAnh.search');
 
@@ -169,7 +169,7 @@ Route::get('hinhAnh/restore/one/{id}', [HinhAnhController::class, 'restore'])->n
 
 Route::get('hinhAnh/restore/all/{id}', [HinhAnhController::class, 'restoreAll'])->name('hinhAnh.restore.all');
 
-Route::resource('banner', BannerController::class);
+Route::resource('banner', BannerController::class)->middleware('CheckLogout');
 
 Route::get('/searchBanner', [BannerController::class, 'search'])->name('banner.search');
 

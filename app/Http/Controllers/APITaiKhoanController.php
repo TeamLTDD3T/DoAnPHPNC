@@ -136,7 +136,11 @@ class APITaiKhoanController extends Controller
                 }
                 return response()->json($taiKhoan, 404);
             }
-            return response()->json($taiKhoan, 200);
+            else if($request['loai'] !=$taiKhoan->loai_tai_khoan_id)
+            {
+                    return response()->json($taiKhoan, 404);
+            }
+            return response()->json($taiKhoan, 200);         
         }
         return response()->json($taiKhoan, 404);
     }

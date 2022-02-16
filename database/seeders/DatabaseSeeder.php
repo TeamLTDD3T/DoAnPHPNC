@@ -23,5 +23,7 @@ class DatabaseSeeder extends Seeder
             SanPhamSeeder::class,
             ChiTietSanPhamSeeder::class
         ]);
+
+        
     }
 }

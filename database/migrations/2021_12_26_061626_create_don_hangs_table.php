@@ -20,7 +20,6 @@ class CreateDonHangsTable extends Migration
             $table->string('sdt_nguoi_nhan');
             $table->string('ghi_chu');
             $table->integer('trang_thai');
-            $table->unsignedBigInteger('tai_khoan_nhan_vien_id');
             $table->unsignedBigInteger('tai_khoan_id');//Khóa ngoại
             $table->unsignedBigInteger('tai_khoan_nhan_vien_id');//Khóa ngoại
             $table->timestamps();
