@@ -85,7 +85,75 @@
                     </div>
                     <!-- ./col -->
                 </div>
-
+                    <div class="card card-success">
+                        <div class="card-header">
+                          <h3 class="card-title">Monthly revenue statistics</h3>
+          
+                          <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                            </button>
+                            {{-- <button type="button" class="btn btn-tool" data-card-widget="remove">
+                              <i class="fas fa-times"></i>
+                            </button> --}}
+                          </div>
+                        </div>
+                        <div class="card-body">
+                          <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                            <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 572px;" width="715" height="312" class="chartjs-render-monitor"></canvas>
+                          </div>
+                        </div>
+                        <!-- /.card-body -->
+                      </div>
+   
+                
             </div><!-- /.container-fluid -->
         </section>
+        <script>
+            var thang = 0;
+            var doanhthutemp = <?php echo json_encode($doanhthutungthang); ?>;
+            
+            doanhthutemp.forEach(element => {
+                thang++
+            });
+            console.log(thang);
+            var temp = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            for(var i = 0; i < thang; i++)
+            {
+                temp[i] = doanhthutemp[i].doanhthu ;
+            }
+            var areaChartData = {
+            labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July','Argust','September','October','November','December'],
+            datasets: [
+                {
+                label               : 'Revenue',
+                backgroundColor     : 'rgba(60,141,188,0.9)',
+                borderColor         : 'rgba(60,141,188,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(60,141,188,1)',
+                pointHighlightFill  : '#fff',
+                pointHighlightStroke: 'rgba(60,141,188,1)',
+                data                : [temp[0], temp[1], temp[2], temp[3], temp[4], temp[5], temp[6], temp[7], temp[8], temp[9], temp[10], temp[11] ]
+                },
+            ]
+            }
+    
+            var barChartCanvas = $('#barChart').get(0).getContext('2d')
+            var barChartData = $.extend(true, {}, areaChartData)
+            var temp0 = areaChartData.datasets[0]
+            barChartData.datasets[0] = temp0
+    
+            var barChartOptions = {
+            responsive              : true,
+            maintainAspectRatio     : false,
+            datasetFill             : false
+            }
+    
+            new Chart(barChartCanvas, {
+            type: 'bar',
+            data: barChartData,
+            options: barChartOptions
+        })
+        </script>
     @endsection

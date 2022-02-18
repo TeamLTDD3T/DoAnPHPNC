@@ -53,16 +53,38 @@ class SanPhamController extends Controller
      */
     public function store(Request $request)
     {
-        $sanPham= new SanPham;
-        $sanPham->fill([
-            'ten_san_pham'=>$request->input('tensp'),
-            'mo_ta'=>$request->input('mota'),
-            'gia'=>$request->input('gia'),
-            'loai_san_pham_id'=>$request->input('loaisp'),
-            'thuong_hieu_id'=>$request->input('thuonghieu'),
-        ]);
-        $sanPham->save();
-        return Redirect::route('sanPham.index');
+        // $sanPham= new SanPham;
+        // $sanPham->fill([
+        //     'ten_san_pham'=>$request->input('tensp'),
+        //     'mo_ta'=>$request->input('mota'),
+        //     'gia'=>$request->input('gia'),
+        //     'loai_san_pham_id'=>$request->input('loaisp'),
+        //     'thuong_hieu_id'=>$request->input('thuonghieu'),
+        // ]);
+        // $sanPham->save();
+        // return Redirect::route('sanPham.index');
+
+        $sanphamformat=trim( $request->input('tensp')); 
+        $tontai=SanPham::where('ten_san_pham','like', $sanphamformat)->first(); 
+        if(empty($tontai)){
+            $kt_sanpham=str_replace(' ', '', $sanphamformat);
+            $tontai=SanPham::where('ten_san_pham','like',$kt_sanpham)->first();
+            if(empty($tontai))
+            {
+                $sanPham = new SanPham;
+                $sanPham->fill([
+                    'ten_san_pham'=>$sanphamformat,
+                    'mo_ta'=>$request->input('mota'),
+                    'gia'=>$request->input('gia'),
+                    'loai_san_pham_id'=>$request->input('loaisp'),
+                    'thuong_hieu_id'=>$request->input('thuonghieu'),
+                ]);
+                $sanPham->save();
+                return Redirect::route('sanPham.index');
+            }
+        }
+        $alert = 'Product name already in use';
+        return redirect()->back()->with('alert', $alert);
     }
 
     /**
@@ -105,15 +127,26 @@ class SanPhamController extends Controller
      */
     public function update(Request $request, SanPham $sanPham)
     {
-        $sanPham->fill([
-            'ten_san_pham'=>$request->input('tensp'),
-            'mo_ta'=>$request->input('mota'),
-            'gia'=>$request->input('gia'),
-            'loai_san_pham_id'=>$request->input('loaisp'),
-            'thuong_hieu_id'=>$request->input('thuonghieu'),
-        ]);
-        $sanPham->save();
-        return Redirect::route('sanPham.index');
+        $sanphamformat=trim( $request->input('tensp')); 
+        $tontai=SanPham::where('ten_san_pham','like', $sanphamformat)->first(); 
+        if(empty($tontai)){
+            $kt_sanpham=str_replace(' ', '', $sanphamformat);
+            $tontai=SanPham::where('ten_san_pham','like',$kt_sanpham)->first();
+            if(empty($tontai))
+            {
+                $sanPham->fill([
+                    'ten_san_pham'=>$sanphamformat,
+                    'mo_ta'=>$request->input('mota'),
+                    'gia'=>$request->input('gia'),
+                    'loai_san_pham_id'=>$request->input('loaisp'),
+                    'thuong_hieu_id'=>$request->input('thuonghieu'),
+                ]);
+                $sanPham->save();
+                return Redirect::route('sanPham.index');
+            }
+        }
+        $alert = 'Product name already in use';
+        return redirect()->back()->with('alert', $alert);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ThuongHieu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use SebastianBergmann\Environment\Console;
 
 class ThuongHieuController extends Controller
 {
@@ -40,12 +41,23 @@ class ThuongHieuController extends Controller
      */
     public function store(Request $request)
     {
-        $thuongHieu = new ThuongHieu;
-        $thuongHieu->fill([
-            'ten_thuong_hieu' => $request->input('tenthuonghieu'),
-        ]);
-        $thuongHieu->save();
-        return Redirect::route('thuongHieu.index');
+        $thuonghieuformat=trim( $request->input('tenthuonghieu')); 
+        $tontai=ThuongHieu::where('ten_thuong_hieu','like',$thuonghieuformat)->first(); 
+        if(empty($tontai)){
+            $kt_thuonghieu=str_replace(' ', '', $thuonghieuformat);
+            $tontai=ThuongHieu::where('ten_thuong_hieu','like',$kt_thuonghieu)->first();
+            if(empty($tontai))
+            {
+                $thuongHieu = new ThuongHieu;
+                $thuongHieu->fill([
+                    'ten_thuong_hieu' => $thuonghieuformat,
+                ]);
+                $thuongHieu->save();
+                return Redirect::route('thuongHieu.index');
+            }
+        }
+        $alert = 'Brand name already in use';
+        return redirect()->back()->with('alert', $alert);
     }
 
     /**
@@ -79,11 +91,22 @@ class ThuongHieuController extends Controller
      */
     public function update(Request $request, ThuongHieu $thuongHieu)
     {
-        $thuongHieu->fill([
-            'ten_thuong_hieu' => $request->input('tenthuonghieu'),
-        ]);
-        $thuongHieu->save();
-        return Redirect::route('thuongHieu.index');
+        $thuonghieuformat=trim( $request->input('tenthuonghieu')); 
+        $tontai=ThuongHieu::where('ten_thuong_hieu','like',$thuonghieuformat)->first(); 
+        if(empty($tontai)){
+            $kt_thuonghieu=str_replace(' ', '', $thuonghieuformat);
+            $tontai=ThuongHieu::where('ten_thuong_hieu','like',$kt_thuonghieu)->first();
+            if(empty($tontai))
+            {
+                $thuongHieu->fill([
+                    'ten_thuong_hieu' => $thuonghieuformat,
+                ]);
+                $thuongHieu->save();
+                return Redirect::route('thuongHieu.index');
+            }
+        }
+        $alert = 'Brand name already in use';
+        return redirect()->back()->with('alert', $alert);
     }
 
     /**

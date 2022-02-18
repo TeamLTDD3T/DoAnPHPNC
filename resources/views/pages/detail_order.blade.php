@@ -41,7 +41,7 @@
                                     </div>
                                 </div>
 
-                            </div>
+                            </div>                         
                             <!-- /.card-header -->
                             <div class="card-body table-responsive p-0" style="height: 480px;">
                                 <table class="table table-head-fixed text-nowrap">
@@ -58,7 +58,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if (count($lstctdh) > 0)
+                                        
+                                        @if (count($lstctdh) > 0)                                      
                                         @foreach ($lstctdh as $ctdh)
                                         <tr>
                                             <td>{{ $ctdh->id }}</td>
@@ -84,7 +85,10 @@
                                     @endif
                                     </tbody>
                                 </table>
+                                
                             </div>
+                            <h4 style="margin-left:10px">Total price: <b>$ {{ $tongtien }}</b></h4>
+                            <h4 style="margin-left:10px">Total quantity: <b>{{ $tongsoluong }}</b></h4>
                             <!-- /.card-body -->
                         </div>
                         <!-- /.card -->

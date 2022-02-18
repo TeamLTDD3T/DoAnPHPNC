@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="{{ asset('/storage/assets/plugins/summernote/summernote-bs4.min.css') }}">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="{{ asset('/storage/assets/plugins/chart.js/Chart.min.js') }}"></script>
     <title>Admin 3TFashion</title>
 </head>
 
@@ -214,27 +215,16 @@
             <b>Beta Version</b>
         </div>
     </footer>
-    {{-- <script>
-        const dotBtn = document.querySelectorAll(".nav-link");
-        [...dotBtn].forEach((item) =>item.addEventListener("click",function(i){
-        // [...dotBtn].forEach(itemlist =>itemlist.classList.remove("active"));
-        if(item.className != "nav-link active")
-        {
-            item.className +=" active";
-        }
-        })
-    );
-    </script> --}}
     <script>
         const currentLocation = location.href;
-        const menuItem = document.querySelectorAll('a.nav-link');
-        const menuLength = menuItem.length;
-        for (let i = 0; i < menuLength; i++) {
-            if (menuItem[i].href == currentLocation) {
-                c = menuItem[i].childNodes;
-                c[1].className = "far fa-check-circle nav-icon";
+            const menuItem = document.querySelectorAll('a.nav-link');
+            const menuLength = menuItem.length;
+            for (let i = 0; i < menuLength; i++) {
+                if (menuItem[i].href == currentLocation) {
+                    c = menuItem[i].childNodes;
+                    c[1].className = "far fa-check-circle nav-icon";
+                }
             }
-        }
     </script>
     <!-- jQuery -->
     <script src="{{ asset('/storage/assets/plugins/jquery/jquery.min.js') }}"></script>
@@ -247,7 +237,7 @@
     <!-- Bootstrap 4 -->
     <script src="{{ asset('/storage/assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- ChartJS -->
-    <script src="{{ asset('/storage/assets/plugins/chart.js/Chart.min.js') }}"></script>
+    
     <!-- Sparkline -->
     <script src="{{ asset('/storage/assets/plugins/sparklines/sparkline.js') }}"></script>
     <!-- JQVMap -->
@@ -277,6 +267,7 @@
             bsCustomFileInput.init();
         });
     </script>
+    
 </body>
 
 </html>

@@ -40,12 +40,30 @@ class LoaiTaiKhoanController extends Controller
      */
     public function store(Request $request)
     {
-        $loaiTaiKhoan= new LoaiTaiKhoan;
-        $loaiTaiKhoan->fill([
-            'ten_loai_tai_khoan'=>$request->input('tenltk'),
-        ]);
-        $loaiTaiKhoan->save();
-        return Redirect::route('loaiTaiKhoan.index');
+        // $loaiTaiKhoan= new LoaiTaiKhoan;
+        // $loaiTaiKhoan->fill([
+        //     'ten_loai_tai_khoan'=>$request->input('tenltk'),
+        // ]);
+        // $loaiTaiKhoan->save();
+        // return Redirect::route('loaiTaiKhoan.index');
+
+        $loaitaikhoanformat=trim( $request->input('tenltk')); 
+        $tontai = LoaiTaiKhoan::where('ten_loai_tai_khoan','like', $loaitaikhoanformat)->first(); 
+        if(empty($tontai)){
+            $kt_loaitaikhoan=str_replace(' ', '', $loaitaikhoanformat);
+            $tontai = LoaiTaiKhoan::where('ten_loai_tai_khoan','like',$kt_loaitaikhoan)->first();
+            if(empty($tontai))
+            {
+                $loaiTaiKhoan = new LoaiTaiKhoan;
+                $loaiTaiKhoan->fill([
+                    'ten_loai_tai_khoan' => $loaitaikhoanformat,
+                ]);
+                $loaiTaiKhoan->save();
+                return Redirect::route('loaiTaiKhoan.index');
+            }
+        }
+        $alert = 'Account type name already in use';
+        return redirect()->back()->with('alert', $alert);
     }
 
     /**
@@ -79,11 +97,22 @@ class LoaiTaiKhoanController extends Controller
      */
     public function update(Request $request, LoaiTaiKhoan $loaiTaiKhoan)
     {
-        $loaiTaiKhoan->fill([
-            'ten_loai_tai_khoan'=>$request->input('tenltk'),
-        ]);
-        $loaiTaiKhoan->save();
-        return Redirect::route('loaiTaiKhoan.index');
+        $loaitaikhoanformat=trim( $request->input('tenltk')); 
+        $tontai = LoaiTaiKhoan::where('ten_loai_tai_khoan','like', $loaitaikhoanformat)->first(); 
+        if(empty($tontai)){
+            $kt_loaitaikhoan=str_replace(' ', '', $loaitaikhoanformat);
+            $tontai = LoaiTaiKhoan::where('ten_loai_tai_khoan','like',$kt_loaitaikhoan)->first();
+            if(empty($tontai))
+            {
+                $loaiTaiKhoan->fill([
+                    'ten_loai_tai_khoan' => $loaitaikhoanformat,
+                ]);
+                $loaiTaiKhoan->save();
+                return Redirect::route('loaiTaiKhoan.index');
+            }
+        }
+        $alert = 'Account type name already in use';
+        return redirect()->back()->with('alert', $alert);
     }
 
     /**

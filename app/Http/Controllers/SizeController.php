@@ -40,12 +40,23 @@ class SizeController extends Controller
      */
     public function store(Request $request)
     {
-        $size= new Size;
-        $size->fill([
-            'ten_size'=>$request->input('tensize'),
-        ]);
-        $size->save();
-        return Redirect::route('size.index');
+        $sizeformat=trim( $request->input('tensize')); 
+        $tontai=Size::where('ten_size','like', $sizeformat)->first(); 
+        if(empty($tontai)){
+            $kt_size = str_replace(' ', '', $sizeformat);
+            $tontai = Size::where('ten_size', 'like', $kt_size)->first();
+            if(empty($tontai))
+            {
+                $size = new Size;
+                $size->fill([
+                    'ten_size' => $sizeformat,
+                ]);
+                $size->save();
+                return Redirect::route('size.index');
+            }
+        }
+        $alert = 'Size name already in use';
+        return redirect()->back()->with('alert', $alert);
     }
 
     /**
@@ -79,11 +90,22 @@ class SizeController extends Controller
      */
     public function update(Request $request, Size $size)
     {
-        $size->fill([
-            'ten_size'=>$request->input('tensize'),
-        ]);
-        $size->save();
-        return Redirect::route('size.index');
+        $sizeformat=trim( $request->input('tensize')); 
+        $tontai=Size::where('ten_size','like', $sizeformat)->first(); 
+        if(empty($tontai)){
+            $kt_size = str_replace(' ', '', $sizeformat);
+            $tontai = Size::where('ten_size', 'like', $kt_size)->first();
+            if(empty($tontai))
+            {
+                $size->fill([
+                    'ten_size' => $sizeformat,
+                ]);
+                $size->save();
+                return Redirect::route('size.index');
+            }
+        }
+        $alert = 'Size name already in use';
+        return redirect()->back()->with('alert', $alert);
     }
 
     /**

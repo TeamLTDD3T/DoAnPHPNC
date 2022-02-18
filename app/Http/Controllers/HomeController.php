@@ -6,6 +6,7 @@ use App\Models\ChiTietSanPham;
 use App\Models\DonHang;
 use App\Models\TaiKhoan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -29,7 +30,13 @@ class HomeController extends Controller
         for ($i = 0; $i < count($gia); $i++) {
             $tongdoanhthu = $tongdoanhthu + $gia[$i]->gia * $soluong[$i]->so_luong;
         }
+        $doanhthutungthang = DonHang::join('chi_tiet_don_hangs', 'chi_tiet_don_hangs.don_hang_id', '=', 'don_hangs.id')
+        ->whereYear('don_hangs.created_at', '=', now()->year)
+        ->where('trang_thai', '=', 3)
+        ->select(DB::raw("MONTH(don_hangs.created_at) month"), DB::raw('sum(chi_tiet_don_hangs.so_luong * chi_tiet_don_hangs.gia) doanhthu'))
+        ->groupBy('month')
+        ->get();
         $sanphamtonkho = ChiTietSanPham::sum('so_luong');
-        return view('pages.home', ['donhangmoi' => $donhangmoi, 'taikhoankhachhang' => $taikhoankhachhang, 'tongdoanhthu' => $tongdoanhthu, 'sanphamtonkho' => $sanphamtonkho]);
+        return view('pages.home', ['donhangmoi' => $donhangmoi, 'taikhoankhachhang' => $taikhoankhachhang, 'tongdoanhthu' => $tongdoanhthu, 'sanphamtonkho' => $sanphamtonkho, 'doanhthutungthang' => $doanhthutungthang]);
     }
 }

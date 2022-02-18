@@ -40,12 +40,23 @@ class MauController extends Controller
      */
     public function store(Request $request)
     {
-        $mau= new Mau;
-        $mau->fill([
-            'ten_mau'=>$request->input('tenmau'),
-        ]);
-        $mau->save();
-        return Redirect::route('mau.index');
+        $mauformat=trim( $request->input('tenmau')); 
+        $tontai=Mau::where('ten_mau','like',$mauformat)->first(); 
+        if(empty($tontai)){
+            $kt_mau=str_replace(' ', '', $mauformat);
+            $tontai=Mau::where('ten_mau','like',$kt_mau)->first();
+            if(empty($tontai))
+            {
+                $mau = new Mau;
+                $mau->fill([
+                    'ten_mau' => $mauformat,
+                ]);
+                $mau->save();
+                return Redirect::route('mau.index');
+            }
+        }
+        $alert = 'Color name already in use';
+        return redirect()->back()->with('alert', $alert);
     }
 
     /**
@@ -79,11 +90,22 @@ class MauController extends Controller
      */
     public function update(Request $request, Mau $mau)
     {
-        $mau->fill([
-            'ten_mau'=>$request->input('tenmau'),
-        ]);
-        $mau->save();
-        return Redirect::route('mau.index');
+        $mauformat=trim( $request->input('tenmau')); 
+        $tontai=Mau::where('ten_mau','like',$mauformat)->first(); 
+        if(empty($tontai)){
+            $kt_mau=str_replace(' ', '', $mauformat);
+            $tontai=Mau::where('ten_mau','like',$kt_mau)->first();
+            if(empty($tontai))
+            {
+                $mau->fill([
+                    'ten_mau' => $mauformat,
+                ]);
+                $mau->save();
+                return Redirect::route('mau.index');
+            }
+        }
+        $alert = 'Color name already in use';
+        return redirect()->back()->with('alert', $alert);
     }
 
     /**

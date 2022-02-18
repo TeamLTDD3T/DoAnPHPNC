@@ -54,19 +54,19 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body table-responsive p-0" style="height: 480px;">
-                                <table class="table table-head-fixed text-nowrap">
+                                <table class="table table-head-fixed">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
                                             <th>Name</th>
                                             <th>Description</th>
                                             <th>Price</th>
-                                            <th>Product Type</th>
+                                            <th style="width: 120px">Product Type</th>
                                             <th>Brand</th>
-                                            <th>Created At</th>
-                                            <th>Updated At</th>
+                                            <th style="width: 120px">Created At</th>
+                                            <th style="width: 120px">Updated At</th>
                                             @if (request()->has('view_deleted'))
-                                                <th>Delete At</th>
+                                                <th style="width: 120px">Delete At</th>
                                                 <th>Restore</th>
                                             @else
                                                 <th>Detail</th>
@@ -81,7 +81,7 @@
                                                 <tr>
                                                     <td>{{ $sp->id }}</td>
                                                     <td>{{ $sp->ten_san_pham }}</td>
-                                                    <td>{{ $sp->mo_ta }}</td>
+                                                    <td >{{ $sp->mo_ta }}</td>
                                                     <td>{{ $sp->gia }}</td>
                                                     <td>{{ $sp->ten_loai_san_pham }}</td>
                                                     <td>{{ $sp->ten_thuong_hieu }}</td>

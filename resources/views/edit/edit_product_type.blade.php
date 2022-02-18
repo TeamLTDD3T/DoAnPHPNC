@@ -50,6 +50,18 @@
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary" style="width: 100%">Submit</button>
                             </div>
+                            @if(session('alert'))
+                            <section class='alert alert-danger'>{{session('alert')}}</section>
+                            @endif
+                            @if (count($errors) > 0)
+                                <div class="error-message">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                         </form>
                     </div>
             </div><!-- /.container-fluid -->

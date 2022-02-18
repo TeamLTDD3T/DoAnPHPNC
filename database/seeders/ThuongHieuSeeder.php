@@ -14,12 +14,42 @@ class ThuongHieuSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=1; $i <= 5; $i++) {
-            $th= new ThuongHieu();
-            $th->fill([
-                'ten_thuong_hieu' => "Thương hiệu ".$i,
-            ]);
-            $th->save();
-        }
+        Thuonghieu::create( [
+            'id'=>1,
+            'ten_thuong_hieu'=>'Nike',
+            'created_at'=>'2022-01-01 17:00:00',
+            'updated_at'=>'2022-01-01 17:00:00',
+            'deleted_at'=>NULL
+            ] );
+            
+            
+                        
+            Thuonghieu::create( [
+            'id'=>2,
+            'ten_thuong_hieu'=>'Adidas',
+            'created_at'=>'2022-01-01 17:00:00',
+            'updated_at'=>'2022-01-01 17:00:00',
+            'deleted_at'=>NULL
+            ] );
+            
+            
+                        
+            Thuonghieu::create( [
+            'id'=>3,
+            'ten_thuong_hieu'=>'H&M',
+            'created_at'=>'2022-01-01 17:00:00',
+            'updated_at'=>'2022-02-06 23:36:15',
+            'deleted_at'=>NULL
+            ] );
+            
+            
+                        
+            Thuonghieu::create( [
+            'id'=>4,
+            'ten_thuong_hieu'=>'Under Armour',
+            'created_at'=>'2022-01-01 17:00:00',
+            'updated_at'=>'2022-02-06 23:36:15',
+            'deleted_at'=>NULL
+            ] );
     }
 }

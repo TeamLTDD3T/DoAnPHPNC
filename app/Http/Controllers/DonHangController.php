@@ -58,7 +58,13 @@ class DonHangController extends Controller
             ->join('sizes', 'sizes.id', '=', 'chi_tiet_san_phams.size_id')
             ->select('san_phams.ten_san_pham', 'maus.ten_mau', 'sizes.ten_size', 'chi_tiet_don_hangs.*')
             ->where('don_hang_id', '=', $donHang->id)->get();
-        return view('pages.detail_order', ['lstctdh' => $lstctdh]);
+        $tongtien=0;
+        $tongsoluong=0;
+        foreach($lstctdh as $ctdh){
+            $tongtien += $ctdh->gia * $ctdh->so_luong;
+            $tongsoluong +=$ctdh->so_luong;
+        }
+        return view('pages.detail_order', ['lstctdh' => $lstctdh,'tongtien'=>$tongtien,'tongsoluong'=>$tongsoluong]);
     }
 
     /**
