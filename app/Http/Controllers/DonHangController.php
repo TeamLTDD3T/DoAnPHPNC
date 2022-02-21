@@ -64,7 +64,7 @@ class DonHangController extends Controller
             $tongtien += $ctdh->gia * $ctdh->so_luong;
             $tongsoluong +=$ctdh->so_luong;
         }
-        return view('pages.detail_order', ['lstctdh' => $lstctdh,'tongtien'=>$tongtien,'tongsoluong'=>$tongsoluong]);
+        return view('pages.detail_order', ['lstctdh' => $lstctdh,'tongtien'=>$tongtien,'tongsoluong'=>$tongsoluong, 'donHang'=>$donHang]);
     }
 
     /**

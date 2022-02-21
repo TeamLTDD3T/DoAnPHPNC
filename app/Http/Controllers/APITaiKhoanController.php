@@ -66,19 +66,13 @@ class APITaiKhoanController extends Controller
     function layIDTaiKhoan(Request $request)
     {
         $taiKhoan = TaiKhoan::where('email', $request['email'])->first();
-        if ($taiKhoan != null) {
-            return response()->json($taiKhoan, 200);
-        }
-        return response()->json('', 404);
+        return response()->json($taiKhoan, 200);
     }
 
     function layThongTinTaiKhoan(Request $request)
     {
         $taiKhoan = TaiKhoan::where('id', $request['id'])->first();
-        if ($taiKhoan != null) {
-            return response()->json($taiKhoan, 200);
-        }
-        return response()->json('', 404);
+        return response()->json($taiKhoan, 200);
     }
 
     function doiMatKhau(Request $request)
@@ -106,10 +100,7 @@ class APITaiKhoanController extends Controller
             'sdt' => $request['sdt'],
         ]);
         $taiKhoan->save();
-        if (!empty($taiKhoan)) {
-            return response()->json($taiKhoan, 200);
-        }
-        return response()->json($taiKhoan, 404);
+        return response()->json($taiKhoan, 200);
     }
 
     function dangNhapBangSocial(Request $request)

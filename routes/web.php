@@ -16,6 +16,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\RecoverPasswordController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\ChiTietDonHangController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -179,5 +180,5 @@ Route::get('banner/restore/one/{id}', [BannerController::class, 'restore'])->nam
 
 Route::get('banner/restore/all/{id}', [BannerController::class, 'restoreAll'])->name('banner.restore.all');
 
-
+Route::get('/searchChiTietDonHang', [ChiTietDonHangController::class, 'search'])->name('chiTietDonHang.search');
 

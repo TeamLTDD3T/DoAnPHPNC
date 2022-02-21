@@ -62,10 +62,7 @@ class APIYeuThichController extends Controller
         ->where('yeu_thiches.trang_thai', '=', 1)
         ->select('yeu_thiches.id','yeu_thiches.chi_tiet_san_pham_id','san_phams.ten_san_pham', 'san_phams.gia','thuong_hieus.ten_thuong_hieu','hinh_anhs.hinh_anh','yeu_thiches.trang_thai')
         ->get();
-        if(!empty($danhSach)){
-            return response()->json($danhSach, 200);
-        }
-        return response()->json($danhSach, 404);
+        return response()->json($danhSach, 200);
     }
 
     function xoaYeuThich(Request $request){
@@ -74,9 +71,6 @@ class APIYeuThichController extends Controller
             'trang_thai'=>0,
         ]);
         $yeuThich->save();
-        if(!empty($yeuThich)){
-            return response()->json($yeuThich, 200);
-        }
-        return response()->json($yeuThich, 404);
+        return response()->json($yeuThich, 200);
     }
 }

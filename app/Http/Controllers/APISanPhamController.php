@@ -20,9 +20,7 @@ class APISanPhamController extends Controller
             ->where('hinh_anhs.hinh_dai_dien', '=', 0)
             ->where('hinh_anhs.chi_tiet_san_pham_id', '=', $chiTietSanPham->id)
             ->get();
-        if (!empty($danhSach))
-            return response()->json($danhSach, 200);
-        return response()->json($danhSach, 404);
+        return response()->json($danhSach, 200);
     }
     # Lấy ds  sản phẩm 
     function layDanhSach()
@@ -33,9 +31,7 @@ class APISanPhamController extends Controller
             ->select('chi_tiet_san_phams.id','san_phams.ten_san_pham','san_phams.mo_ta','san_phams.gia','san_phams.loai_san_pham_id','san_phams.thuong_hieu_id','thuong_hieus.ten_thuong_hieu', 'hinh_anhs.hinh_anh')
             ->where('hinh_anhs.hinh_dai_dien', '=', 1)
             ->get();
-        if (!empty($danhSach))
-            return response()->json($danhSach, 200);
-        return response()->json($danhSach, 404);
+        return response()->json($danhSach, 200);
     }
     function layDanhSachSanPhamRecom()
     {
@@ -46,9 +42,7 @@ class APISanPhamController extends Controller
             ->where('chi_tiet_san_phams.so_luong', '>=', 50)
             ->where('hinh_anhs.hinh_dai_dien', '=', 1)
             ->get();
-        if (!empty($danhSach))
-            return response()->json($danhSach, 200);
-        return response()->json($danhSach, 404);
+        return response()->json($danhSach, 200);
     }
     function layDanhSachSanPhamFea()
     {
@@ -59,9 +53,7 @@ class APISanPhamController extends Controller
             ->where('san_phams.loai_san_pham_id', '=', 4)
             ->where('hinh_anhs.hinh_dai_dien', '=', 1)
             ->get();
-        if (!empty($danhSach))
-            return response()->json($danhSach, 200);
-        return response()->json($danhSach, 404);
+        return response()->json($danhSach, 200);
     }
     function layDanhSachSanPhamNew()
     {
@@ -73,9 +65,7 @@ class APISanPhamController extends Controller
             ->orderBy('created_at', 'desc')
             ->limit(5)
             ->get();
-        if (!empty($danhSach))
-            return response()->json($danhSach, 200);
-        return response()->json($danhSach, 404);
+        return response()->json($danhSach, 200);
     }
 
     function layDanhSachTheoLoai(LoaiSanPham $loaiSanPham)
@@ -87,9 +77,7 @@ class APISanPhamController extends Controller
         ->where('hinh_anhs.hinh_dai_dien', '=', 1)
         ->where('loai_san_pham_id', $loaiSanPham->id)
         ->get();
-        if (!empty($danhSach))
-            return response()->json($danhSach, 200);
-        return response()->json($danhSach, 404);
+        return response()->json($danhSach, 200);
     }
 
     function search(Request $request){
@@ -106,10 +94,7 @@ class APISanPhamController extends Controller
         ->where('ten_san_pham','LIKE','%'.$request['query'].'%')
         ->where('san_phams.loai_san_pham_id','LIKE','%'.$idLSP.'%')
         ->get();
-        if ($sanPham != null) {
-            return response()->json($sanPham, 200);
-        }
-        return response()->json('', 404);
+        return response()->json($sanPham, 200);
     }
 
 }

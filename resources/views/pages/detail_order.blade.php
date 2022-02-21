@@ -27,9 +27,9 @@
                             <div class="card-header">
                                 <h3 class="card-title">Detail Order Management</h3>
                                 <div class="card-tools">
-                                    <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" name="table_search" class="form-control float-right"
-                                            placeholder="Search">
+                                    <div class="input-group input-group-sm" style="width: 200px;">
+                                        <input type="text" name="table_search" class="form-control float-right" id="search"
+                                            name="search" placeholder="Search by Product Name">
 
                                         <div class="input-group-append">
 
@@ -97,4 +97,29 @@
             </div><!-- /.container-fluid -->
         </section>
     </div>
+
+    <script type="text/javascript">
+        $('#search').on('keyup', function() {
+            $id = <?php echo $donHang->id; ?>;
+            $value = $(this).val();
+            $.ajax({
+            type: 'get',
+            url: '{{ URL::to('searchChiTietDonHang') }}',
+            data: {
+                'search': $value,
+                'donHang': $id
+            },
+
+            success: function(data) {
+                $('tbody').html(data);
+            }
+            });
+         
+        })
+        $.ajaxSetup({
+            headers: {
+                'csrftoken': '{{ csrf_token() }}'
+            }
+        });
+    </script>
     @endsection

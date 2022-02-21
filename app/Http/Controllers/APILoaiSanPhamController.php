@@ -13,8 +13,6 @@ class APILoaiSanPhamController extends Controller
     function layDanhSachLoaiSP()
     {
         $danhsach = LoaiSanPham::all();
-        if(!empty($danhsach))
-            return response($danhsach,200);
-        return response($danhsach,404);
+        return response($danhsach, 200);
     }
 }

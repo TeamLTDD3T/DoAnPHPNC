@@ -102,6 +102,5 @@ class APIDanhGiaController extends Controller
             $danhGia->save();
             return response()->json(1, 200);
         }
-        return response()->json(0, 404);
     }
 }

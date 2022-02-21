@@ -55,21 +55,18 @@ class APIDonHangController extends Controller
                     'trang_thai_danh_gia' => 0,
                     'chi_tiet_san_pham_id' => $chiTietSanPham->id,
                 ]);
-                if ($chiTietDonHang != null) {
+                if ($chiTietDonHang == true) {
                     return response()->json($chiTietDonHang, 200);
                 }
                 return response()->json('', 404);
             } else {
                 $soluongsp = ChiTietDonHang::where('chi_tiet_san_pham_id', $chiTietSanPham->id)->select('chi_tiet_don_hangs.so_luong')->first();
-                // return response()->json($soluongsp, 200);
                 if ($soluongsp->so_luong < 10) {
                     $sptontaitronggio->fill([
                         'so_luong' => $sptontaitronggio->so_luong + 1,
                     ]);
                     $sptontaitronggio->save();
-                    if ($sptontaitronggio != null) {
-                        return response()->json($sptontaitronggio, 200);
-                    }
+                    return response()->json($sptontaitronggio, 200);
                 }
                 return response()->json('', 404);
             }
@@ -90,9 +87,7 @@ class APIDonHangController extends Controller
             // ->where('hinh_anhs.hinh_dai_dien', '=', 1)
             ->select('chi_tiet_don_hangs.id', 'chi_tiet_san_phams.size_id', 'chi_tiet_san_phams.mau_id', 'chi_tiet_don_hangs.chi_tiet_san_pham_id', 'san_phams.ten_san_pham', 'san_phams.gia', 'chi_tiet_don_hangs.so_luong', 'thuong_hieus.ten_thuong_hieu')
             ->get();
-        if ($danhsach != null) {
-            return response()->json($danhsach, 200);
-        }
+        return response()->json($danhsach, 200);
     }
 
     function updateSoLuongSP(Request $request, ChiTietDonHang $chiTietDonHang)
@@ -102,10 +97,7 @@ class APIDonHangController extends Controller
             'so_luong' => (int)$request['soLuong'],
         ]);
         $ctdh->save();
-        if ($ctdh != null) {
-            return response()->json($ctdh, 200);
-        }
-        return response()->json('', 404);
+        return response()->json($ctdh, 200);
     }
 
     function updateSizeSP(Request $request, ChiTietDonHang $chiTietDonHang)
@@ -119,8 +111,8 @@ class APIDonHangController extends Controller
             ->select('chi_tiet_san_phams.id')
             ->first();
         $kiemtra = ChiTietDonHang::where('chi_tiet_don_hangs.id', $chiTietDonHang->id)
-        ->where('chi_tiet_don_hangs.chi_tiet_san_pham_id', $idctspupdate->id)  
-        ->first();
+            ->where('chi_tiet_don_hangs.chi_tiet_san_pham_id', $idctspupdate->id)
+            ->first();
         if (empty($kiemtra)) {
             $ctdh = ChiTietDonHang::where('chi_tiet_don_hangs.id', $chiTietDonHang->id)->first();
             $ctdh->fill([
@@ -144,10 +136,7 @@ class APIDonHangController extends Controller
             ->where('chi_tiet_san_phams.mau_id', $idmau->mau_id)
             ->select('hinh_anhs.chi_tiet_san_pham_id', 'hinh_anhs.hinh_anh',)
             ->get();
-        if ($hinhanh != null) {
-            return response()->json($hinhanh, 200);
-        }
-        return response()->json('', 404);
+        return response()->json($hinhanh, 200);
     }
     function xoaCTGH(ChiTietDonHang $chiTietDonHang)
     {
@@ -170,8 +159,6 @@ class APIDonHangController extends Controller
             // ->where('chi_tiet_don_hangs.so_luong', '>' ,'chi_tiet_san_phams.so_luong')
             ->select('chi_tiet_don_hangs.chi_tiet_san_pham_id', 'chi_tiet_don_hangs.so_luong', 'san_phams.ten_san_pham', 'san_phams.ten_san_pham', 'maus.ten_mau', 'sizes.ten_size')
             ->get();
-        // return response()->json($kiemtrasoluongCTDH[0]->so_luong,200);
-        // 2 1 5
         $kiemtrasoluongCTSP = ChiTietDonHang::join('don_hangs', 'don_hangs.id', '=', 'chi_tiet_don_hangs.don_hang_id')
             ->join('chi_tiet_san_phams', 'chi_tiet_san_phams.id', '=', 'chi_tiet_don_hangs.chi_tiet_san_pham_id')
             ->join('san_phams', 'san_phams.id', '=', 'chi_tiet_san_phams.san_pham_id')
@@ -181,8 +168,6 @@ class APIDonHangController extends Controller
             // ->where('chi_tiet_don_hangs.so_luong', '>' , 'chi_tiet_san_phams.so_luong')
             ->select('chi_tiet_san_phams.so_luong')
             ->get();
-        // return response()->json((int)$kiemtrasoluongCTSP[0]->so_luong,200);
-        // 1 25 25            
         for ($i = 0; $i < count($kiemtrasoluongCTDH); $i++) {
             if ((int)$kiemtrasoluongCTDH[$i]->so_luong > (int)$kiemtrasoluongCTSP[$i]->so_luong) {
                 $list[] = $kiemtrasoluongCTDH[$i]->ten_san_pham . ' - ' . $kiemtrasoluongCTDH[$i]->ten_mau . ' - ' . $kiemtrasoluongCTDH[$i]->ten_size;
@@ -225,9 +210,7 @@ class APIDonHangController extends Controller
             // ->where('hinh_anhs.hinh_dai_dien', '=', 1)
             ->select('chi_tiet_don_hangs.id', 'sizes.ten_size', 'chi_tiet_san_phams.mau_id', 'chi_tiet_don_hangs.chi_tiet_san_pham_id', 'san_phams.ten_san_pham', 'san_phams.gia', 'chi_tiet_don_hangs.so_luong', 'thuong_hieus.ten_thuong_hieu')
             ->get();
-        if ($danhsach != null) {
-            return response()->json($danhsach, 200);
-        }
+        return response()->json($danhsach, 200);
     }
     function huyDonHang(Request $request)
     {
@@ -236,9 +219,6 @@ class APIDonHangController extends Controller
             'trang_thai' => 4,
         ]);
         $donhang->save();
-        if ($donhang != null) {
-            return response()->json($donhang, 200);
-        }
-        return response()->json('', 404);
+        return response()->json($donhang, 200);
     }
 }
